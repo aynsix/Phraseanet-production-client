@@ -131,7 +131,8 @@ const workzone = (services) => {
         $('#basket_menu_trigger').trigger('click');
 
         $('.basketTips').tooltip({
-            delay: 200
+            delay: 200,
+            extraClass: 'tooltip_flat'
         });
 
         $('#idFrameC .tabs').tabs({
@@ -558,7 +559,9 @@ const workzone = (services) => {
                     tolerance: 'pointer'
                 });
 
-                $('.noteTips, .captionRolloverTips', dest).tooltip();
+                $('.noteTips, .captionRolloverTips', dest).tooltip({
+                    extraClass: 'tooltip_flat'
+                });
 
                 dest.find('.CHIM').draggable({
                     helper: function () {
