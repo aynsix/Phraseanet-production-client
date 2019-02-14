@@ -99,7 +99,22 @@ $diapoBorderColor: $darkerBorderColor !default;
     vertical-align: middle;
   }
 }
+.icon-stack-wrapper {
+  background: none;
+  float: right;
 
+  .thirty & {
+    height: 30px;
+  }
+
+  .twenty & {
+    height: 20px;
+  }
+
+  .twenty-four & {
+    height: 23px;
+  }
+}
 .diapo.CHIM .thumb_wrapper {
   padding: 6px 0px;
 }
