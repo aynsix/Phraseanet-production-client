@@ -35,7 +35,6 @@ $diapoBorderColor: $darkerBorderColor !default;
   border-radius: $defaultBorderRadius;
   text-align: center;
   margin: 8px 5px;
-
   &.selected {
     cursor: url('#{$iconsPath}cursor-move.png'), -moz-grab;
   }
@@ -43,7 +42,6 @@ $diapoBorderColor: $darkerBorderColor !default;
   .thumb {
     overflow: hidden;
     position: relative;
-
     .record {
       position: relative;
       margin: 0 auto;
@@ -54,7 +52,6 @@ $diapoBorderColor: $darkerBorderColor !default;
     position: absolute;
     bottom: 0;
     z-index: 99;
-
     &.actions {
       /*.action-icon {
         cursor: pointer;
@@ -71,7 +68,6 @@ $diapoBorderColor: $darkerBorderColor !default;
           }
         }
       }
-
       .fa-stack {
         font-size: 11px;
         cursor: pointer;
@@ -81,11 +77,9 @@ $diapoBorderColor: $darkerBorderColor !default;
         //padding: 0;
         //margin: 0;
       }
-
       .fa-stack-2x {
         color: #777777; //darken($darkerBackgroundColor, 10);
       }
-
       .fa-inverse {
         color: $darkerBackgroundColor; //$darkerTextColor;
       }
@@ -103,23 +97,6 @@ $diapoBorderColor: $darkerBorderColor !default;
     background-color: darken($darkerBackgroundColor, 10);
     color: $darkerTextColor;
     vertical-align: middle;
-  }
-}
-
-.icon-stack-wrapper {
-  background: none;
-  float: right;
-
-  .thirty & {
-    height: 30px;
-  }
-
-  .twenty & {
-    height: 20px;
-  }
-
-  .twenty-four & {
-    height: 23px;
   }
 }
 
