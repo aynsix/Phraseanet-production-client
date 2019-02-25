@@ -250,7 +250,8 @@ const workzoneFacets = services => {
                         selectedFacetValues[facet.title].push(facetData);
                                                 
                         appEvents.emit('search.getSelectedFacetValues', selectedFacetValues);
-                        _facetCombinedSearch();
+                        /*_facetCombinedSearch();*/
+                        $('#searchForm').submit();
                     }
                 },
                 collapse: function (event, data) {
@@ -358,7 +359,8 @@ const workzoneFacets = services => {
                                             return (obj.value.label == facetFilter && obj.mode == mode);
                                         });
                                         //delete selectedFacetValues[facetTitle];
-                                        _facetCombinedSearch();
+                                        /*_facetCombinedSearch();*/
+                                        $('#searchForm').submit();
                                         return false;
                                     }
                                 );
@@ -378,7 +380,9 @@ const workzoneFacets = services => {
                                             found.mode = newMode;
                                             //replace class attr
                                             $facet.filter('.' + "facetFilter" + '_' + mode).removeClass("facetFilter" + '_' + mode).addClass("facetFilter" + '_' + newMode).end();
-                                            _facetCombinedSearch();
+                                            /*_facetCombinedSearch();*/
+                                            $('#searchForm').submit();
+
                                         }
                                         return false;
                                     }
@@ -408,7 +412,7 @@ const workzoneFacets = services => {
         return $facetsTree.fancytree('getTree');
     }
 
-    function _facetCombinedSearch() {
+  /*  function _facetCombinedSearch() {
         var q = $('#EDIT_query').val();
         var q_facet_and = "";
         var q_facet_except = "";
@@ -441,10 +445,11 @@ const workzoneFacets = services => {
         appEvents.emit('search.doCheckFilters');
         appEvents.emit('search.doNewSearch', q);
         // searchModule.newSearch(q);
-    }
+    }*/
+
 
     function serializeJSON(data, selectedFacetValues, facets) {
-        
+
         let json = {},
             obj = {},
             bases = [],
@@ -453,35 +458,36 @@ const workzoneFacets = services => {
             aggregates = []
         ;
     
-        $.each(data, function(i, el) {
+        $.each(data, function (i, el) {
             obj[el.name] = el.value;
-    
+
             let col = parseInt(el.value);
     
-            if(el.name === 'bases[]') {
+            if (el.name === 'bases[]') {
                 bases.push(col);
             }
     
-            if(el.name.startsWith('status')) {
+            if (el.name.startsWith('status')) {
                 let databoxId = el.name.match(/\d+/g)[0],
                     databoxRow = el.name.match(/\d+/g)[1],
-                    statusMatch = false
-                ;
+                    statusMatch = false;
                 
-                $.each(statuses, function(i, status) {
+                $.each(statuses, function (i, status) {
                     
-                    if (status.databox === databoxId) {                    
-                        for (let j = 0; j < status.status.length; j++) {
-                            let st = status.status[j].name;
-                            let st_id = st.substr(0, st.indexOf(':'));
+                    if (status.databox === databoxId) {
+                        for (var j = 0; j < status.status.length; j++) {
+                            var st = status.status[j].index;
+                            /*var st_id = st.substr(0, st.indexOf(':'));*/
                             
-                            if (st_id === databoxRow) {
+                            if (st === databoxRow) {
                                 statusMatch = true;                            
                             }
                         }
-                        statuses.splice((databoxId -1), 1);
+                        statuses.splice((databoxId - 1), 1);
                     }
+
                 });
+
                 if (!statusMatch) {
                     statuses.push({
                         'databox': databoxId,
@@ -493,10 +499,56 @@ const workzoneFacets = services => {
                         ]
                     });
                 }
+                /*//  restore the status-bits (for now dual checked status are restored unchecked)
+                if (!_.isUndefined(statuses)) {
+                    $('#ADVSRCH_SB_ZONE INPUT:checkbox').prop('checked', false);
+                    _.each(statuses, function (db_statuses) {
+                        let db = db_statuses.databox;
+                        _.each(db_statuses.status, function (sb) {
+                            let i = sb.index;
+                            let v = sb.value ? '1' : '0';
+                            $("#ADVSRCH_SB_ZONE INPUT[name='status[" + db_statuses.databox + '][' + sb.index + "]'][value=" + v + ']').prop('checked', true);
+                        });
+                    });
+                }*/
             }
         });
-    
-        $('.term_select_field').each(function(i, el) {
+
+        var _tmpStat = [];
+        $('#ADVSRCH_SB_ZONE INPUT[type=checkbox]:checked').each(function (k, o){
+            o = $(o);
+            var b = o.data('sbas_id');
+            var i = o.data('sb');
+            var v = o.val();
+            if (_.isUndefined(_tmpStat[b])) {
+                _tmpStat[b] = [];
+            }
+            if (_.isUndefined(_tmpStat[b][i])) {
+                // first check
+                _tmpStat[b][i] = v;
+            } else {
+                // both checked
+                _tmpStat[b][i] = -1;
+            }
+        });
+        _.each(_tmpStat, function(v, sbas_id){
+            var status = []
+            _.each(v, function(v, sb_index) {
+                if (v !== -1) {     // ignore both checked
+                    status.push({
+                        'index': sb_index,
+                        'value': (v === '1')
+                    });
+                }
+            });
+            statuses.push({
+                'databox': sbas_id,
+                'status': status
+            });
+        });
+
+
+        $('.term_select_field').each(function (i, el) {
             if ($(el).val()) {
                 fields.push({
                     'type': 'TEXT-FIELD',
@@ -508,8 +560,8 @@ const workzoneFacets = services => {
             }
         }); 
         
-        $(facets).each(function(i, el) {
-            
+        $(facets).each(function (i, el) {
+
             let facetFilterTitle = el.label,
                 facetType = el.type,
                 facetField = el.field,
@@ -531,7 +583,7 @@ const workzoneFacets = services => {
                 negated = true;
             }
             
-            _.each(selectedFacetValues[facetFilterTitle], function(facet) {
+            _.each(selectedFacetValues[facetFilterTitle], function (facet) {
                 let query = facet.value.query;
                 for (let i = 0; i < el.values.length; i++) {                        
                     if (el.values[i].query === query) {
@@ -540,7 +592,7 @@ const workzoneFacets = services => {
                     }
                 }
 
-                if(facetQuery === query) {                    
+                if (facetQuery === query) {
                     aggregates.push({
                         'type': facetType,
                         'field': facetField,
@@ -551,20 +603,23 @@ const workzoneFacets = services => {
                 }
             });
         });
-        
+        var date_field = $('#ADVSRCH_DATE_ZONE select[name=date_field]', 'form.phrasea_query .adv_options').val();
+        var date_from  = $('#ADVSRCH_DATE_ZONE input[name=date_min]', 'form.phrasea_query .adv_options').val();
+        var date_to    = $('#ADVSRCH_DATE_ZONE input[name=date_max]', 'form.phrasea_query .adv_options').val();
+
         json['sort'] = {
             'field': obj.sort,
             'order': obj.ord
         };
         json['perpage'] = parseInt($('#nperpage_value').val());
-        json['page'] = obj.pag === "" ? 1 : parseInt(obj.pag);
-        json['use_truncation'] = obj.truncation === "on" ? true : false;
+        json['page'] = obj.pag === '' ? 1 : parseInt(obj.pag);
+        json['use_truncation'] = obj.truncation === 'on' ? true : false;
         json['phrasea_recordtype'] = obj.search_type === 0 ? 'RECORD' : 'STORY';
         json['phrasea_mediatype'] = obj.record_type.toUpperCase();
         json['bases'] = bases;
         json['statuses'] = statuses;
         json['query'] = {
-            '_ux_zone': $('.menu-bar .selectd').text().toUpperCase(),
+            '_ux_zone': $('.menu-bar .selectd').text().trim().toUpperCase(),
             'type': 'CLAUSES',
             'must_match': 'ALL',
             'enabled': true,
@@ -573,7 +628,7 @@ const workzoneFacets = services => {
                     '_ux_zone': 'FULLTEXT',
                     'type': 'FULLTEXT',
                     'value': obj.fake_qry,
-                    'enabled': true
+                    'enabled': obj.fake_qry !== ''
                 },
                 {
                     '_ux_zone': 'FIELDS',
@@ -583,26 +638,106 @@ const workzoneFacets = services => {
                     'clauses': fields
                 },
                 {
-                    "type": "DATE-FIELD",
-                    "field": $('#ADVSRCH_DATE_ZONE select', 'form.phrasea_query .adv_options').val(),
-                    "from": $('#ADVSRCH_DATE_ZONE input[name=date_min]', 'form.phrasea_query .adv_options').val(),
-                    "to": $('#ADVSRCH_DATE_ZONE input[name=date_max]', 'form.phrasea_query .adv_options').val(),
+                    'type': 'DATE-FIELD',
+                    'field': date_field,
+                    'from': date_from,
+                    'to': date_to,
                     "enabled": true
                 },
                 {
-                    "_ux_zone": "AGGREGATES",
-                    "type": "CLAUSES",
-                    "must_match": "ALL",
-                    "enabled": true,
-                    "clauses": aggregates
+                    '_ux_zone': 'AGGREGATES',
+                    'type': 'CLAUSES',
+                    'must_match': 'ALL',
+                    'enabled': true,
+                    'clauses': aggregates
                 }
             ]
-        }
-        
-        // console.log(json);
-        // console.log(buildQ(json.query));
+        };
         
         return JSON.stringify(json);
+    }
+    var _ALL_Clause_ = '(created_on>1900/01/01)';
+    function buildQ(clause) {
+        if (clause.enabled === false) {
+            return '';
+        }
+        switch (clause.type) {
+            case 'CLAUSES':
+                var t_pos = [];
+                var t_neg = [];
+                for (var i = 0; i < clause.clauses.length; i++) {
+                    var _clause = clause.clauses[i];
+                    var _sub_q = buildQ(_clause);
+                    if (_sub_q !== '()' && _sub_q !== '') {
+                        if (_clause.negated === true) {
+                            t_neg.push(_sub_q);
+                        } else {
+                            t_pos.push(_sub_q);
+                        }
+                    }
+                }
+                if (t_pos.length > 0) {
+                    // some "yes" clauses
+                    if (t_neg.length > 0) {
+                        // some "yes" and and some "neg" clauses
+                        if (clause.must_match === 'ONE') {
+                            // some "yes" and and some "neg" clauses, one is enough to match
+                            var neg = '(' + _ALL_Clause_ + ' EXCEPT (' + t_neg.join(' OR ') + '))';
+                            t_pos.push(neg);
+                            return '(' + t_pos.join(' OR ') + ')';
+                        } else {
+                            // some "yes" and and some "neg" clauses, all must match
+                            return '((' + t_pos.join(' AND ') + ') EXCEPT (' + t_neg.join(' OR ') + '))';
+                        }
+                    } else {
+                        // only "yes" clauses
+                        return '(' + t_pos.join(clause.must_match === 'ONE' ? ' OR ' : ' AND ') + ')';
+                    }
+                } else {
+                    // no "yes" clauses
+                    if (t_neg.length > 0) {
+                        // only "neg" clauses
+                        return '(' + _ALL_Clause_ + ' EXCEPT (' + t_neg.join(clause.must_match === 'ONE' ? ' OR ' : ' AND ') + '))';
+                    } else {
+                        // no clauses at all
+                        return '';
+                    }
+                }
+            case 'FULLTEXT':
+                return clause.value ? ('(' + clause.value + ')') : '';
+
+            case 'DATE-FIELD':
+                var t = '';
+                if (clause.from) {
+                    t = clause.field + '>=' + clause.from;
+                }
+                if (clause.to) {
+                    t += (t ? ' AND ' : '') + clause.field + '<=' + clause.to;
+                }
+                return t ? ('(' + t + ')') : '';
+
+            case 'TEXT-FIELD':
+                return clause.field + clause.operator + '\'' + clause.value + '\'';
+
+            case 'GEO-DISTANCE':
+                return clause.field + '=\'' + clause.lat + ' ' + clause.lon + ' ' + clause.distance + '\'';
+
+            case 'STRING-AGGREGATE':
+                return clause.field + ':\'' + clause.value + '\'';
+
+            case 'COLOR-AGGREGATE':
+                return clause.field + ':\'' + clause.value + '\'';
+
+            case 'NUMBER-AGGREGATE':
+                return clause.field + '=' + clause.value;
+
+            case 'BOOL-AGGREGATE':
+                return clause.field + '=' + (clause.value ? '1' : '0');
+
+            default :
+                console.error('Unknown clause type \'' + clause.type + '\'');
+                return null;
+        }
     }
 
     appEvents.listenAll({
@@ -613,7 +748,8 @@ const workzoneFacets = services => {
     return {
         loadFacets,
         serializeJSON,
-        resetSelectedFacets
+        resetSelectedFacets,
+        buildQ
     };
 };
 

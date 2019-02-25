@@ -50,25 +50,23 @@ const searchAdvancedForm = (services) => {
             const $this = $(event.currentTarget);
     
             // if option is selected
-            if($this.val()) {
+            if ($this.val()) {
                 $this.siblings().prop('disabled', false);
     
                 $('.term_select_multiple option').each((index, el) => {
                     let $el = $(el);
-                    if($this.val() === $el.val()) {
+                    if ($this.val() === $el.val()) {
                         $el.prop('selected', true);
-                    }
-                    else if (previousVal === $el.val()) {
+                    } else if (previousVal === $el.val()) {
                         $el.prop('selected', false);
                     }
                 });
-            }
-            else {
+            } else {
                 $this.siblings().prop('disabled', 'disabled');
     
                 $('.term_select_multiple option').each((index, el) => {
                     let $el = $(el);
-                    if(previousVal === $el.val()) {
+                    if (previousVal === $el.val()) {
                         $el.prop('selected', false);
                     }
                 });
@@ -195,8 +193,8 @@ const searchAdvancedForm = (services) => {
         $('option.dbx', dateFilterSelect).hide().prop('disabled', true);   // dbx = all "field" entries in the select = all except the firstt
 
         statusFilters.removeClass('danger');
-        $.each($('#ADVSRCH_SB_ZONE .field_switch'), function(index,el){
-            if( $(el).prop('checked') === true ) {
+        $.each($('#ADVSRCH_SB_ZONE .field_switch'), function (index, el) {
+            if ($(el).prop('checked') === true) {
                 danger = true;
                 statusFilters.addClass('danger');
             }
@@ -252,7 +250,7 @@ const searchAdvancedForm = (services) => {
                 $('.db_' + sbas_id, fieldsSort).show().prop('disabled', false);
                 // show again the relevant fields in "from fields" select
                 $('.db_' + sbas_id, fieldsSelect).show().prop('disabled', false);
-                $('.db_' + sbas_id, fieldsSelectFake).show().prop("disabled", false);
+                $('.db_' + sbas_id, fieldsSelectFake).show().prop('disabled', false);
                 // show the sb
                 $('#ADVSRCH_SB_ZONE_' + sbas_id, container).show();
                 // show again the relevant fields in "date field" select
@@ -313,13 +311,18 @@ const searchAdvancedForm = (services) => {
         const availableDb = search.bases;
         for (let sbas_id in availableDb) {
 
-            var nchecked = 0;
-            $('#ADVSRCH_SB_ZONE_' + sbas_id + ' :checkbox[checked]', container).each(function () {
-                var n = $(this).attr('n');
-                search.status[n] = $(this).val().split('_');
-                nchecked++;
+            var n_checked = 0;
+            var n_unchecked = 0;
+            $('#ADVSRCH_SB_ZONE_' + sbas_id + ' :checkbox', container).each(function (k, o) {
+                var n = $(this).data('sb');
+                if ($(o).attr('checked')) {
+                    search.status[n] = $(this).val().split('_');
+                    n_checked++;
+                } else {
+                    n_unchecked++;
+                }
             });
-            if (nchecked === 0) {
+            if (n_checked !== 0) {
                 $('#ADVSRCH_SB_ZONE_' + sbas_id, container).removeClass('danger');
             } else {
                 $('#ADVSRCH_SB_ZONE_' + sbas_id, container).addClass('danger');
@@ -349,9 +352,11 @@ const searchAdvancedForm = (services) => {
 
         fieldsSelect.scrollTop(scroll);
 
+
         // if one filter shows danger, show it on the query
-        if (danger) {
-            $('#EDIT_query').addClass('danger');
+       /* if (danger) {*/
+        if ($('#ADVSRCH_DATE_ZONE', adv_box).hasClass('danger') || $('#ADVSRCH_SB_ZONE .danger_indicator', adv_box).hasClass('danger') || $('#ADVSRCH_FIELDS_ZONE', adv_box).hasClass('danger') || $('#ADVSRCH_SBAS_ZONE', adv_box).hasClass('danger')) {
+                $('#EDIT_query').addClass('danger');
         } else {
             $('#EDIT_query').removeClass('danger');
         }

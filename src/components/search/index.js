@@ -115,15 +115,15 @@ const search = services => {
         searchResult.selection.empty();
 
         clearAnswers();
-        $('#SENT_query').val(query);
-        /*var histo = $('#history-queries ul');
-
-         histo.prepend('<li onclick="prodModule.doSpecialSearch(\'' + query.replace(/\'/g, "\\'") + '\')">' + query + '</li>');
-
-         var lis = $('li', histo);
-         if (lis.length > 25) {
-         $('li:last', histo).remove();
-         }*/
+        //$('#SENT_query').val(query);
+        if (query !== null) {
+            var histo = $('#history-queries ul');
+            histo.prepend('<li onclick="doSpecialSearch(\'' + query.replace(/\'/g, "\\'") + '\')">' + query + '</li>');
+            var lis = $('li', histo);
+            if (lis.length > 25) {
+                $('li:last', histo).remove();
+            }
+        }
 
         $('#idFrameC li.proposals_WZ').removeClass('active');
         appEvents.emit('search.doRefreshState');
@@ -145,13 +145,24 @@ const search = services => {
         let data = $searchForm.serializeArray();
         
         var jsonData = workzoneFacets(services).serializeJSON(data, selectedFacetValues, facets);
+        jsonData = JSON.parse(jsonData);
+        var qry = workzoneFacets(services).buildQ(jsonData.query);
+
+        data.push({
+                name: 'jsQuery',
+                value: JSON.stringify(jsonData)
+            },
+            {
+                name: 'qry',
+                value: qry
+            });
         console.log(jsonData);
 
         let searchPromise = {};
         searchPromise = $.ajax({
             type: 'POST',
             url: `${url}prod/query/`,
-            data: jsonData,
+            data: data,
             dataType: 'json',
             beforeSend: function (formData) {
                 if (answAjaxrunning && searchPromise.abort !== undefined) {
@@ -178,7 +189,7 @@ const search = services => {
                 });
 
                 //load last result collected or [] if length == 0
-                if (datas.facets.length == 0) {
+                if (datas.facets.length > 0) {
                     appEvents.emit('facets.doLoadFacets', {
                         facets: lastFilterResults,
                         filterFacet: $('#look_box_settings input[name=filter_facet]').prop('checked'),
@@ -207,7 +218,6 @@ const search = services => {
                     datas.infos,
                     searchResult.selection.length()
                 );
-
                 $('#tool_navigate').empty().append(datas.navigationTpl);
 
                 // @TODO refactor
@@ -261,9 +271,9 @@ const search = services => {
                 $hiddenFacetsContainer.append($html);
 
                 $('.remove-btn').on('click', function () {
-                    let name = $(this).parent().data("name");
+                    let name = $(this).parent().data('name');
                     savedHiddenFacetsList = _.reject(savedHiddenFacetsList, function (obj) {
-                        return (obj.name == name);
+                        return (obj.name === name);
                     });
                     $(this).parent().remove();
                     appEvents.emit('search.saveHiddenFacetsList', savedHiddenFacetsList);
