@@ -553,7 +553,7 @@ const workzoneFacets = services => {
                 fields.push({
                     'type': 'TEXT-FIELD',
                     'field': 'field.' + $(el).val(),
-                    'operator': $(el).next().val() === 'contains' ? ":" : "=",
+                    'operator': $(el).next().val() === ':' ? ":" : "=",
                     'value': $(el).next().next().val(),
                     "enabled": true
                 });

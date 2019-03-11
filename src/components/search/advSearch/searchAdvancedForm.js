@@ -7,6 +7,25 @@ const searchAdvancedForm = (services) => {
     const {configService, localeService, appEvents} = services;
     const url = configService.get('baseUrl');
     let $container = null;
+    /**
+     * add "field" zone on advsearch
+     *
+     * @returns {jQuery|HTMLElement}
+     * @constructor
+     */
+    function AdvSearchAddNewTerm() {
+        var block_template = $('#ADVSRCH_FIELDS_ZONE DIV.term_select_wrapper_template');
+        var last_block = $('#ADVSRCH_FIELDS_ZONE DIV.term_select_wrapper:last');
+        if (last_block.length === 0) {
+            last_block = block_template;
+        }
+        last_block = block_template.clone(true).insertAfter(last_block); // true: clone event handlers
+        last_block.removeClass('term_select_wrapper_template').addClass('term_select_wrapper').show();
+        last_block.css('background-color', '');
+
+        return last_block;
+    }
+
     const initialize = (options) => {
         let initWith = {$container} = options;
         let previousVal;
@@ -78,26 +97,13 @@ const searchAdvancedForm = (services) => {
         $(document).on('click', '.term_deleter', (event) => {
             event.preventDefault();
             let $this = $(event.currentTarget);
-            let rowOption = $this.siblings('.term_select_field');
-            
-            $('.term_select_multiple option').each((index, el) => {
-                let $el = $(el);
-                if(rowOption.val() == $el.val()) {
-                    $el.prop('selected', false);
-                }
-            });
-            checkFilters(true);
             $this.closest('.term_select_wrapper').remove();
+            checkFilters(true);
         });
 
         $('.add_new_term').on('click', (event) => {
             event.preventDefault();
-            if ($('select.term_select_field').length === 0) {
-                $('.term_select').prepend('<div class="term_select_wrapper">' + multi_term_select_html + '</div>');
-            }
-            else if ($('select.term_select_field').last().val() !== '') {
-                $('.term_select_wrapper').last().after('<div class="term_select_wrapper">' + multi_term_select_html + '</div>');
-            }
+            AdvSearchAddNewTerm(1);
         });
 
         // @TODO - check if usefull
@@ -178,6 +184,7 @@ const searchAdvancedForm = (services) => {
         var fieldsSortOrd = $('#ADVSRCH_SORT_ZONE select[name=ord]', container);
         var fieldsSelect = $('#ADVSRCH_FIELDS_ZONE select.term_select_multiple', container);
         var fieldsSelectFake = $('#ADVSRCH_FIELDS_ZONE select.term_select_field', container);
+        var statusField = $('#ADVSRCH_FIELDS_ZONE .danger_indicator', container);
         var statusFilters = $('#ADVSRCH_SB_ZONE .status-section-title .danger_indicator', container);
         var dateFilterSelect = $('#ADVSRCH_DATE_ZONE select', container);
         var scroll = fieldsSelect.scrollTop();
@@ -187,7 +194,7 @@ const searchAdvancedForm = (services) => {
 
         // hide all the fields in the "fields" select, so only the relevant ones will be shown again
         $('option.dbx', fieldsSelect).hide().prop('disabled', true);     // option[0] is "all fields"
-        $("option.dbx", fieldsSelectFake).hide().prop("disabled", true);
+        $('option.dbx', fieldsSelectFake).hide().prop('disabled', true);
 
         // hide all the fields in the "date field" select, so only the relevant ones will be shown again
         $('option.dbx', dateFilterSelect).hide().prop('disabled', true);   // dbx = all "field" entries in the select = all except the firstt
@@ -199,8 +206,33 @@ const searchAdvancedForm = (services) => {
                 statusFilters.addClass('danger');
             }
         });
-
+        // enable also the select if the first option ("choose:") was selected
+        statusField.removeClass('danger');
+        fieldsSelectFake.each(function (e) {
+            var $this = $(this);
+            if ($this.val() !== '') {
+                danger = true;
+                statusField.addClass('danger');
+            }
+        });
         var nbTotalSelectedColls = 0;
+        // if one coll is not checked, show danger for ADVSRCH_SBAS_ZONE
+        $('#ADVSRCH_SBAS_ZONE').each(function () {
+            var $this = (0, $)(this);
+            var nbSelectedColls = 0;
+            $this.find('.checkbas').each(function (idx, el) {
+                if ($(this).prop('checked') === false) {
+                    nbSelectedColls++;
+                }
+            });
+            if (nbSelectedColls > 0) {
+                $('#ADVSRCH_SBAS_ZONE').addClass('danger');
+                danger = true;
+            } else {
+                $('#ADVSRCH_SBAS_ZONE').removeClass('danger');
+
+            }
+        });
         $.each($('.sbascont', adv_box), function () {
             var $this = $(this);
 
@@ -219,23 +251,23 @@ const searchAdvancedForm = (services) => {
             });
 
             // display the number of selected colls for the databox
-            if (nbSelectedColls == nbCols) {
+            if (nbSelectedColls === nbCols) {
                 $('.infos_sbas_' + sbas_id).empty().append(nbCols);
-                $(this).siblings(".clksbas").removeClass("danger");
-                $(this).siblings(".clksbas").find(".custom_checkbox_label input").prop("checked", "checked");
-            }
-            else {
+                $(this).siblings('.clksbas').removeClass('danger');
+                $(this).siblings('.clksbas').find('.custom_checkbox_label input').prop('checked', 'checked');
+            } else {
                 $('.infos_sbas_' + sbas_id).empty().append('<span style="color:#2096F3;font-size: 20px;">' + nbSelectedColls + '</span> / ' + nbCols);
-                $(this).siblings(".clksbas").addClass("danger");
+                $(this).siblings('.clksbas').addClass('danger');
+                danger = true;
             }
 
             // if one coll is not checked, show danger
             if (nbSelectedColls !== nbCols) {
                 $('#ADVSRCH_SBAS_ZONE').addClass('danger');
                 danger = true;
-            } 
-            else if (nbSelectedColls === nbCols && danger === false) {
+            } else if (nbSelectedColls === nbCols && danger === false) {
                 $('#ADVSRCH_SBAS_ZONE').removeClass('danger');
+
             }
 
             if (nbSelectedColls === 0) {
@@ -295,15 +327,6 @@ const searchAdvancedForm = (services) => {
             }
         );
 
-        // here only the relevant fields are selected
-        search.fields = fieldsSelect.val();
-        if (search.fields === null || search.fields.length === 0) {
-            $('#ADVSRCH_FIELDS_ZONE', container).removeClass('danger');
-            search.fields = [];
-        } else {
-            $('#ADVSRCH_FIELDS_ZONE', container).addClass('danger');
-            danger = true;
-        }
 
         // --------- status bits filter ---------
 
