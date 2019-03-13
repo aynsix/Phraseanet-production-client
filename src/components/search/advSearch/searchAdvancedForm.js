@@ -58,6 +58,9 @@ const searchAdvancedForm = (services) => {
             checkFilters(shouldSave);
         });
 
+        $('.field_switch').on('change', function (event) {
+            checkFilters(true);
+        });
         $container.on('click', '.search-reset-action', () => {
             resetSearch();
         });
@@ -345,7 +348,7 @@ const searchAdvancedForm = (services) => {
                     n_unchecked++;
                 }
             });
-            if (n_checked !== 0) {
+            if (n_checked === 0) {
                 $('#ADVSRCH_SB_ZONE_' + sbas_id, container).removeClass('danger');
             } else {
                 $('#ADVSRCH_SB_ZONE_' + sbas_id, container).addClass('danger');
