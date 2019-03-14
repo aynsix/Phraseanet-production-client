@@ -143,7 +143,23 @@ const search = services => {
         });
 
         let data = $searchForm.serializeArray();
-        
+        // fix bug : if a sb is dual checked, both values are sent with the SAME name
+        //     we can remove those since it means we don't care about this sb
+        var sb = [];
+        _.each(data, function (v) {
+            var name = v.name;
+            if (name.substr(0, 7) === 'status[') {
+                if (_.isUndefined(sb[name])) {
+                    sb[name] = 0;
+                }
+                sb[name]++;
+            }
+        });
+        data = _.filter(data, function (e) {
+            return _.isUndefined(sb[e.name]) || sb[e.name] === 1;
+        });
+        // end of sb fix
+
         var jsonData = workzoneFacets(services).serializeJSON(data, selectedFacetValues, facets);
         jsonData = JSON.parse(jsonData);
         var qry = workzoneFacets(services).buildQ(jsonData.query);

@@ -446,7 +446,30 @@ const workzoneFacets = services => {
         appEvents.emit('search.doNewSearch', q);
         // searchModule.newSearch(q);
     }*/
-
+    /**
+     * restore the advansearch ux from a json-query
+     * elements are restored thank's to custom properties ("_xxx") included in json.
+     * nb : for now, _ux_ facets can't be restored _before_sending_the_query_,
+     *      but since "selectedFacets" (js) IS restored, sending the query WILL restore facets.
+     *
+     * @param jsq
+     * @param submit
+     */
+    function restoreJsonQuery(jsq, submit) {
+        var clause;
+        // restore the status-bits (for now dual checked status are restored unchecked)
+        if (!_.isUndefined(jsq.statuses)) {
+            $('#ADVSRCH_SB_ZONE INPUT:checkbox').prop('checked', false);
+            _.each(jsq.statuses, function (db_statuses) {
+                let db = db_statuses.databox;
+                _.each(db_statuses.status, function (sb) {
+                    let i = sb.index;
+                    let v = sb.value ? '1' : '0';
+                    $("#ADVSRCH_SB_ZONE INPUT[name='status[" + db_statuses.databox + '][' + sb.index + "]'][value=" + v + ']').prop('checked', true);
+                });
+            });
+        }
+    }
 
     function serializeJSON(data, selectedFacetValues, facets) {
 
@@ -475,14 +498,14 @@ const workzoneFacets = services => {
                 $.each(statuses, function (i, status) {
                     
                     if (status.databox === databoxId) {
-                        for (var j = 0; j < status.status.length; j++) {
-                            var st = status.status[j].index;
-                            /*var st_id = st.substr(0, st.indexOf(':'));*/
-                            
-                            if (st === databoxRow) {
-                                statusMatch = true;                            
-                            }
-                        }
+                        // for (var j = 0; j < status.status.length; j++) {
+                        //     var st = status.status[j].name;
+                        //     var st_id = st.substr(0, st.indexOf(':'));
+                        //
+                        //     if (st_id === databoxRow) {
+                        //         statusMatch = true;
+                        //     }
+                        // }
                         statuses.splice((databoxId - 1), 1);
                     }
 
