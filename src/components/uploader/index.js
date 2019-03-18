@@ -178,6 +178,47 @@ const uploader = (services) => {
             domEl.html(parseInt(domEl.html(), 10) - 1);
         });
 
+        // add a url
+        $('button.add-url', uploaderInstance.getContainer()).bind('click', function(e) {
+            e.preventDefault();
+            var url = $('#add-url', uploaderInstance.getContainer()).val();
+
+            $('.upload-box').show();
+
+            // perform a "head" request on the url (via php proxy) to get mime and size
+            var distantfileInfos = {
+                'content-type': '?',
+                'content-length': '?'
+            };
+            $.get(
+                'upload/head/',
+                {
+                    'url': url
+                }
+            ).done(
+                function(data) {
+                    distantfileInfos = data;
+                }
+            ).always(
+                function() {
+                    var fileContent = JSON.stringify( {'url' : url} , null, 2);     // the content of the "micro json file" that will be uploaded
+                    var blob = new Blob(
+                        [ fileContent ],
+                        {
+                            type: 'application/json'
+                        }
+                    );
+                    $('#fileupload', uploaderInstance.getContainer()).fileupload(
+                        'add',
+                        {
+                            'files': blob,                      // files is an array with 1 element
+                            'fileInfos': [ distantfileInfos ]   // ... so we do the same with our custom data
+                        }
+                    );
+                }
+            );
+        });
+
         // Remove all element from upload box
         $('button.clear-queue', uploaderInstance.getContainer()).bind('click', function () {
             uploaderInstance.clearUploadBox();
@@ -235,6 +276,7 @@ const uploader = (services) => {
 
                 documents.each(function (index, el) {
                     let indexValue = $(el).find('input[name=uploadIndex]').val();
+                    var data = uploaderInstance.getData(indexValue);
                     uploaderInstance.getData(indexValue).submit();
                 });
             }
@@ -262,13 +304,13 @@ const uploader = (services) => {
             },
             // Set singleFileUploads, sequentialUploads to true so the files
             // are upload one by one
-            singleFileUploads: true,
+            singleFileUploads: true,        // There will be ONE AND ONLY ONE file into data.files
             sequentialUploads: true,
             recalculateProgress: true,
             // When a file is added
             add: function (e, data) {
                 // Since singleFileUploads &  sequentialUploads are setted to true
-                // There is only on file data.files
+                // There is ONE AND ONLY ONE file into data.files
                 $.each(data.files, function (index, file) {
                     $('.upload-box').show();
                     let params = {};
@@ -294,6 +336,14 @@ const uploader = (services) => {
                             uploadIndex: uploaderInstance.getUploadIndex()
                         };
 
+                        // if the "file" is a blob (tiny json with url to a distant file),
+                        //   we can find infos of distant file into data, and fix html
+                        if(typeof(data.fileInfos) !== 'undefined') {
+                            formatedFile.size = uploaderInstance.Formater.size(data.fileInfos[index]['content-length']);
+                            formatedFile.name = data.fileInfos[index]['basename'];
+                            formatedFile.type = data.fileInfos[index]['content-type'];
+                        }
+
                         // Set context in upload-box
                         html = _.template($('#upload_items_tpl').html())(formatedFile);
                         uploaderInstance.getUploadBox().append(html);
@@ -314,6 +364,11 @@ const uploader = (services) => {
 
                 uploaderInstance.getContainer().trigger('file-added');
             },
+
+            submit: function(e, data) {
+                return false;
+            },
+
             // on success upload
             done: function (e, data) {
                 // set progress bar to 100% for preventing mozilla bug which never reach 100%
@@ -343,6 +398,7 @@ const uploader = (services) => {
 
                 return false;
             },
+
             fail: function () {
                 // disabled cancel-all button, if queue is empty and last upload fail
                 if (uploaderInstance.Queue.isEmpty()) {
@@ -374,6 +430,13 @@ const uploader = (services) => {
             // Set new context in download-box
             $.each(data.files, function (index, file) {
                 let params = $.extend({}, file, {id: 'file-' + index, name: encodeURI(file.name)});
+
+                // if the "file" is a blob (tiny json with url to a distant file),
+                //   we can find infos of distant file into data, and fix html
+                if (typeof (data.fileInfos) !== 'undefined') {
+                    params.name = data.fileInfos[index]['basename'];
+                }
+
                 let html = _.template($('#download_items_tpl').html())(params);
 
                 uploaderInstance.getDownloadBox().append(html);
