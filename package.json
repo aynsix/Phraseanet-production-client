@@ -28,6 +28,7 @@
     "package:upgrade": "./node_modules/.bin/ncu -u",
     "package:prod": "./node_modules/.bin/ncu -u",
     "package:dev": "./node_modules/.bin/ncu -p -u",
+    "prepare": "npm run dist",
     "asset-server": "node config/webpack/webpack.hot.assets.config",
     "publish-patch": "git add -A && npm run dist && git commit && git push -u origin 4.1 && git push --tags && npm version patch && npm publish",
     "publish-minor": "git add -A && npm run dist && git commit && git push -u origin 4.1 && git push --tags && npm version minor && npm publish",
