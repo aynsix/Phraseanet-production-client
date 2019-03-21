@@ -601,9 +601,11 @@ const workzoneFacets = services => {
                     nodeEl = $(node).find('[class^="facetFilter_"]');
                 }
             });
-    
-            if (nodeEl.is('[class$="_EXCEPT"]')) {
-                negated = true;
+
+            if (nodeEl !== undefined) {
+                if (nodeEl.is('[class$="_EXCEPT"]')) {
+                    negated = true;
+                }
             }
             
             _.each(selectedFacetValues[facetFilterTitle], function (facet) {
