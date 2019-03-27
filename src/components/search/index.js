@@ -273,6 +273,28 @@ const search = services => {
                 afterSearch();
             }
         });
+        // if defined, play the first query
+        //
+        try {
+            var jsq = $("#FIRST_QUERY_CONTAINER");
+            if(jsq.length > 0) {
+                // there is a query to play
+                if(jsq.data('format') === "json") {
+                    // json
+                    jsq = JSON.parse(jsq.text());
+                    workzoneFacets(services).restoreJsonQuery(jsq, true);
+                }
+                else {
+                    // text : do it the old way : restore only fulltext and submit
+                    searchForm.trigger('submit');
+                }
+            }
+        }
+        catch (e) {
+            // malformed jsonquery ?
+            // no-op
+        }
+
     };
 
     const updateHiddenFacetsListInPrefsScreen = () => {

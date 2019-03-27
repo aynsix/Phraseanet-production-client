@@ -446,6 +446,39 @@ const workzoneFacets = services => {
         appEvents.emit('search.doNewSearch', q);
         // searchModule.newSearch(q);
     }*/
+
+    function findClauseBy_ux_zone(clause, ux_zone) {
+        console.log('find clause' + ux_zone);
+        if(typeof clause._ux_zone != 'undefined' && clause._ux_zone === ux_zone) {
+            return clause;
+        }
+        if(clause.type === "CLAUSES") {
+            for(var i=0; i<clause.clauses.length; i++) {
+                var r = findClauseBy_ux_zone(clause.clauses[i], ux_zone);
+                if(r != null) {
+                    return r;
+                }
+            }
+        }
+        return null;
+    }
+    /**
+     * add "field" zone on advsearch
+     *
+     * @returns {jQuery|HTMLElement}
+     * @constructor
+     */
+    function AdvSearchFacetAddNewTerm() {
+        var block_template = (0, _jquery2.default)('#ADVSRCH_FIELDS_ZONE DIV.term_select_wrapper_template');
+        var last_block = (0, _jquery2.default)('#ADVSRCH_FIELDS_ZONE DIV.term_select_wrapper:last');
+        if (last_block.length === 0) {
+            last_block = block_template;
+        }
+        last_block = block_template.clone(true).insertAfter(last_block); // true: clone event handlers
+        last_block.removeClass('term_select_wrapper_template').addClass('term_select_wrapper').show();
+        last_block.css('background-color', '');
+        return last_block;
+    }
     /**
      * restore the advansearch ux from a json-query
      * elements are restored thank's to custom properties ("_xxx") included in json.
@@ -457,6 +490,12 @@ const workzoneFacets = services => {
      */
     function restoreJsonQuery(jsq, submit) {
         var clause;
+
+        // restore the "fulltext" input-text
+        clause = findClauseBy_ux_zone(jsq.query, "FULLTEXT");
+        if(clause) {
+            $('#EDIT_query').val(clause.value);
+        }
         // restore the status-bits (for now dual checked status are restored unchecked)
         if (!_.isUndefined(jsq.statuses)) {
             $('#ADVSRCH_SB_ZONE INPUT:checkbox').prop('checked', false);
@@ -468,6 +507,79 @@ const workzoneFacets = services => {
                     $("#ADVSRCH_SB_ZONE INPUT[name='status[" + db_statuses.databox + '][' + sb.index + "]'][value=" + v + ']').prop('checked', true);
                 });
             });
+        }
+
+        // restore the "records/stories" radios
+        if(!_.isUndefined(jsq.phrasea_recordtype)) {
+            $('#searchForm INPUT[name=search_type][value="' + ((jsq.phrasea_recordtype == 'STORY') ? '1' : '0') + '"]').prop('checked', true);  // check one radio will uncheck siblings
+        }
+
+        // restore the "record type" menu (image, video, audio, ...)
+        if(!_.isUndefined(jsq.phrasea_mediatype)) {
+            $('#searchForm SELECT[name=record_type] OPTION[value="' + jsq.phrasea_mediatype.toLowerCase() + '"]').prop('selected', true);
+        }
+
+        // restore the "use truncation" checkbox
+        if(!_.isUndefined(jsq.phrasea_mediatype)) {
+            $('#ADVSRCH_USE_TRUNCATION').prop('checked', jsq.phrasea_mediatype);
+        }
+
+        // restore the "sort results" menus
+        if(!_.isUndefined(jsq.sort)) {
+            if(!_.isUndefined(jsq.sort.field)) {
+                $('#ADVSRCH_SORT_ZONE SELECT[name=sort] OPTION[value="' + jsq.sort.field + '"]').prop('selected', true);
+            }
+            if(!_.isUndefined(jsq.sort.order)) {
+                $('#ADVSRCH_SORT_ZONE SELECT[name=ord] OPTION[value="' + jsq.sort.order + '"]').prop('selected', true);
+            }
+        }
+
+
+        // restore the multiples "fields" (field-menu + op-menu + value-input)
+        clause = findClauseBy_ux_zone(jsq.query, "FIELDS");
+        if (clause) {
+            $('#ADVSRCH_FIELDS_ZONE INPUT[name=must_match][value="' + clause.must_match + '"]').attr('checked', true);
+            $('#ADVSRCH_FIELDS_ZONE DIV.term_select_wrapper').remove();
+            for (var j = 0; j < clause.clauses.length; j++) {
+                var wrapper = appEvents.emit('search.doCheckFilters'); AdvSearchFacetAddNewTerm();    // div.term_select_wrapper
+                var f = $(".term_select_field", wrapper);
+                var o = $(".term_select_op", wrapper);
+                var v = $(".term_select_value", wrapper);
+
+                f.data('fieldtype', clause.clauses[j].type);
+                $('option[value="' + clause.clauses[j].field + '"]', f).prop('selected', true);
+                $('option[value="' + clause.clauses[j].operator + '"]', o).prop('selected', true);
+                v.val(clause.clauses[j].value);
+            }
+            /*if (j === 0) {
+                // if no field, add an empty one to ux
+                searchAdvancedForm(services).AdvSearchAddNewTerm();
+            }*/
+        }
+
+        // restore the "date field" (field-menu + from + to)
+        clause = findClauseBy_ux_zone(jsq.query, "DATE-FIELD");
+        if(clause) {
+            $("#ADVSRCH_DATE_ZONE SELECT[name=date_field] option[value='" + clause.field + "']").prop('selected', true);
+            $("#ADVSRCH_DATE_ZONE INPUT[name=date_min]").val(clause.from);
+            $("#ADVSRCH_DATE_ZONE INPUT[name=date_max]").val(clause.to);
+            if ($("#ADVSRCH_DATE_ZONE SELECT[name=date_field]").val() !== '' ) {
+                $("#ADVSRCH_DATE_SELECTORS").show();
+               // $('#ADVSRCH_DATE_ZONE').addClass('danger');
+            }
+        }
+
+        // restore the selected facets (whole saved as custom property)
+        if(!_.isUndefined(jsq._selectedFacets)) {
+            selectedFacetValues = jsq._selectedFacets;
+        }
+
+        // the ux is restored, finish the job (hide unavailable fields/status etc, display "danger" where needed)
+        appEvents.emit('search.doCheckFilters');
+        // loadFacets([]);  // useless, facets will be restored after the query is sent
+
+        if (submit) {
+            $('#searchForm').submit();
         }
     }
 
@@ -522,18 +634,6 @@ const workzoneFacets = services => {
                         ]
                     });
                 }
-                /*//  restore the status-bits (for now dual checked status are restored unchecked)
-                if (!_.isUndefined(statuses)) {
-                    $('#ADVSRCH_SB_ZONE INPUT:checkbox').prop('checked', false);
-                    _.each(statuses, function (db_statuses) {
-                        let db = db_statuses.databox;
-                        _.each(db_statuses.status, function (sb) {
-                            let i = sb.index;
-                            let v = sb.value ? '1' : '0';
-                            $("#ADVSRCH_SB_ZONE INPUT[name='status[" + db_statuses.databox + '][' + sb.index + "]'][value=" + v + ']').prop('checked', true);
-                        });
-                    });
-                }*/
             }
         });
 
@@ -575,7 +675,7 @@ const workzoneFacets = services => {
             if ($(el).val()) {
                 fields.push({
                     'type': 'TEXT-FIELD',
-                    'field': 'field.' + $(el).val(),
+                    'field': $(el).val(),
                     'operator': $(el).next().val() === ':' ? ":" : "=",
                     'value': $(el).next().next().val(),
                     "enabled": true
@@ -663,6 +763,7 @@ const workzoneFacets = services => {
                     'clauses': fields
                 },
                 {
+                    '_ux_zone': 'DATE-FIELD',
                     'type': 'DATE-FIELD',
                     'field': date_field,
                     'from': date_from,
@@ -678,22 +779,22 @@ const workzoneFacets = services => {
                 }
             ]
         };
-        
+        json['_selectedFacets'] = selectedFacetValues;
         return JSON.stringify(json);
     }
-    var _ALL_Clause_ = '(created_on>1900/01/01)';
+    var _ALL_Clause_ = "(created_on>1900/01/01)";
     function buildQ(clause) {
         if (clause.enabled === false) {
-            return '';
+            return "";
         }
         switch (clause.type) {
-            case 'CLAUSES':
+            case "CLAUSES":
                 var t_pos = [];
                 var t_neg = [];
                 for (var i = 0; i < clause.clauses.length; i++) {
                     var _clause = clause.clauses[i];
                     var _sub_q = buildQ(_clause);
-                    if (_sub_q !== '()' && _sub_q !== '') {
+                    if (_sub_q !== "()" && _sub_q !== "") {
                         if (_clause.negated === true) {
                             t_neg.push(_sub_q);
                         } else {
@@ -705,62 +806,63 @@ const workzoneFacets = services => {
                     // some "yes" clauses
                     if (t_neg.length > 0) {
                         // some "yes" and and some "neg" clauses
-                        if (clause.must_match === 'ONE') {
+                        if (clause.must_match === "ONE") {
                             // some "yes" and and some "neg" clauses, one is enough to match
-                            var neg = '(' + _ALL_Clause_ + ' EXCEPT (' + t_neg.join(' OR ') + '))';
+                            var neg = "(" + _ALL_Clause_ + " EXCEPT (" + t_neg.join(" OR ") + "))";
                             t_pos.push(neg);
-                            return '(' + t_pos.join(' OR ') + ')';
+                            return "(" + t_pos.join(" OR ") + ")";
                         } else {
                             // some "yes" and and some "neg" clauses, all must match
-                            return '((' + t_pos.join(' AND ') + ') EXCEPT (' + t_neg.join(' OR ') + '))';
+                            return "((" + t_pos.join(" AND ") + ") EXCEPT (" + t_neg.join(" OR ") + "))";
                         }
                     } else {
                         // only "yes" clauses
-                        return '(' + t_pos.join(clause.must_match === 'ONE' ? ' OR ' : ' AND ') + ')';
+                        return "(" + t_pos.join(clause.must_match === "ONE" ? " OR " : " AND ") + ")";
                     }
                 } else {
                     // no "yes" clauses
                     if (t_neg.length > 0) {
                         // only "neg" clauses
-                        return '(' + _ALL_Clause_ + ' EXCEPT (' + t_neg.join(clause.must_match === 'ONE' ? ' OR ' : ' AND ') + '))';
+                        return "(" + _ALL_Clause_ + " EXCEPT (" + t_neg.join(clause.must_match === "ONE" ? " OR " : " AND ") + "))";
+
                     } else {
                         // no clauses at all
-                        return '';
+                        return "";
                     }
                 }
-            case 'FULLTEXT':
-                return clause.value ? ('(' + clause.value + ')') : '';
+            case "FULLTEXT":
+                return clause.value ? ("(" + clause.value + ")") : "";
 
-            case 'DATE-FIELD':
-                var t = '';
+            case "DATE-FIELD":
+                var t = "";
                 if (clause.from) {
-                    t = clause.field + '>=' + clause.from;
+                    t = clause.field + ">=" + clause.from;
                 }
                 if (clause.to) {
-                    t += (t ? ' AND ' : '') + clause.field + '<=' + clause.to;
+                    t += (t ? " AND " : "") + clause.field + "<=" + clause.to;
                 }
-                return t ? ('(' + t + ')') : '';
+                return t ? ("(" + t + ")") : '';
 
-            case 'TEXT-FIELD':
-                return clause.field + clause.operator + '\'' + clause.value + '\'';
+            case "TEXT-FIELD":
+                return clause.field + clause.operator + "\"" + clause.value + "\"";
 
-            case 'GEO-DISTANCE':
-                return clause.field + '=\'' + clause.lat + ' ' + clause.lon + ' ' + clause.distance + '\'';
+            case "GEO-DISTANCE":
+                return clause.field + "=\"" + clause.lat + " " + clause.lon + " " + clause.distance + "\"";
 
-            case 'STRING-AGGREGATE':
-                return clause.field + ':\'' + clause.value + '\'';
+            case "STRING-AGGREGATE":
+                return clause.field + ":\"" + clause.value + "\"";
 
-            case 'COLOR-AGGREGATE':
-                return clause.field + ':\'' + clause.value + '\'';
+            case "COLOR-AGGREGATE":
+                return clause.field + ":\"" + clause.value + "\"";
 
-            case 'NUMBER-AGGREGATE':
-                return clause.field + '=' + clause.value;
+            case "NUMBER-AGGREGATE":
+                return clause.field + "=" + clause.value;
 
-            case 'BOOL-AGGREGATE':
-                return clause.field + '=' + (clause.value ? '1' : '0');
+            case "BOOL-AGGREGATE":
+                return clause.field + "=" + (clause.value ? "1" : "0");
 
             default :
-                console.error('Unknown clause type \'' + clause.type + '\'');
+                console.error("Unknown clause type \"" + clause.type + "\"");
                 return null;
         }
     }
@@ -772,7 +874,10 @@ const workzoneFacets = services => {
 
     return {
         loadFacets,
+        findClauseBy_ux_zone,
+        restoreJsonQuery,
         serializeJSON,
+       /* facetsAddMissingSelected,*/
         resetSelectedFacets,
         buildQ
     };
