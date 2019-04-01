@@ -549,7 +549,8 @@ const workzoneFacets = services => {
                 f.data('fieldtype', clause.clauses[j].type);
                 $('option[value="' + clause.clauses[j].field + '"]', f).prop('selected', true);
                 $('option[value="' + clause.clauses[j].operator + '"]', o).prop('selected', true);
-                v.val(clause.clauses[j].value);
+                o.prop('disabled', false);
+                v.val(clause.clauses[j].value).prop('disabled', false);
             }
 
         }
