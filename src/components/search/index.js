@@ -205,7 +205,7 @@ const search = services => {
                 });
 
                 //load last result collected or [] if length == 0
-                if (datas.facets.length > 0) {
+                if (datas.facets != undefined && datas.facets.length > 0) {
                     appEvents.emit('facets.doLoadFacets', {
                         facets: lastFilterResults,
                         filterFacet: $('#look_box_settings input[name=filter_facet]').prop('checked'),
@@ -440,7 +440,7 @@ const search = services => {
 
     const getSelectedFacetValues = (facets) => {
         selectedFacetValues = facets;
-        
+
     }
 
     appEvents.listenAll({

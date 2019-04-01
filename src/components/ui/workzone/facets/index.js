@@ -248,7 +248,7 @@ const workzoneFacets = services => {
                             selectedFacetValues[facet.title] = [];
                         }
                         selectedFacetValues[facet.title].push(facetData);
-                                                
+
                         appEvents.emit('search.getSelectedFacetValues', selectedFacetValues);
                         /*_facetCombinedSearch();*/
                         $('#searchForm').submit();
@@ -448,7 +448,7 @@ const workzoneFacets = services => {
     }*/
 
     function findClauseBy_ux_zone(clause, ux_zone) {
-        console.log('find clause' + ux_zone);
+      //  console.log('find clause' + ux_zone);
         if(typeof clause._ux_zone != 'undefined' && clause._ux_zone === ux_zone) {
             return clause;
         }
@@ -469,8 +469,8 @@ const workzoneFacets = services => {
      * @constructor
      */
     function AdvSearchFacetAddNewTerm() {
-        var block_template = (0, _jquery2.default)('#ADVSRCH_FIELDS_ZONE DIV.term_select_wrapper_template');
-        var last_block = (0, _jquery2.default)('#ADVSRCH_FIELDS_ZONE DIV.term_select_wrapper:last');
+        var block_template = $('#ADVSRCH_FIELDS_ZONE DIV.term_select_wrapper_template');
+        var last_block = $('#ADVSRCH_FIELDS_ZONE DIV.term_select_wrapper:last');
         if (last_block.length === 0) {
             last_block = block_template;
         }
@@ -492,10 +492,10 @@ const workzoneFacets = services => {
         var clause;
 
         // restore the "fulltext" input-text
-        clause = findClauseBy_ux_zone(jsq.query, "FULLTEXT");
-        if(clause) {
+       /* clause = findClauseBy_ux_zone(jsq.query, "FULLTEXT");
+        if (clause) {
             $('#EDIT_query').val(clause.value);
-        }
+        }*/
         // restore the status-bits (for now dual checked status are restored unchecked)
         if (!_.isUndefined(jsq.statuses)) {
             $('#ADVSRCH_SB_ZONE INPUT:checkbox').prop('checked', false);
@@ -510,22 +510,22 @@ const workzoneFacets = services => {
         }
 
         // restore the "records/stories" radios
-        if(!_.isUndefined(jsq.phrasea_recordtype)) {
+        if (!_.isUndefined(jsq.phrasea_recordtype)) {
             $('#searchForm INPUT[name=search_type][value="' + ((jsq.phrasea_recordtype == 'STORY') ? '1' : '0') + '"]').prop('checked', true);  // check one radio will uncheck siblings
         }
 
         // restore the "record type" menu (image, video, audio, ...)
-        if(!_.isUndefined(jsq.phrasea_mediatype)) {
+        if (!_.isUndefined(jsq.phrasea_mediatype)) {
             $('#searchForm SELECT[name=record_type] OPTION[value="' + jsq.phrasea_mediatype.toLowerCase() + '"]').prop('selected', true);
         }
 
         // restore the "use truncation" checkbox
-        if(!_.isUndefined(jsq.phrasea_mediatype)) {
+        if (!_.isUndefined(jsq.phrasea_mediatype)) {
             $('#ADVSRCH_USE_TRUNCATION').prop('checked', jsq.phrasea_mediatype);
         }
 
         // restore the "sort results" menus
-        if(!_.isUndefined(jsq.sort)) {
+        if (!_.isUndefined(jsq.sort)) {
             if(!_.isUndefined(jsq.sort.field)) {
                 $('#ADVSRCH_SORT_ZONE SELECT[name=sort] OPTION[value="' + jsq.sort.field + '"]').prop('selected', true);
             }
@@ -541,7 +541,7 @@ const workzoneFacets = services => {
             $('#ADVSRCH_FIELDS_ZONE INPUT[name=must_match][value="' + clause.must_match + '"]').attr('checked', true);
             $('#ADVSRCH_FIELDS_ZONE DIV.term_select_wrapper').remove();
             for (var j = 0; j < clause.clauses.length; j++) {
-                var wrapper = appEvents.emit('search.doCheckFilters'); AdvSearchFacetAddNewTerm();    // div.term_select_wrapper
+                var wrapper = AdvSearchFacetAddNewTerm();    // div.term_select_wrapper
                 var f = $(".term_select_field", wrapper);
                 var o = $(".term_select_op", wrapper);
                 var v = $(".term_select_value", wrapper);
@@ -551,10 +551,7 @@ const workzoneFacets = services => {
                 $('option[value="' + clause.clauses[j].operator + '"]', o).prop('selected', true);
                 v.val(clause.clauses[j].value);
             }
-            /*if (j === 0) {
-                // if no field, add an empty one to ux
-                searchAdvancedForm(services).AdvSearchAddNewTerm();
-            }*/
+
         }
 
         // restore the "date field" (field-menu + from + to)
@@ -578,9 +575,6 @@ const workzoneFacets = services => {
         appEvents.emit('search.doCheckFilters');
         // loadFacets([]);  // useless, facets will be restored after the query is sent
 
-        if (submit) {
-            $('#searchForm').submit();
-        }
     }
 
     function serializeJSON(data, selectedFacetValues, facets) {
@@ -592,23 +586,23 @@ const workzoneFacets = services => {
             fields = [],
             aggregates = []
         ;
-    
+
         $.each(data, function (i, el) {
             obj[el.name] = el.value;
 
             let col = parseInt(el.value);
-    
+
             if (el.name === 'bases[]') {
                 bases.push(col);
             }
-    
+
             if (el.name.startsWith('status')) {
                 let databoxId = el.name.match(/\d+/g)[0],
                     databoxRow = el.name.match(/\d+/g)[1],
                     statusMatch = false;
-                
+
                 $.each(statuses, function (i, status) {
-                    
+
                     if (status.databox === databoxId) {
                         // for (var j = 0; j < status.status.length; j++) {
                         //     var st = status.status[j].name;
@@ -681,8 +675,8 @@ const workzoneFacets = services => {
                     "enabled": true
                 });
             }
-        }); 
-        
+        });
+
         $(facets).each(function (i, el) {
 
             let facetFilterTitle = el.label,
@@ -696,7 +690,7 @@ const workzoneFacets = services => {
             ;
 
             $('.fancytree-node.fancytree-folder').each(function (i, node) {
-                var nodeTitile = $(node).find('.fancytree-title').text();                    
+                var nodeTitile = $(node).find('.fancytree-title').text();
                 if (nodeTitile === facetFilterTitle) {
                     nodeEl = $(node).find('[class^="facetFilter_"]');
                 }
@@ -707,10 +701,10 @@ const workzoneFacets = services => {
                     negated = true;
                 }
             }
-            
+
             _.each(selectedFacetValues[facetFilterTitle], function (facet) {
                 let query = facet.value.query;
-                for (let i = 0; i < el.values.length; i++) {                        
+                for (let i = 0; i < el.values.length; i++) {
                     if (el.values[i].query === query) {
                         facetRawVal = el.values[i].raw_value;
                         facetQuery = el.values[i].query;
