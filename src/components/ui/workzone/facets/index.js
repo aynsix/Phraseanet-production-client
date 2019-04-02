@@ -15,12 +15,14 @@ const workzoneFacets = services => {
      'mode' : "AND"|"EXCEPT"
      }
      */
+    const selectedFacets = {};
+    const facets = null;
 
     const ORDER_BY_BCT = "ORDER_BY_BCT";
     const ORDER_ALPHA_ASC = "ORDER_ALPHA_ASC";
     const ORDER_BY_HITS = "ORDER_BY_HITS";
 
-    let selectedFacetValues = [];
+    let selectedFacetValues = {};
     let facetStatus = $.parseJSON(sessionStorage.getItem('facetStatus')) || [];
     let hiddenFacetsList = [];
 
@@ -33,7 +35,23 @@ const workzoneFacets = services => {
         selectedFacetValues = [];
         return selectedFacetValues;
     };
-
+    /**
+     *  add missing selected facets fields into "facets", from "selectedFacets"
+     *  why : because if we negates all values for a facet field (all red), the facet will disapear from next query->answers
+     *        (not in "facets" anymore, not in ux). So we lose the posibility to delete or invert a facet value.
+     *  nb : negating all facets values does not mean there will be 0 results, because the field can be empty for some records.
+     */
+    function facetsAddMissingSelected(_selectedFacets, _facets) {
+        _.each(_selectedFacets, function (v, k) {
+            var found = _.find(_facets, function (facet) {
+                return (facet.field == k);
+            });
+            if(!found) {
+                var i = _facets.push(_.clone(v)); // add a "fake" facet to facets
+                _facets[i-1].values = [];      // with no values
+            }
+        });
+    };
 
     var loadFacets = function (data) {
         hiddenFacetsList = data.hiddenFacetsList;
@@ -48,7 +66,7 @@ const workzoneFacets = services => {
                     break;
             }
         }
-
+        facetsAddMissingSelected(selectedFacets, facets);
         // Convert facets data to fancytree source format
         var treeSource = _.map(data.facets, function (facet) {
             // Values
@@ -520,7 +538,7 @@ const workzoneFacets = services => {
         }
 
         // restore the "use truncation" checkbox
-        if (!_.isUndefined(jsq.phrasea_mediatype)) {
+        if (!_.isUndefined(jsq.phrasea_mediatype) && jsq.phrasea_mediatype == 'true') {
             $('#ADVSRCH_USE_TRUNCATION').prop('checked', jsq.phrasea_mediatype);
         }
 
@@ -734,7 +752,7 @@ const workzoneFacets = services => {
         json['perpage'] = parseInt($('#nperpage_value').val());
         json['page'] = obj.pag === '' ? 1 : parseInt(obj.pag);
         json['use_truncation'] = obj.truncation === 'on' ? true : false;
-        json['phrasea_recordtype'] = obj.search_type === 0 ? 'RECORD' : 'STORY';
+        json['phrasea_recordtype'] = obj.search_type == 1 ? 'STORY' : 'RECORD';
         json['phrasea_mediatype'] = obj.record_type.toUpperCase();
         json['bases'] = bases;
         json['statuses'] = statuses;

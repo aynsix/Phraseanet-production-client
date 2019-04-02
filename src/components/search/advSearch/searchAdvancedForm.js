@@ -70,11 +70,11 @@ const searchAdvancedForm = (services) => {
         });
         $(document).on('change', 'select.term_select_field', (event) => {
             const $this = $(event.currentTarget);
-    
+
             // if option is selected
             if ($this.val()) {
                 $this.siblings().prop('disabled', false);
-    
+
                 $('.term_select_multiple option').each((index, el) => {
                     let $el = $(el);
                     if ($this.val() === $el.val()) {
@@ -85,7 +85,7 @@ const searchAdvancedForm = (services) => {
                 });
             } else {
                 $this.siblings().prop('disabled', 'disabled');
-    
+
                 $('.term_select_multiple option').each((index, el) => {
                     let $el = $(el);
                     if (previousVal === $el.val()) {
@@ -199,6 +199,11 @@ const searchAdvancedForm = (services) => {
         $('option.dbx', fieldsSelect).hide().prop('disabled', true);     // option[0] is "all fields"
         $('option.dbx', fieldsSelectFake).hide().prop('disabled', true);
 
+        // disable the whole select
+        $('#ADVSRCH_FIELDS_ZONE .term_select_wrapper select.term_select_field', container).prop('disabled', true);
+        $('#ADVSRCH_FIELDS_ZONE .term_select_wrapper select.term_select_op', container).prop('disabled', true);
+        $('#ADVSRCH_FIELDS_ZONE .term_select_wrapper input.term_select_value', container).prop('disabled', true);
+
         // hide all the fields in the "date field" select, so only the relevant ones will be shown again
         $('option.dbx', dateFilterSelect).hide().prop('disabled', true);   // dbx = all "field" entries in the select = all except the firstt
 
@@ -290,6 +295,20 @@ const searchAdvancedForm = (services) => {
                 $('#ADVSRCH_SB_ZONE_' + sbas_id, container).show();
                 // show again the relevant fields in "date field" select
                 $('.db_' + sbas_id, dateFilterSelect).show().prop('disabled', false);
+            }
+        });
+
+        // enable also the select if the first option ("choose:") was selected
+        statusField.removeClass('danger');
+        fieldsSelectFake.each(function(e) {
+            var $this = $(this);
+            var term_ok = $('option:selected:enabled', $this).closest(".term_select_wrapper");
+            $("select.term_select_field", term_ok).prop('disabled', false);
+            if($this.val() !== "") {
+                $("select.term_select_op", term_ok).prop('disabled', false);
+                $("input.term_select_value", term_ok).prop('disabled', false);
+                danger = true;
+                statusField.addClass('danger');
             }
         });
 
@@ -408,6 +427,9 @@ const searchAdvancedForm = (services) => {
 
         $('#ADVSRCH_FIELDS_ZONE option').prop('selected', false);
         $('#ADVSRCH_OPTIONS_ZONE input:checkbox.field_switch').prop('checked', false);
+        $('#ADVSRCH_USE_TRUNCATION').prop('checked', false);
+        $('#mode_type_doc').prop('checked', true);
+        $('#ADVSRCH_FIELDS_ZONE .term_select_wrapper').remove();
 
         $('option:eq(0)', dateFilterSelect).prop('selected', true);
         $('#ADVSRCH_OPTIONS_ZONE .datepicker').val('');

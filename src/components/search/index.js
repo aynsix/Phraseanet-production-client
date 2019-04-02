@@ -134,13 +134,6 @@ const search = services => {
      *
      */
     const onRefreshSearchState = () => {
-        appEvents.emit('facets.doLoadFacets', {
-            facets: lastFilterResults,
-            filterFacet: $('#look_box_settings input[name=filter_facet]').prop('checked'),
-            facetOrder: $('#look_box_settings select[name=orderFacet]').val(),
-            facetValueOrder: $('#look_box_settings select[name=facetValuesOrder]').val(),
-            hiddenFacetsList: savedHiddenFacetsList
-        });
 
         let data = $searchForm.serializeArray();
         // fix bug : if a sb is dual checked, both values are sent with the SAME name
@@ -269,8 +262,8 @@ const search = services => {
                 }
 
                 updateHiddenFacetsListInPrefsScreen();
-
-                afterSearch();
+                appEvents.emit('search.doAfterSearch');
+                appEvents.emit('search.updateFacetData');
             }
         });
 
