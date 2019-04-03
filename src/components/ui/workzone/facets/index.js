@@ -268,8 +268,8 @@ const workzoneFacets = services => {
                         selectedFacetValues[facet.title].push(facetData);
 
                         appEvents.emit('search.getSelectedFacetValues', selectedFacetValues);
-                        /*_facetCombinedSearch();*/
-                        $('#searchForm').submit();
+                        _facetCombinedSearch();
+                        /*$('#searchForm').submit();*/
                     }
                 },
                 collapse: function (event, data) {
@@ -377,8 +377,8 @@ const workzoneFacets = services => {
                                             return (obj.value.label == facetFilter && obj.mode == mode);
                                         });
                                         //delete selectedFacetValues[facetTitle];
-                                        /*_facetCombinedSearch();*/
-                                        $('#searchForm').submit();
+                                        _facetCombinedSearch();
+                                        /*$('#searchForm').submit();*/
                                         return false;
                                     }
                                 );
@@ -398,8 +398,8 @@ const workzoneFacets = services => {
                                             found.mode = newMode;
                                             //replace class attr
                                             $facet.filter('.' + "facetFilter" + '_' + mode).removeClass("facetFilter" + '_' + mode).addClass("facetFilter" + '_' + newMode).end();
-                                            /*_facetCombinedSearch();*/
-                                            $('#searchForm').submit();
+                                            _facetCombinedSearch();
+                                           /* $('#searchForm').submit();*/
 
                                         }
                                         return false;
@@ -430,7 +430,7 @@ const workzoneFacets = services => {
         return $facetsTree.fancytree('getTree');
     }
 
-  /*  function _facetCombinedSearch() {
+    function _facetCombinedSearch() {
         var q = $('#EDIT_query').val();
         var q_facet_and = "";
         var q_facet_except = "";
@@ -463,7 +463,7 @@ const workzoneFacets = services => {
         appEvents.emit('search.doCheckFilters');
         appEvents.emit('search.doNewSearch', q);
         // searchModule.newSearch(q);
-    }*/
+    }
 
     function findClauseBy_ux_zone(clause, ux_zone) {
       //  console.log('find clause' + ux_zone);
@@ -592,7 +592,7 @@ const workzoneFacets = services => {
 
         // the ux is restored, finish the job (hide unavailable fields/status etc, display "danger" where needed)
         appEvents.emit('search.doCheckFilters');
-        // loadFacets([]);  // useless, facets will be restored after the query is sent
+         //loadFacets([]);  // useless, facets will be restored after the query is sent
 
     }
 
@@ -882,7 +882,8 @@ const workzoneFacets = services => {
 
     appEvents.listenAll({
         'facets.doLoadFacets': loadFacets,
-        'facets.doResetSelectedFacets': resetSelectedFacets
+        'facets.doResetSelectedFacets': resetSelectedFacets,
+        'facets.doAddMissingSelectedFacets': facetsAddMissingSelected
     });
 
     return {
@@ -890,7 +891,7 @@ const workzoneFacets = services => {
         findClauseBy_ux_zone,
         restoreJsonQuery,
         serializeJSON,
-       /* facetsAddMissingSelected,*/
+        /*facetsAddMissingSelected,*/
         resetSelectedFacets,
         buildQ
     };
