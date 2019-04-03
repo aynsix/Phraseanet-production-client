@@ -4,9 +4,9 @@
   "description": "Phraseanet frontend dependencies",
   "scripts": {
     "clean": "rimraf dist",
-    "dev": "npm run clean && set NODE_ENV=devlopment && webpack --config ./config/webpack/webpack.development.config.js --progress --profile --colors",
-    "production": "npm run clean && set NODE_ENV=production && webpack --config ./config/webpack/webpack.production.config.js --progress --profile --colors",
-    "dist": "npm run clean && set NODE_ENV=production && webpack --config ./config/webpack/webpack.production.config.js --progress --profile --colors && webpack --config ./config/webpack/webpack.production.minified.config.js --progress --profile --colors",
+    "dev": "npm run clean && set NODE_ENV=devlopment && npx webpack --config ./config/webpack/webpack.development.config.js --progress --profile --colors",
+    "production": "npm run clean && set NODE_ENV=production && npx webpack --config ./config/webpack/webpack.production.config.js --progress --profile --colors",
+    "dist": "npm run clean && set NODE_ENV=production && npx webpack --config ./config/webpack/webpack.production.config.js --progress --profile --colors && npx webpack --config ./config/webpack/webpack.production.minified.config.js --progress --profile --colors",
     "test": "npm run test:browser",
     "test:server": "mocha --opts config/mocha.opts",
     "test:browser": "./node_modules/.bin/karma start --single-run",
