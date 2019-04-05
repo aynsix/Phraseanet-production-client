@@ -111,12 +111,12 @@ const pushAddUser = (services) => {
                 }
             });
         };
-
-        $addUserForm.find('.geoname_field').geocompleter({
-            server: config.geonameServerUrl,
-            limit: 40
-        });
-
+        if (config.geonameServerUrl.length > 0) {
+            $addUserForm.find('.geoname_field').geocompleter({
+                server: config.geonameServerUrl,
+                limit: 40
+            });
+        }
         $addUserForm.on('submit', function (event) {
             event.preventDefault();
             submitAddUser();
