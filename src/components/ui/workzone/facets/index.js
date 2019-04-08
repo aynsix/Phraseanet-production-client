@@ -32,7 +32,7 @@ const workzoneFacets = services => {
      };*/
 
     var resetSelectedFacets = function () {
-        selectedFacetValues = [];
+        selectedFacetValues = {};
         return selectedFacetValues;
     };
     /**
@@ -514,6 +514,20 @@ const workzoneFacets = services => {
         if (clause) {
             $('#EDIT_query').val(clause.value);
         }*/
+
+        // restore the "bases" checkboxes
+        if(!_.isUndefined(jsq.bases)) {
+            $('#ADVSRCH_SBAS_ZONE .sbas_list .checkbas').prop('checked', false);
+            if (jsq.bases.length > 0) {
+                for (var k = 0; k < jsq.bases.length; k++) {
+                    $('#ADVSRCH_SBAS_ZONE .sbas_list .checkbas[value="' + jsq.bases[k] + '"]').prop('checked', true);
+                }
+            } else {
+                // special case : EMPTY array ==> since it's a nonsense, check ALL bases
+                $('#ADVSRCH_SBAS_ZONE .sbas_list .checkbas').prop('checked', true);
+            }
+        }
+
         // restore the status-bits (for now dual checked status are restored unchecked)
         if (!_.isUndefined(jsq.statuses)) {
             $('#ADVSRCH_SB_ZONE INPUT:checkbox').prop('checked', false);
@@ -551,6 +565,7 @@ const workzoneFacets = services => {
                 $('#ADVSRCH_SORT_ZONE SELECT[name=ord] OPTION[value="' + jsq.sort.order + '"]').prop('selected', true);
             }
         }
+
 
 
         // restore the multiples "fields" (field-menu + op-menu + value-input)

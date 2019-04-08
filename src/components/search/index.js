@@ -30,7 +30,7 @@ const search = services => {
     let answAjaxrunning = false;
     let resultInfoView;
     let facets = null;
-    let selectedFacetValues = [];
+    let selectedFacetValues = {};
     var lastFilterResults = [];
     let savedHiddenFacetsList = configService.get('savedHiddenFacetsList') ? JSON.parse(configService.get('savedHiddenFacetsList')) : [];
 
