@@ -32,6 +32,26 @@ const search = services => {
     let facets = null;
     let selectedFacetValues = {};
     var lastFilterResults = [];
+    var jsq = '';
+
+    // if defined, play the first query
+    if ($('#FIRST_QUERY_CONTAINER').length > 0 ) {
+        jsq = $('#FIRST_QUERY_CONTAINER');
+    }
+    if (jsq.length > 0) {
+        // there is a query to play
+        if (jsq.data('format') === "json") {
+            jsq = JSON.parse(jsq.text());
+            // restore the selected facets (whole saved as custom property)
+            if(!_.isUndefined(jsq._selectedFacets)) {
+                selectedFacetValues = jsq._selectedFacets;
+                console.log('ato '+ selectedFacetValues);
+            }
+        } else {
+            // text : do it the old way : restore only fulltext and submit
+            searchForm.trigger('submit');
+        }
+    }
     let savedHiddenFacetsList = configService.get('savedHiddenFacetsList') ? JSON.parse(configService.get('savedHiddenFacetsList')) : [];
 
 
