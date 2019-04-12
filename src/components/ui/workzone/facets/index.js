@@ -7,34 +7,40 @@ import * as _ from 'underscore';
 const workzoneFacets = services => {
     const { configService, localeService, appEvents } = services;
 
-    /*
-     selectedFacetValues[]
-     key : facet.name
-     value : {
-     'value' : facet.value,
-     'mode' : "AND"|"EXCEPT"
-     }
-     */
-    const selectedFacets = {};
-    const facets = null;
+    let facets = null;
 
     const ORDER_BY_BCT = "ORDER_BY_BCT";
     const ORDER_ALPHA_ASC = "ORDER_ALPHA_ASC";
     const ORDER_BY_HITS = "ORDER_BY_HITS";
 
-    let selectedFacetValues = {};
+    let selectedFacets = {};
     let facetStatus = $.parseJSON(sessionStorage.getItem('facetStatus')) || [];
     let hiddenFacetsList = [];
 
 
-    /*var getSelectedFacets = function() {
-     return selectedFacetValues;
-     };*/
 
     var resetSelectedFacets = function () {
-        selectedFacetValues = {};
-        return selectedFacetValues;
+        selectedFacets = {};
+        return selectedFacets;
     };
+    // if defined, play the first query
+    //
+    try {
+        var jsq = $("#FIRST_QUERY_CONTAINER");
+        if(jsq.length > 0) {
+            // there is a query to play
+            if(jsq.data('format') === "json") {
+                // json
+                jsq = JSON.parse(jsq.text());
+                 facets = jsq._facets;
+            }
+
+        }
+    }
+    catch (e) {
+        // malformed jsonquery ?
+        // no-op
+    }
     /**
      *  add missing selected facets fields into "facets", from "selectedFacets"
      *  why : because if we negates all values for a facet field (all red), the facet will disapear from next query->answers
@@ -67,6 +73,7 @@ const workzoneFacets = services => {
             }
         }
         facetsAddMissingSelected(selectedFacets, facets);
+
         // Convert facets data to fancytree source format
         var treeSource = _.map(data.facets, function (facet) {
             // Values
@@ -200,14 +207,10 @@ const workzoneFacets = services => {
     function _shouldFilterSingleContent(source) {
         var filteredSource = [];
         _.forEach(source, function (facet) {
-            //close expansion for facet containing selected values
-            // if (!_.isUndefined(selectedFacetValues[facet.title])) {
-            //     facet.expanded = false;
-            // }
             if (
                 !_.isUndefined(facet.children) &&
                 (facet.children.length > 1 ||
-                !_.isUndefined(selectedFacetValues[facet.title]))
+                !_.isUndefined(selectedFacets[facet.title]))
             ) {
                 filteredSource.push(facet);
             }
@@ -252,7 +255,7 @@ const workzoneFacets = services => {
                     var query = data.node.data.query;
                     var eventType = event.originalEvent;
                     //if user did not click, then no need to perform any query
-                    if(eventType == null) {
+                    if(eventType === null) {
                         return;
                     }
                     if (query) {
@@ -262,20 +265,19 @@ const workzoneFacets = services => {
                             mode: event.altKey ? "EXCEPT" : "AND"
                         };
 
-                        if (selectedFacetValues[facet.title] == null) {
-                            selectedFacetValues[facet.title] = [];
+                        if (selectedFacets[facet.title] === null) {
+                            selectedFacets[facet.title] = [];
                         }
-                        selectedFacetValues[facet.title].push(facetData);
+                        selectedFacets[facet.title].push(facetData);
 
-                        appEvents.emit('search.getSelectedFacetValues', selectedFacetValues);
+                        appEvents.emit('search.getSelectedFacets', selectedFacets);
                         _facetCombinedSearch();
-                        /*$('#searchForm').submit();*/
                     }
                 },
                 collapse: function (event, data) {
                     var dict = {};
                     dict[data.node.data.name] = "collapse";
-                    if(_.findWhere(facetStatus, dict) !== undefined ) {
+                    if (_.findWhere(facetStatus, dict) !== undefined ) {
                         facetStatus = _.without(facetStatus, _.findWhere(facetStatus, dict))
                     }
                     facetStatus.push(dict);
@@ -317,7 +319,7 @@ const workzoneFacets = services => {
                         // span rendered
                         $nodeSpan.data('rendered', true);
 
-                        if (data.node.folder && !_.isUndefined(selectedFacetValues[data.node.title])) {
+                        if (data.node.folder && !_.isUndefined(selectedFacets[data.node.title])) {
                             if ($(".fancytree-folder", data.node.li).find('.dataNode').length == 0) {
                                 var dataNode = document.createElement('div');
                                 dataNode.setAttribute("class", "dataNode");
@@ -329,7 +331,7 @@ const workzoneFacets = services => {
                                 $(".dataNode", data.node.li).empty();
                             }
 
-                            _.each(selectedFacetValues[data.node.title], function (facetValue) {
+                            _.each(selectedFacets[data.node.title], function (facetValue) {
 
                                 facetFilter = facetValue.value.label;
 
@@ -373,12 +375,10 @@ const workzoneFacets = services => {
                                         var facetTitle = $facet.data("facetTitle");
                                         var facetFilter = $facet.data("facetFilter");
                                         var mode = $facet.hasClass("facetFilter_EXCEPT") ? "EXCEPT" : "AND";
-                                        selectedFacetValues[facetTitle] = _.reject(selectedFacetValues[facetTitle], function (obj) {
+                                        selectedFacets[facetTitle] = _.reject(selectedFacets[facetTitle], function (obj) {
                                             return (obj.value.label == facetFilter && obj.mode == mode);
                                         });
-                                        //delete selectedFacetValues[facetTitle];
                                         _facetCombinedSearch();
-                                        /*$('#searchForm').submit();*/
                                         return false;
                                     }
                                 );
@@ -390,7 +390,7 @@ const workzoneFacets = services => {
                                         var facetTitle = $facet.data("facetTitle");
                                         var facetFilter = $facet.data("facetFilter");
                                         var mode = $facet.hasClass("facetFilter_EXCEPT") ? "EXCEPT" : "AND";
-                                        var found = _.find(selectedFacetValues[facetTitle], function (obj) {
+                                        var found = _.find(selectedFacets[facetTitle], function (obj) {
                                             return (obj.value.label == facetFilter && obj.mode == mode);
                                         });
                                         if (found) {
@@ -434,7 +434,7 @@ const workzoneFacets = services => {
         var q = $('#EDIT_query').val();
         var q_facet_and = "";
         var q_facet_except = "";
-        _.each(_.values(selectedFacetValues), function (facet) {
+        _.each(_.values(selectedFacets), function (facet) {
             _.each(facet, function (facetValue) {
                 switch (facetValue.mode) {
                     case "AND":
@@ -508,7 +508,7 @@ const workzoneFacets = services => {
      */
     function restoreJsonQuery(jsq, submit) {
         var clause;
-        var AllFacets;
+        var facets;
 
         // restore the "fulltext" input-text
        /* clause = findClauseBy_ux_zone(jsq.query, "FULLTEXT");
@@ -603,10 +603,10 @@ const workzoneFacets = services => {
 
         // restore the selected facets (whole saved as custom property)
         if(!_.isUndefined(jsq._selectedFacets)) {
-            selectedFacetValues = jsq._selectedFacets;
+            selectedFacets = jsq._selectedFacets;
         }
         if (!_.isUndefined(jsq._facets)) {
-             AllFacets = jsq._facets;
+             facets = jsq._facets;
         }
 
         // the ux is restored, finish the job (hide unavailable fields/status etc, display "danger" where needed)
@@ -615,7 +615,7 @@ const workzoneFacets = services => {
 
     }
 
-    function serializeJSON(data, selectedFacetValues, facets) {
+    function serializeJSON(data, selectedFacets, facets) {
 
         let json = {},
             obj = {},
@@ -740,7 +740,7 @@ const workzoneFacets = services => {
                 }
             }
 
-            _.each(selectedFacetValues[facetFilterTitle], function (facet) {
+            _.each(selectedFacets[facetFilterTitle], function (facet) {
                 let query = facet.value.query;
                 for (let i = 0; i < el.values.length; i++) {
                     if (el.values[i].query === query) {
@@ -811,7 +811,7 @@ const workzoneFacets = services => {
                 }
             ]
         };
-        json['_selectedFacets'] = selectedFacetValues;
+        json['_selectedFacets'] = selectedFacets;
         json['_facets'] = facets;
         return JSON.stringify(json);
     }

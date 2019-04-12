@@ -30,7 +30,7 @@ const search = services => {
     let answAjaxrunning = false;
     let resultInfoView;
     let facets = null;
-    let selectedFacetValues = {};
+    let selectedFacets = {};
     var lastFilterResults = [];
     var jsq = '';
     var jsq2 = '';
@@ -45,8 +45,8 @@ const search = services => {
             jsq2 = JSON.parse(jsq2.text());
             // restore the selected facets (whole saved as custom property)
             if(!_.isUndefined(jsq2._selectedFacets)) {
-                selectedFacetValues = jsq2._selectedFacets;
-                console.log('ato '+ selectedFacetValues);
+                selectedFacets = jsq2._selectedFacets;
+                console.log('ato '+ selectedFacets);
             }
             if (!_.isUndefined(jsq2._facets)) {
                 var AllFacets = jsq2._facets;
@@ -176,7 +176,7 @@ const search = services => {
         });
         // end of sb fix
 
-        var jsonData = workzoneFacets(services).serializeJSON(data, selectedFacetValues, facets);
+        var jsonData = workzoneFacets(services).serializeJSON(data, selectedFacets, facets);
         jsonData = JSON.parse(jsonData);
         var qry = workzoneFacets(services).buildQ(jsonData.query);
 
@@ -455,8 +455,8 @@ const search = services => {
         updateHiddenFacetsListInPrefsScreen();
     }
 
-    const getSelectedFacetValues = (facets) => {
-        selectedFacetValues = facets;
+    const getSelectedFacets = (facets) => {
+        selectedFacets = facets;
 
     }
 
@@ -468,7 +468,7 @@ const search = services => {
         'search.doNavigate': navigate,
         'search.updateFacetData': updateFacetData,
         'search.reloadHiddenFacetList': reloadHiddenFacetList,
-        'search.getSelectedFacetValues': getSelectedFacetValues
+        'search.getSelectedFacets': getSelectedFacets
     });
 
     return { initialize, getResultSelectionStream, getResultNavigationStream };
