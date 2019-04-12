@@ -33,25 +33,28 @@ const search = services => {
     let selectedFacetValues = {};
     var lastFilterResults = [];
     var jsq = '';
+    var jsq2 = '';
 
     // if defined, play the first query
     if ($('#FIRST_QUERY_CONTAINER').length > 0 ) {
-        jsq = $('#FIRST_QUERY_CONTAINER');
+        jsq2 = $('#FIRST_QUERY_CONTAINER');
     }
-    if (jsq.length > 0) {
+    if (jsq2.length > 0) {
         // there is a query to play
-        if (jsq.data('format') === "json") {
-            jsq = JSON.parse(jsq.text());
+        if (jsq2.data('format') === "json") {
+            jsq2 = JSON.parse(jsq2.text());
             // restore the selected facets (whole saved as custom property)
-            if(!_.isUndefined(jsq._selectedFacets)) {
-                selectedFacetValues = jsq._selectedFacets;
+            if(!_.isUndefined(jsq2._selectedFacets)) {
+                selectedFacetValues = jsq2._selectedFacets;
                 console.log('ato '+ selectedFacetValues);
             }
-        } else {
-            // text : do it the old way : restore only fulltext and submit
-            searchForm.trigger('submit');
+            if (!_.isUndefined(jsq2._facets)) {
+                var AllFacets = jsq2._facets;
+
+            }
         }
     }
+    facets = AllFacets;
     let savedHiddenFacetsList = configService.get('savedHiddenFacetsList') ? JSON.parse(configService.get('savedHiddenFacetsList')) : [];
 
 

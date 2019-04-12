@@ -508,6 +508,7 @@ const workzoneFacets = services => {
      */
     function restoreJsonQuery(jsq, submit) {
         var clause;
+        var AllFacets;
 
         // restore the "fulltext" input-text
        /* clause = findClauseBy_ux_zone(jsq.query, "FULLTEXT");
@@ -603,6 +604,9 @@ const workzoneFacets = services => {
         // restore the selected facets (whole saved as custom property)
         if(!_.isUndefined(jsq._selectedFacets)) {
             selectedFacetValues = jsq._selectedFacets;
+        }
+        if (!_.isUndefined(jsq._facets)) {
+             AllFacets = jsq._facets;
         }
 
         // the ux is restored, finish the job (hide unavailable fields/status etc, display "danger" where needed)
@@ -808,6 +812,7 @@ const workzoneFacets = services => {
             ]
         };
         json['_selectedFacets'] = selectedFacetValues;
+        json['_facets'] = facets;
         return JSON.stringify(json);
     }
     var _ALL_Clause_ = "(created_on>1900/01/01)";
