@@ -52,7 +52,7 @@ const searchGeoForm = (services) => {
     }
 
     const updateSearchValue = () => {
-        appEvents.emit('search.updateSearchValue', {
+        appEvents.emit('searchForm.updateSearchValue', {
             searchValue: searchQuery,
             reset: true,
             submit: true
@@ -156,7 +156,7 @@ const searchGeoForm = (services) => {
 
     const savePreferences = (obj) => {
         //drawnItems = JSON.stringify(data);
-        appEvents.emit('search.updatePreferences', obj);
+        appEvents.emit('searchForm.updatePreferences', obj);
 
     }
 

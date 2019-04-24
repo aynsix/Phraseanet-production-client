@@ -808,7 +808,7 @@ const thesaurusService = services => {
     }
 
     function doThesSearch(type, sbid, term, field) {
-        appEvents.emit('search.activateDatabase', { databases: [sbid] });
+        appEvents.emit('searchAdvancedForm.activateDatabase', { databases: [sbid] });
 
         let queryString = '';
         if (type === 'T') {
@@ -818,7 +818,7 @@ const thesaurusService = services => {
         }
         appEvents.emit('facets.doResetSelectedFacets');
         $('#EDIT_query').val(queryString);
-        appEvents.emit('search.doCheckFilters');
+        appEvents.emit('searchAdvancedForm.checkFilters');
         appEvents.emit('search.doNewSearch', queryString);
         //searchModule.newSearch(v);
     }

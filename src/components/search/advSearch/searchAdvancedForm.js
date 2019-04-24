@@ -415,36 +415,209 @@ const searchAdvancedForm = (services) => {
         user.setPref('hiddenFacetsList', JSON.stringify(hiddenFacetsList));
     }
 
-    // @TODO seem to be never used
-    const resetSearch = () => {
-        var container = $('#ADVSRCH_OPTIONS_ZONE');
-        var fieldsSort = $('#ADVSRCH_SORT_ZONE select[name=sort]', container);
-        var fieldsSortOrd = $('#ADVSRCH_SORT_ZONE select[name=ord]', container);
-        var dateFilterSelect = $('#ADVSRCH_DATE_ZONE select', container);
+    function findClauseBy_ux_zone(clause, ux_zone) {
+        //  console.log('find clause' + ux_zone);
+        if (typeof clause._ux_zone != 'undefined' && clause._ux_zone === ux_zone) {
+            return clause;
+        }
+        if (clause.type === "CLAUSES") {
+            for (var i = 0; i < clause.clauses.length; i++) {
+                var r = findClauseBy_ux_zone(clause.clauses[i], ux_zone);
+                if (r != null) {
+                    return r;
+                }
+            }
+        }
+        return null;
+    }
 
-        $('option.default-selection', fieldsSort).prop('selected', true);
-        $('option.default-selection', fieldsSortOrd).prop('selected', true);
+    /**
+     * add "field" zone on advsearch
+     *
+     * @returns {jQuery|HTMLElement}
+     * @constructor
+     */
+    function AdvSearchFacetAddNewTerm() {
+        var block_template = $('#ADVSRCH_FIELDS_ZONE DIV.term_select_wrapper_template');
+        var last_block = $('#ADVSRCH_FIELDS_ZONE DIV.term_select_wrapper:last');
+        if (last_block.length === 0) {
+            last_block = block_template;
+        }
+        last_block = block_template.clone(true).insertAfter(last_block); // true: clone event handlers
+        last_block.removeClass('term_select_wrapper_template').addClass('term_select_wrapper').show();
+        last_block.css('background-color', '');
+        return last_block;
+    }
 
-        $('#ADVSRCH_FIELDS_ZONE option').prop('selected', false);
-        $('#ADVSRCH_OPTIONS_ZONE input:checkbox.field_switch').prop('checked', false);
-        $('#ADVSRCH_USE_TRUNCATION').prop('checked', false);
-        $('#mode_type_doc').prop('checked', true);
-        $('#ADVSRCH_FIELDS_ZONE .term_select_wrapper').remove();
+    function restoreJsonQuery(args) {
+        var jsq = args.jsq;
+        var submit = args.submit;
 
-        $('option:eq(0)', dateFilterSelect).prop('selected', true);
-        $('#ADVSRCH_OPTIONS_ZONE .datepicker').val('');
-        $('form.adv_search_bind input:text').val('');
-        toggleAllDatabase(true);
+        var clause;
+
+        // restore the "fulltext" input-text
+        clause = findClauseBy_ux_zone(jsq.query, "FULLTEXT");
+        if (clause) {
+            $('#EDIT_query').val(clause.value);
+        }
+
+        // restore the "bases" checkboxes
+        if(! _.isUndefined(jsq.bases)) {
+            $('#ADVSRCH_SBAS_ZONE .sbas_list .checkbas').prop('checked', false);
+            if (jsq.bases.length > 0) {
+                for (var k = 0; k < jsq.bases.length; k++) {
+                    $('#ADVSRCH_SBAS_ZONE .sbas_list .checkbas[value="' + jsq.bases[k] + '"]').prop('checked', true);
+                }
+            } else {
+                // special case : EMPTY array ==> since it's a nonsense, check ALL bases
+                $('#ADVSRCH_SBAS_ZONE .sbas_list .checkbas').prop('checked', true);
+            }
+        }
+
+        // restore the status-bits (for now dual checked status are restored unchecked)
+        if(! _.isUndefined(jsq.statuses)) {
+            $('#ADVSRCH_SB_ZONE INPUT:checkbox').prop('checked', false);
+            _.each(jsq.statuses, function (db_statuses) {
+                var db = db_statuses.databox;
+                _.each(db_statuses.status, function (sb) {
+                    var i = sb.index;
+                    var v = sb.value ? '1' : '0';
+                    $("#ADVSRCH_SB_ZONE INPUT[name='status[" + db_statuses.databox + '][' + sb.index + "]'][value=" + v + ']').prop('checked', true);
+                });
+            });
+        }
+
+        // restore the "records/stories" radios
+        if(! _.isUndefined(jsq.phrasea_recordtype)) {
+            $('#searchForm INPUT[name=search_type][value="' + (jsq.phrasea_recordtype == 'STORY' ? '1' : '0') + '"]').prop('checked', true); // check one radio will uncheck siblings
+        }
+
+        // restore the "record type" menu (image, video, audio, ...)
+        if(! _.isUndefined(jsq.phrasea_mediatype)) {
+            $('#searchForm SELECT[name=record_type] OPTION[value="' + jsq.phrasea_mediatype.toLowerCase() + '"]').prop('selected', true);
+        }
+
+        // restore the "use truncation" checkbox
+        if(! _.isUndefined(jsq.phrasea_mediatype) && jsq.phrasea_mediatype == 'true') {
+            $('#ADVSRCH_USE_TRUNCATION').prop('checked', jsq.phrasea_mediatype);
+        }
+
+        // restore the "sort results" menus
+        if(! _.isUndefined(jsq.sort)) {
+            if(! _.isUndefined(jsq.sort.field)) {
+                $('#ADVSRCH_SORT_ZONE SELECT[name=sort] OPTION[value="' + jsq.sort.field + '"]').prop('selected', true);
+            }
+            if(! _.isUndefined(jsq.sort.order)) {
+                $('#ADVSRCH_SORT_ZONE SELECT[name=ord] OPTION[value="' + jsq.sort.order + '"]').prop('selected', true);
+            }
+        }
+
+        // restore the multiples "fields" (field-menu + op-menu + value-input)
+        clause = findClauseBy_ux_zone(jsq.query, "FIELDS");
+        if (clause) {
+            $('#ADVSRCH_FIELDS_ZONE INPUT[name=must_match][value="' + clause.must_match + '"]').attr('checked', true);
+            $('#ADVSRCH_FIELDS_ZONE DIV.term_select_wrapper').remove();
+            for (var j = 0; j < clause.clauses.length; j++) {
+                var wrapper = AdvSearchFacetAddNewTerm(); // div.term_select_wrapper
+                var f = $(".term_select_field", wrapper);
+                var o = $(".term_select_op", wrapper);
+                var v = $(".term_select_value", wrapper);
+
+                f.data('fieldtype', clause.clauses[j].type);
+                $('option[value="' + clause.clauses[j].field + '"]', f).prop('selected', true);
+                $('option[value="' + clause.clauses[j].operator + '"]', o).prop('selected', true);
+                o.prop('disabled', false);
+                v.val(clause.clauses[j].value).prop('disabled', false);
+            }
+        }
+
+        // restore the "date field" (field-menu + from + to)
+        clause = findClauseBy_ux_zone(jsq.query, "DATE-FIELD");
+        if (clause) {
+            $("#ADVSRCH_DATE_ZONE SELECT[name=date_field] option[value='" + clause.field + "']").prop('selected', true);
+            $("#ADVSRCH_DATE_ZONE INPUT[name=date_min]").val(clause.from);
+            $("#ADVSRCH_DATE_ZONE INPUT[name=date_max]").val(clause.to);
+            if ($("#ADVSRCH_DATE_ZONE SELECT[name=date_field]").val() !== '') {
+                $("#ADVSRCH_DATE_SELECTORS").show();
+                // $('#ADVSRCH_DATE_ZONE').addClass('danger');
+            }
+        }
+
+        // restore the selected facets (whole saved as custom property)
+        if(! _.isUndefined(jsq._selectedFacets)) {
+            appEvents.emit('facets.setSelectedFacets', jsq._selectedFacets);
+            //(0, _index2.default)(services).setSelectedFacets(jsq._selectedFacets);
+            // selectedFacets = jsq._selectedFacets;
+        }
+
+        // the ux is restored, finish the job (hide unavailable fields/status etc, display "danger" where needed)
+        appEvents.emit('searchAdvancedForm.checkFilters');
+        //loadFacets([]);  // useless, facets will be restored after the query is sent
+
+        if(submit) {
+            appEvents.emit('search.doRefreshState');
+        }
+    }
+
+    var resetSearch = function resetSearch() {
+        var jsq = {
+            "sort":{
+                "field":"created_on",
+                "order":"desc"
+            },
+            "use_truncation":false,
+            "phrasea_recordtype":"RECORD",
+            "phrasea_mediatype":"",
+            "bases":[ ],
+            "statuses":[ ],
+            "query":{
+                "_ux_zone":"PROD",
+                "type":"CLAUSES",
+                "must_match":"ALL",
+                "enabled":true,
+                "clauses":[
+                    {
+                        "_ux_zone":"FIELDS",
+                        "type":"CLAUSES",
+                        "must_match":"ALL",
+                        "enabled":false,
+                        "clauses":[ ]
+                    },
+                    {
+                        "_ux_zone":"DATE-FIELD",
+                        "type":"DATE-FIELD",
+                        "field":"",
+                        "from":"",
+                        "to":"",
+                        "enabled":false
+                    },
+                    {
+                        "_ux_zone":"AGGREGATES",
+                        "type":"CLAUSES",
+                        "must_match":"ALL",
+                        "enabled":false,
+                        "clauses":[ ]
+                    }
+                ]
+            },
+            "_selectedFacets":{ }
+        };
+
+        restoreJsonQuery({'jsq':jsq, 'submit':false});
     };
 
     appEvents.listenAll({
-        'search.doCheckFilters': checkFilters,
-        'search.doSelectDatabase': selectDatabase,
-        'search.activateDatabase': (params) => activateDatabase(params.databases),
-        'search.doToggleCollection': toggleCollection,
-        'search.saveHiddenFacetsList': saveHiddenFacetsList
-    })
-    return {initialize};
+        'searchAdvancedForm.checkFilters':         checkFilters,
+        'searchAdvancedForm.selectDatabase':       selectDatabase,
+        'searchAdvancedForm.activateDatabase':     function (params) {
+            return activateDatabase(params.databases);
+        },
+        'searchAdvancedForm.toggleCollection':     toggleCollection,
+        'searchAdvancedForm.saveHiddenFacetsList': saveHiddenFacetsList,
+        'searchAdvancedForm.restoreJsonQuery':     restoreJsonQuery
+    });
+
+    return { initialize: initialize };
 };
 
 export default searchAdvancedForm;
