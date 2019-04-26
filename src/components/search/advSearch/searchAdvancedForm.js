@@ -544,7 +544,7 @@ const searchAdvancedForm = (services) => {
         }
 
         // restore the selected facets (whole saved as custom property)
-        if(! _.isUndefined(jsq._selectedFacets)) {
+        if(!_.isUndefined(jsq._selectedFacets)) {
             appEvents.emit('facets.setSelectedFacets', jsq._selectedFacets);
             //(0, _index2.default)(services).setSelectedFacets(jsq._selectedFacets);
             // selectedFacets = jsq._selectedFacets;

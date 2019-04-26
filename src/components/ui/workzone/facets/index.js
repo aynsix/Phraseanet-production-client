@@ -8,7 +8,7 @@ import * as _ from 'underscore';
 
 const workzoneFacets = services => {
     const {configService, localeService, appEvents} = services;
-
+    let selectedFacets = {};
     let facets = null;
 
     const ORDER_BY_BCT = 'ORDER_BY_BCT';

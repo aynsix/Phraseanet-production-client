@@ -276,7 +276,8 @@ const search = services => {
                     searchForm.trigger('submit');;
                 }
             }
-        } catch (e) {
+        }
+        catch (e) {
             // malformed jsonquery ?
             // no-op
             // console.error(e);
