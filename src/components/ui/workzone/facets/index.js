@@ -470,6 +470,9 @@ const workzoneFacets = services => {
     }
 
     var setSelectedFacets = function setSelectedFacets(facets) {
+        if(!_.isObject(facets) || facets.length === 0) {
+            facets = {};
+        }
         selectedFacets = facets;
     }
 
