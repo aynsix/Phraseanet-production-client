@@ -30,7 +30,6 @@ const search = services => {
     let answAjaxrunning = false;
     let resultInfoView;
     let facets = null;
-    let selectedFacetValues = [];
     var lastFilterResults = [];
     let savedHiddenFacetsList = configService.get('savedHiddenFacetsList') ? JSON.parse(configService.get('savedHiddenFacetsList')) : [];
 
@@ -115,15 +114,15 @@ const search = services => {
         searchResult.selection.empty();
 
         clearAnswers();
-        $('#SENT_query').val(query);
-        /*var histo = $('#history-queries ul');
-
-         histo.prepend('<li onclick="prodModule.doSpecialSearch(\'' + query.replace(/\'/g, "\\'") + '\')">' + query + '</li>');
-
-         var lis = $('li', histo);
-         if (lis.length > 25) {
-         $('li:last', histo).remove();
-         }*/
+        //$('#SENT_query').val(query);
+        if (query !== null) {
+            var histo = $('#history-queries ul');
+            histo.prepend('<li onclick="doSpecialSearch(\'' + query.replace(/\'/g, "\\'") + '\')">' + query + '</li>');
+            var lis = $('li', histo);
+            if (lis.length > 25) {
+                $('li:last', histo).remove();
+            }
+        }
 
         $('#idFrameC li.proposals_WZ').removeClass('active');
         appEvents.emit('search.doRefreshState');
@@ -133,25 +132,50 @@ const search = services => {
     /**
      *
      */
-    const onRefreshSearchState = () => {
-        appEvents.emit('facets.doLoadFacets', {
-            facets: lastFilterResults,
-            filterFacet: $('#look_box_settings input[name=filter_facet]').prop('checked'),
-            facetOrder: $('#look_box_settings select[name=orderFacet]').val(),
-            facetValueOrder: $('#look_box_settings select[name=facetValuesOrder]').val(),
-            hiddenFacetsList: savedHiddenFacetsList
+    const doRefreshState = () => {
+
+        // get the selectedFacets from the facets module
+        let selectedFacets = {};
+        appEvents.emit('facets.getSelectedFacets', function(v) {
+            selectedFacets = v;
         });
 
         let data = $searchForm.serializeArray();
-        
-        var jsonData = workzoneFacets(services).serializeJSON(data, selectedFacetValues, facets);
+        // fix bug : if a sb is dual checked, both values are sent with the SAME name
+        //     we can remove those since it means we don't care about this sb
+        var sb = [];
+        _.each(data, function (v) {
+            var name = v.name;
+            if (name.substr(0, 7) === 'status[') {
+                if (_.isUndefined(sb[name])) {
+                    sb[name] = 0;
+                }
+                sb[name]++;
+            }
+        });
+        data = _.filter(data, function (e) {
+            return _.isUndefined(sb[e.name]) || sb[e.name] === 1;
+        });
+        // end of sb fix
+
+        var jsonData = serializeJSON(data, selectedFacets);
+        var qry = buildQ(jsonData.query);
+
+        data.push({
+                name: 'jsQuery',
+                value: JSON.stringify(jsonData)
+            },
+            {
+                name: 'qry',
+                value: qry
+            });
         console.log(jsonData);
 
         let searchPromise = {};
         searchPromise = $.ajax({
             type: 'POST',
             url: `${url}prod/query/`,
-            data: jsonData,
+            data: data,
             dataType: 'json',
             beforeSend: function (formData) {
                 if (answAjaxrunning && searchPromise.abort !== undefined) {
@@ -178,23 +202,8 @@ const search = services => {
                 });
 
                 //load last result collected or [] if length == 0
-                if (datas.facets.length == 0) {
-                    appEvents.emit('facets.doLoadFacets', {
-                        facets: lastFilterResults,
-                        filterFacet: $('#look_box_settings input[name=filter_facet]').prop('checked'),
-                        facetOrder: $('#look_box_settings select[name=orderFacet]').val(),
-                        facetValueOrder: $('#look_box_settings select[name=facetValuesOrder]').val(),
-                        hiddenFacetsList: savedHiddenFacetsList
-                    });
-                } else {
-                    lastFilterResults = datas.facets;
-                    appEvents.emit('facets.doLoadFacets', {
-                        facets: datas.facets,
-                        filterFacet: $('#look_box_settings input[name=filter_facet]').prop('checked'),
-                        facetOrder: $('#look_box_settings select[name=orderFacet]').val(),
-                        facetValueOrder: $('#look_box_settings select[name=facetValuesOrder]').val(),
-                        hiddenFacetsList: savedHiddenFacetsList
-                    });
+                if (!datas.facets) {
+                    datas.facets = [];
                 }
 
                 facets = datas.facets;
@@ -207,7 +216,6 @@ const search = services => {
                     datas.infos,
                     searchResult.selection.length()
                 );
-
                 $('#tool_navigate').empty().append(datas.navigationTpl);
 
                 // @TODO refactor
@@ -243,11 +251,37 @@ const search = services => {
                 }
 
                 updateHiddenFacetsListInPrefsScreen();
-
-                afterSearch();
+                appEvents.emit('search.doAfterSearch');
+                appEvents.emit('search.updateFacetData');
             }
         });
+
     };
+
+    let playFirstQuery = function playFirstQuery() {
+        // if defined, play the first query
+        //
+        try {
+            var jsq = $("#FIRST_QUERY_CONTAINER");
+            if (jsq.length > 0) {
+                // there is a query to play
+                if (jsq.data('format') === "json") {
+                    // json
+                    jsq = JSON.parse(jsq.text());
+                    // restoreJsonQuery(jsq, true);
+                    appEvents.emit('searchAdvancedForm.restoreJsonQuery', {'jsq':jsq, 'submit':true});
+                }
+                else {
+                    // text : do it the old way : restore only fulltext and submit
+                    searchForm.trigger('submit');;
+                }
+            }
+        } catch (e) {
+            // malformed jsonquery ?
+            // no-op
+            // console.error(e);
+        }
+    }
 
     const updateHiddenFacetsListInPrefsScreen = () => {
         const $hiddenFacetsContainer = $('#look_box_settings').find('.hiddenFiltersListContainer');
@@ -261,12 +295,12 @@ const search = services => {
                 $hiddenFacetsContainer.append($html);
 
                 $('.remove-btn').on('click', function () {
-                    let name = $(this).parent().data("name");
+                    let name = $(this).parent().data('name');
                     savedHiddenFacetsList = _.reject(savedHiddenFacetsList, function (obj) {
-                        return (obj.name == name);
+                        return (obj.name === name);
                     });
                     $(this).parent().remove();
-                    appEvents.emit('search.saveHiddenFacetsList', savedHiddenFacetsList);
+                    appEvents.emit('searchAdvancedForm.saveHiddenFacetsList', savedHiddenFacetsList);
                     updateFacetData();
                 });
             });
@@ -372,7 +406,7 @@ const search = services => {
             searchResult.selection.serialize()
         );
         $('#formAnswerPage').val(page);
-        onRefreshSearchState();
+        appEvents.emit('search.doRefreshState');
     };
 
     const updateFacetData = () => {
@@ -390,23 +424,244 @@ const search = services => {
         updateHiddenFacetsListInPrefsScreen();
     }
 
-    const getSelectedFacetValues = (facets) => {
-        selectedFacetValues = facets;
-        
+    /**
+     * restore the advansearch ux from a json-query
+     * elements are restored thank's to custom properties ("_xxx") included in json.
+     * nb : for now, _ux_ facets can't be restored _before_sending_the_query_,
+     *      but since "selectedFacets" (js) IS restored, sending the query WILL restore facets.
+     *
+     * @param jsq
+     * @param submit
+     */
+    function serializeJSON(data, selectedFacets) {
+
+        var json = {},
+            obj = {},
+            bases = [],
+            statuses = [],
+            fields = [],
+            aggregates = [];
+
+        $.each(data, function (i, el) {
+            obj[el.name] = el.value;
+
+            var col = parseInt(el.value);
+
+            if (el.name === 'bases[]') {
+                bases.push(col);
+            }
+        });
+
+        var _tmpStat = [];
+        $('#ADVSRCH_SB_ZONE INPUT[type=checkbox]:checked').each(function (k, o) {
+            o = $(o);
+            var b = o.data('sbas_id');
+            var i = o.data('sb');
+            var v = o.val();
+            if (_.isUndefined(_tmpStat[b])) {
+                _tmpStat[b] = [];
+            }
+            if (_.isUndefined(_tmpStat[b][i])) {
+                // first check
+                _tmpStat[b][i] = v;
+            } else {
+                // both checked
+                _tmpStat[b][i] = -1;
+            }
+        });
+        _.each(_tmpStat, function (v, sbas_id) {
+            var status = [];
+            _.each(v, function (v, sb_index) {
+                if (v !== -1) {
+                    // ignore both checked
+                    status.push({
+                        'index': sb_index,
+                        'value': v === '1'
+                    });
+                }
+            });
+            statuses.push({
+                'databox': sbas_id,
+                'status': status
+            });
+        });
+
+        $('.term_select_field').each(function (i, el) {
+            if ($(el).val()) {
+                fields.push({
+                    'type': 'TEXT-FIELD',
+                    'field': $(el).val(),
+                    'operator': $(el).next().val() === ':' ? ":" : "=",
+                    'value': $(el).next().next().val(),
+                    "enabled": true
+                });
+            }
+        });
+
+        _.each(selectedFacets, function(facets) {
+            _.each(facets.values, function(facetValue) {
+                aggregates.push({
+                    'type'   : facetValue.value.type,
+                    'field'  : facetValue.value.field,
+                    'value'  : facetValue.value.raw_value,
+                    'negated': facetValue.negated,
+                    'enabled': facetValue.enabled
+                });
+            });
+        });
+
+        var date_field = $('#ADVSRCH_DATE_ZONE select[name=date_field]', 'form.phrasea_query .adv_options').val();
+        var date_from = $('#ADVSRCH_DATE_ZONE input[name=date_min]', 'form.phrasea_query .adv_options').val();
+        var date_to = $('#ADVSRCH_DATE_ZONE input[name=date_max]', 'form.phrasea_query .adv_options').val();
+
+        json['sort'] = {
+            'field': obj.sort,
+            'order': obj.ord
+        };
+        json['perpage'] = parseInt($('#nperpage_value').val());
+        json['page'] = obj.pag === '' ? 1 : parseInt(obj.pag);
+        json['use_truncation'] = obj.truncation === 'on' ? true : false;
+        json['phrasea_recordtype'] = obj.search_type == 1 ? 'STORY' : 'RECORD';
+        json['phrasea_mediatype'] = obj.record_type.toUpperCase();
+        json['bases'] = bases;
+        json['statuses'] = statuses;
+        json['query'] = {
+            '_ux_zone': $('.menu-bar .selectd').text().trim().toUpperCase(),
+            'type': 'CLAUSES',
+            'must_match': 'ALL',
+            'enabled': true,
+            'clauses': [{
+                '_ux_zone': 'FULLTEXT',
+                'type': 'FULLTEXT',
+                'value': obj.fake_qry,
+                'enabled': obj.fake_qry !== ''
+            }, {
+                '_ux_zone': 'FIELDS',
+                'type': 'CLAUSES',
+                'must_match': obj.must_match,
+                'enabled': true,
+                'clauses': fields
+            }, {
+                '_ux_zone': 'DATE-FIELD',
+                'type': 'DATE-FIELD',
+                'field': date_field,
+                'from': date_from,
+                'to': date_to,
+                "enabled": true
+            }, {
+                '_ux_zone': 'AGGREGATES',
+                'type': 'CLAUSES',
+                'must_match': 'ALL',
+                'enabled': true,
+                'clauses': aggregates
+            }]
+        };
+        json['_selectedFacets'] = selectedFacets;
+
+        return json;
+    }
+
+    var _ALL_Clause_ = "(created_on>1900/01/01)";
+    function buildQ(clause) {
+        if (clause.enabled === false) {
+            return "";
+        }
+        switch (clause.type) {
+            case "CLAUSES":
+                var t_pos = [];
+                var t_neg = [];
+                for (var i = 0; i < clause.clauses.length; i++) {
+                    var _clause = clause.clauses[i];
+                    var _sub_q = buildQ(_clause);
+                    if (_sub_q !== "()" && _sub_q !== "") {
+                        if (_clause.negated === true) {
+                            t_neg.push(_sub_q);
+                        } else {
+                            t_pos.push(_sub_q);
+                        }
+                    }
+                }
+                if (t_pos.length > 0) {
+                    // some "yes" clauses
+                    if (t_neg.length > 0) {
+                        // some "yes" and and some "neg" clauses
+                        if (clause.must_match === "ONE") {
+                            // some "yes" and and some "neg" clauses, one is enough to match
+                            var neg = "(" + _ALL_Clause_ + " EXCEPT (" + t_neg.join(" OR ") + "))";
+                            t_pos.push(neg);
+                            return "(" + t_pos.join(" OR ") + ")";
+                        } else {
+                            // some "yes" and and some "neg" clauses, all must match
+                            return "((" + t_pos.join(" AND ") + ") EXCEPT (" + t_neg.join(" OR ") + "))";
+                        }
+                    } else {
+                        // only "yes" clauses
+                        return "(" + t_pos.join(clause.must_match === "ONE" ? " OR " : " AND ") + ")";
+                    }
+                } else {
+                    // no "yes" clauses
+                    if (t_neg.length > 0) {
+                        // only "neg" clauses
+                        return "(" + _ALL_Clause_ + " EXCEPT (" + t_neg.join(clause.must_match === "ONE" ? " OR " : " AND ") + "))";
+                    } else {
+                        // no clauses at all
+                        return "";
+                    }
+                }
+            case "FULLTEXT":
+                return clause.value ? "(" + clause.value + ")" : "";
+
+            case "DATE-FIELD":
+                var t = "";
+                if (clause.from) {
+                    t = clause.field + ">=" + clause.from;
+                }
+                if (clause.to) {
+                    t += (t ? " AND " : "") + clause.field + "<=" + clause.to;
+                }
+                return t ? "(" + t + ")" : '';
+
+            case "TEXT-FIELD":
+                return clause.field + clause.operator + "\"" + clause.value + "\"";
+
+            case "GEO-DISTANCE":
+                return clause.field + "=\"" + clause.lat + " " + clause.lon + " " + clause.distance + "\"";
+
+            case "STRING-AGGREGATE":
+                return clause.field + ":\"" + clause.value + "\"";
+
+            case "COLOR-AGGREGATE":
+                return clause.field + ":\"" + clause.value + "\"";
+
+            case "NUMBER-AGGREGATE":
+                return clause.field + "=" + clause.value;
+
+            case "BOOL-AGGREGATE":
+                return clause.field + "=" + (clause.value ? "1" : "0");
+
+            default:
+                console.error("Unknown clause type \"" + clause.type + "\"");
+                return null;
+        }
     }
 
     appEvents.listenAll({
-        'search.doRefreshState': onRefreshSearchState,
+        'search.doRefreshState': doRefreshState,
         'search.doNewSearch': newSearch,
         'search.doAfterSearch': afterSearch,
         'search.doClearSearch': clearAnswers,
         'search.doNavigate': navigate,
         'search.updateFacetData': updateFacetData,
         'search.reloadHiddenFacetList': reloadHiddenFacetList,
-        'search.getSelectedFacetValues': getSelectedFacetValues
+        'search.playFirstQuery': playFirstQuery
     });
 
-    return { initialize, getResultSelectionStream, getResultNavigationStream };
+    return {
+        initialize: initialize,
+        getResultSelectionStream: getResultSelectionStream,
+        getResultNavigationStream: getResultNavigationStream
+    };
 };
+
 
 export default search;

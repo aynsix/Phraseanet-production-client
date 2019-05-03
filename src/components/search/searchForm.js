@@ -7,6 +7,7 @@ import dialog from 'phraseanet-common/src/components/dialog';
 import Selectable from '../utils/selectable';
 import searchAdvancedForm from './advSearch/searchAdvancedForm';
 import searchGeoForm from './geoSearch/searchGeoForm';
+
 const searchForm = (services) => {
     const {configService, localeService, appEvents} = services;
     let $container = null;
@@ -29,22 +30,22 @@ const searchForm = (services) => {
             event.preventDefault();
             openAdvancedForm();
         });
-        
+
         toggleSearchState();
-        appEvents.emit('search.doCheckFilters');
-        
+        appEvents.emit('searchAdvancedForm.checkFilters');
+
         $container.on('click', '.geo-search-action-btn', (event) => {
             event.preventDefault();
             geoForm.openModal({
                 drawnItems: searchPreferences.drawnItems || false,
             });
         });
-        
-        
+
+
         $container.on('click', 'input[name=search_type]', (event) => {
             let $el = $(event.currentTarget);
             let $record_types = $('#recordtype_sel');
-            
+
             if ($el.hasClass('mode_type_reg')) {
                 $record_types.css('visibility', 'hidden');  // better than hide because does not change layout
                 $record_types.prop('selectedIndex', 0);
@@ -95,11 +96,8 @@ const searchForm = (services) => {
 
         return searchValue;
     }
-    const getSearchValue = () => {
-        return $searchValue.val();
-    }
 
-    const updateSearchPreferences = (preferences) => {
+    const updatePreferences = (preferences) => {
         for (let prefKey in preferences) {
             if (preferences.hasOwnProperty(prefKey)) {
                 searchPreferences[prefKey] = preferences[prefKey];
@@ -113,7 +111,7 @@ const searchForm = (services) => {
      */
     const openAdvancedForm = () => {
         let $searchFormContainer = $container.parent();
-        
+
         var options = {
             size: (window.bodySize.x - 120) + 'x' + (window.bodySize.y - 120),
             loading: false,
@@ -141,9 +139,8 @@ const searchForm = (services) => {
 
     }
     appEvents.listenAll({
-        'search.getSearchValue': getSearchValue,
-        'search.updateSearchValue': updateSearchValue,
-        'search.updatePreferences': updateSearchPreferences
+        'searchForm.updateSearchValue': updateSearchValue,
+        'searchForm.updatePreferences': updatePreferences
     })
     return {initialize};
 };

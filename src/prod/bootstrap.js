@@ -157,7 +157,7 @@ class Bootstrap {
                 break;
             default:
                 // trigger a search on loading
-                this.appEvents.emit('search.doRefreshState');
+                this.appEvents.emit('search.playFirstQuery');
             //$('#searchForm').trigger('submit');
             // $('form[name="phrasea_query"]').addClass('triggerAfterInit');
             // trigger last search
@@ -245,7 +245,7 @@ class Bootstrap {
         }, 450);
 
         //startThesaurus();
-        this.appEvents.emit('search.doCheckFilters');
+        this.appEvents.emit('searchAdvancedForm.checkFilters');
         this.appUi.activeZoning();
         this.appEvents.emit('ui.resizeAll');
 
