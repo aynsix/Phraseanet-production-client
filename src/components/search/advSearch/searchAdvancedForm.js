@@ -170,6 +170,10 @@ const searchAdvancedForm = (services) => {
 
     };
 
+    $('#ADVSRCH_DATE_SELECTORS input').change(function () {
+        checkFilters(true);
+    });
+
     const checkFilters = (save) => {
         var danger = false;
         var search = {
@@ -393,6 +397,8 @@ const searchAdvancedForm = (services) => {
             }
         } else {
             $('#ADVSRCH_DATE_SELECTORS', container).hide();
+            $('#ADVSRCH_DATE_ZONE input[name=date_min]').val("");
+            $('#ADVSRCH_DATE_ZONE input[name=date_max]').val("");
         }
 
         fieldsSelect.scrollTop(scroll);
