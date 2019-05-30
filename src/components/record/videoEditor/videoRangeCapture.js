@@ -21,10 +21,6 @@ const videoRangeCapture = (services, datas, activeTab = false) => {
             options.aspectRatio = configService.get('resource.aspectRatio');
         }
 
-        if (configService.get('resource.autoplay') !== null) {
-            options.autoplay = configService.get('resource.autoplay');
-        }
-
         if (configService.get('resource.playbackRates') !== null) {
             options.playbackRates = configService.get('resource.playbackRates');
         }
@@ -38,7 +34,7 @@ const videoRangeCapture = (services, datas, activeTab = false) => {
         }
 
         options.techOrder = ['html5', 'flash'];
-
+        options.autoplay = false;
         options.recordId = initData.recordId;
         options.record = initData.records[0];
         options.databoxId = initData.databoxId;
