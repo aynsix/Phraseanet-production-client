@@ -59,7 +59,7 @@ const searchForm = (services) => {
                 $dialog.close();
                 isAdvancedDialogOpen = false;
             }
-            appEvents.emit('facets.doResetSelectedFacets');
+            /*appEvents.emit('facets.doResetSelectedFacets');*/
             appEvents.emit('search.doNewSearch', $searchValue.val())
             return false;
         });
