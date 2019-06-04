@@ -85,7 +85,14 @@
                 cursor: pointer;
                 &:hover {
                     background-color: $answersToolsBtnHoverBg;
+                    background-image: none;
                     color: $highlightTextColor; //$answersToolsBtnHoverColor;
+                }
+            }
+            > li > a {
+                &:hover, &:focus, &:active {
+                    background-color: $answersToolsBtnHoverBg;
+                    background-image: none;
                 }
             }
             img {
