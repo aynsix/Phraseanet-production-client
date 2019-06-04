@@ -1087,7 +1087,8 @@ h4 {
 .dropdown-menu .divider {
     background-color: $dropdownDividerBg;
     border-bottom: 1px solid $dropdownDividerBorder;
-    margin: 3px 1px 3px 1px;
+    margin: 0;
+    height: 0;
 }
 
 .close {
