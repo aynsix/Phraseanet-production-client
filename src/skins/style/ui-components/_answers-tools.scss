@@ -66,26 +66,39 @@
 
         .classicButton button.btn-inverse img,
         .dropdownButton button.btn-inverse img {
-            margin: 0 2px;
+            margin: 0 5px 0 2px;
             max-width: none;
-            width: 16px;
+            width: 21px;
         }
         .dropdown-menu {
-            min-width: 95px;
+            min-width: 120px;
+            padding: 0;
+            margin: 0;
+            border-radius: 0 0 6px 6px;
+            overflow: hidden;
             background-color: $answersToolsBtnBg;
-            *border: 1px solid $answersToolsBtnBorder;
+            border: 0;
             a {
-                padding: 3px 10px;
+                padding: 10px 14px;
                 font-size: $mediumFontSize;
                 color: $answersToolsBtnColor;
                 cursor: pointer;
                 &:hover {
                     background-color: $answersToolsBtnHoverBg;
+                    background-image: none;
                     color: $highlightTextColor; //$answersToolsBtnHoverColor;
+                }
+            }
+            > li > a {
+                &:hover, &:focus, &:active {
+                    background-color: $answersToolsBtnHoverBg;
+                    background-image: none;
                 }
             }
             img {
                 margin-right: 5px;
+                width: 21px;
+                max-width: unset;
             }
         }
         #settings {
