@@ -113,6 +113,11 @@ $diapoBorderColor: $darkerBorderColor !default;
 
   .twenty-four & {
     height: 23px;
+      display: table;
+      .fa-stack {
+          padding-left: 1px;
+          padding-right: 1px;
+      }
   }
 }
 .diapo.CHIM .thumb_wrapper {
