@@ -151,12 +151,10 @@ $workzoneTabDisabledTextColor: $mediumTextActiveColor !default;
       text-align: center;
     }
     .WZbasketTab {
-      display: block;
-      background-image: url('#{$iconsPath}workzone32.png');
-      background-repeat: no-repeat;
-      background-position: 9px 21px;
-      width: 70px;
-      height: 82px;
+      text-align: center;
+        #basket_menu_trigger {
+            line-height: 21px;
+        }
     }
   }
   .closed {

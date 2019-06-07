@@ -135,6 +135,10 @@ const workzone = (services) => {
             extraClass: 'tooltip_flat'
         });
 
+        $('.basket_title').tooltip({
+            extraClass: 'tooltip_flat'
+        });
+
         $('#idFrameC .tabs').tabs({
             activate: function (event, ui) {
                 if (ui.newTab.context.hash === '#thesaurus_tab') {
