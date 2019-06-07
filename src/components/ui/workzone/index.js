@@ -543,6 +543,17 @@ const workzone = (services) => {
                     return WorkZoneElementRemover($(this), false);
                 });
 
+                $("#baskets div.content select[name=valid_ord]").on('change', function () {
+                    var active = $('#baskets .SSTT.ui-state-active');
+                    if (active.length === 0) {
+                        return;
+                    }
+
+                    var order = $(this).val();
+
+                    getContent(active, order);
+                });
+
                 dest.droppable({
                     accept: function (elem) {
                         if ($(elem).hasClass('CHIM')) {
