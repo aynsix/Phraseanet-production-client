@@ -1180,6 +1180,9 @@ h4 {
     margin-bottom: 4px;
     margin-top: 3px;
 }
+.icomoon.white {
+    color: $darkerTextColor2;
+}
 
 @import 'ui-components/jquery-ui';
 @import 'ui-components/context-menu';
