@@ -321,7 +321,9 @@ span.ww_winTitle {
     position: relative;
     float: left;
     margin-bottom: 20px;
-
+        #baskets & {
+            margin-bottom: 42px;
+        }
     span.feedback_user_name {
         position: relative;
         background: #292929;
@@ -334,7 +336,7 @@ span.ww_winTitle {
         width: calc(100% - 5px);
         left: 0;
         top: 0;
-        border-bottom: 1px solid #343434;
+        border-bottom: 1px solid #484848;
     }
 
     .note_tips_holder {
