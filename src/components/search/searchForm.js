@@ -12,6 +12,7 @@ const searchForm = (services) => {
     const {configService, localeService, appEvents} = services;
     let $container = null;
     let $searchValue = null;
+    let $sentValue = null;
     let isAdvancedDialogOpen = false;
     let $dialog = null;
     let geoForm;
@@ -20,6 +21,21 @@ const searchForm = (services) => {
     const initialize = (options) => {
         let initWith = {$container} = options;
         $searchValue = $('#EDIT_query');
+
+        /*Remove space on 1st and last char*/
+        $searchValue.on('change', function (event) {
+            $sentValue =  $searchValue.val();
+
+            while ($sentValue.charAt(0) === ' ') {
+                $sentValue = $sentValue.slice(1);
+
+            }
+            while ($sentValue.charAt($sentValue.length - 1) === ' ') {
+                $sentValue = $sentValue.slice(0, -1);
+            }
+            $searchValue.val($sentValue);
+        });
+
 
         searchAdvancedForm(services).initialize({
             $container: $container
