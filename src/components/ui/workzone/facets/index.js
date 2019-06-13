@@ -90,7 +90,7 @@ const workzoneFacets = services => {
                         text = text.substring(0, textLimit) + '…';
                     }
                     label = text;
-                    title = tooltip = _.escape(text);
+                    /*title = tooltip = _.escape(text);*/
                 }
 
                 return {
@@ -452,7 +452,7 @@ const workzoneFacets = services => {
                                     s_facet.data('facetNegated', facetValue.negated);
 
                                     /*add selected facet tooltip*/
-                                    s_facet.attr('title', label);
+                                    s_facet.attr('title', facetValue.value.value);
                                     s_facet.tooltip();
 
                                     s_facet.hover(function () {
