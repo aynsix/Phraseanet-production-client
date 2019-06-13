@@ -332,7 +332,10 @@ const workzoneFacets = services => {
                         deleteButton.hide();
 
                         $nodeSpan.hover(function () {
-                            deleteButton.show();
+                            /*Dont show deleteButton if there is selected facet*/
+                            if ($('.fancytree-folder', data.node.li).find('[class^="facetFilter_"]').length === 0) {
+                                deleteButton.show();
+                            }
                         }, function () {
                             deleteButton.hide();
                         });
@@ -447,6 +450,10 @@ const workzoneFacets = services => {
                                     s_facet.data('facetField', data.node.data.field);
                                     s_facet.data('facetLabel', label);
                                     s_facet.data('facetNegated', facetValue.negated);
+
+                                    /*add selected facet tooltip*/
+                                    s_facet.attr('title', label);
+                                    s_facet.tooltip();
 
                                     s_facet.hover(function () {
                                         $(buttonsSpan).show();
