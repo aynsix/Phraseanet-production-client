@@ -86,7 +86,7 @@ $answersToolsBtnHoverBg: #666666;
 $answersToolsBtnHoverColor: #ffffff;
 
 $answersToolsBtnSettingsColor: lighten($answersToolsBtnColor, 10);
-$answersToolsBtnSettingsHoverBg: #393939;
+$answersToolsBtnSettingsHoverBg: #9c9c9c;
 $answersToolsBtnSettingsHoverColor: lighten($answersToolsBtnColor, 10);
 $answersToolsBtnSettingsBorder: #999;
 
@@ -147,7 +147,7 @@ $pushboxBadgeColor: #666666;
 /******** MAIN MENU CONFIG ********/
 // $mainMenuRightListBorderLeft: #999;
 $mainMenuBottomBorder: none;
-$mainMenuBackgroundColor: $mediumBackgroundColor; //BFBFBF;
+$mainMenuBackgroundColor: #7b7b7b; //BFBFBF;
 $mainMenuBottomBorder: none;
 $mainMenuMarginBottom: 0;
 $mainMenuLinkColor: #fff;
@@ -171,6 +171,14 @@ $proposalsTitleColor: #ffffff;
 $proposalsTitleBorder: #666666;
 $proposalsTitleHoverColor: lighten($proposalsTitleColor, 10);
 $proposalsFacetHoverColor: #fff;
+
+/******** FACETS SEE MORE BTN********/
+$see_more_btn_bg: #dbdbdb;
+$see_more_btn_color: #2d2d2d;
+$see_more_btn_border: #dbdbdb;
+
+$see_more_btn_bg_hov: #f4f4f4;
+$see_more_btn_color_hov: #353535;
 
 @import '../../../../stylesheets/shared/jquery-ui/ui-lightness';
 @import '../skin-shared';

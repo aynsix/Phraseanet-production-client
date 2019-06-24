@@ -145,7 +145,7 @@ $pushboxBadgeColor: #bfbfbf;
 
 /******** MAIN MENU CONFIG ********/
 $mainMenuBottomBorder: none;
-$mainMenuBackgroundColor: #1a1a1a; //BFBFBF;
+$mainMenuBackgroundColor: #979797; //BFBFBF;
 $mainMenuBottomBorder: none;
 $mainMenuMarginBottom: 0;
 $mainMenuLinkColor: #ffffff;
@@ -187,5 +187,15 @@ $answersDocInfoBorder: #fafafa !default;
 $answersDocInfoColor: #ffffff !default;
 $answersLinkColor: #ffffff !default;
 $answersInfoLabelColor: #ffffff !default;
+
+/******** FACETS SEE MORE BTN********/
+$see_more_btn_bg: #dbdbdb;
+$see_more_btn_color: #2d2d2d;
+$see_more_btn_border: #dbdbdb;
+
+$see_more_btn_bg_hov: #ffffff;
+$see_more_btn_color_hov: #353535;
+
+
 @import '../../../../stylesheets/shared/jquery-ui/ui-lightness';
 @import '../skin-shared';

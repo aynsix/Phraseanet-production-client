@@ -161,5 +161,13 @@ $proposalsTitleHoverColor: lighten(
 $proposalsTitleBorder: #303030;
 $proposalsFacetHoverColor: #fff;
 
+/******** FACETS SEE MORE BTN********/
+$see_more_btn_bg: #202020;
+$see_more_btn_color: #a3a3a3;
+$see_more_btn_border: #616161;
+
+$see_more_btn_bg_hov: #454545;
+$see_more_btn_color_hov: #a3a3a3;
+
 @import '../../../../stylesheets/shared/jquery-ui/dark-hive';
 @import '../skin-shared';
