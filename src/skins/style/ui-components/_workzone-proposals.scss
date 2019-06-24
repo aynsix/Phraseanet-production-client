@@ -62,45 +62,49 @@ $proposalsFacetHoverColor: #FFF !default;
     overflow: auto;
     position: relative;
     .newNode {
-      position: relative;
-      overflow: auto;
-      clear: both;
-      margin-left: 20px;
+    position: relative;
+    overflow: auto;
+    clear: both;
+    margin-left: 20px;
     }
     .dataNode {
-      float: left;
-      width: 60%;
-      height: 100%;
-      margin-top: 10px;
-      margin-bottom: 10px;
+    float: left;
+    width: 60%;
+    height: 100%;
+    margin-top: 10px;
+    margin-bottom: 10px;
     }
     .fancytree-title {
-      font-size: $xmediumFontSize;
-        margin-left: 24px;
-      float: left;
-        width: 27%;
-      line-height: 49px;
+    font-size: $xmediumFontSize;
+    margin-left: 24px;
+    float: left;
+    width: 27%;
+    line-height: 49px;
     }
-      .mask-facets-btn {
-          position: absolute;
-          display: none;
-          height: 50px;
-          width: 15px;
-          padding-left: 6px;
-          padding-right: 6px;
-          a {
-              position: absolute;
-              cursor: pointer;
-              background: url(/assets/common/images/icons/bgd_facetFilter.png) 0px 5px no-repeat;
-              height: 25px;
-              width: 14px;
-              top: 0;
-              bottom: 0;
-              left: 0;
-              right: 0;
-              margin: auto;
-          }
-      }
+    .mask-facets-btn {
+        position: absolute;
+        display: none;
+        height: 50px;
+        width: 15px;
+        padding-left: 6px;
+        padding-right: 6px;
+        a {
+            position: relative;
+            cursor: pointer;
+            font-family: "icomoon";
+            color: $proposalsFacetHoverColor;
+            height: 25px;
+            width: 14px;
+            top: 17px;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            margin: auto;
+                &:before {
+                  content: "\ea50";
+                }
+            }
+    }
     &:hover {
       border-left: 4px solid $proposalColor;
       color: $proposalsTitleHoverColor;
