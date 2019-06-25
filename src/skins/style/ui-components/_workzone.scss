@@ -17,6 +17,14 @@ $workzoneTabActiveTextColor: $lightTextColor !default;
 $workzoneTabDisabledBackgroundColor: $tabBackgroundColor !default;
 $workzoneTabDisabledTextColor: $mediumTextActiveColor !default;
 
+$white: #4990e2 !default;
+$toolsPanelBg: #464646 !default;
+$toolTitleColor: #b9b9b9 !default;
+$basketTips: rgba(0, 0, 0, 0.2) !default;
+$basketTips2: rgba(0, 0, 0, 0.19) !default;
+$dividerBg: #6c6c6c !default;
+
+
 
 /**
  * Workzone
@@ -176,13 +184,16 @@ $workzoneTabDisabledTextColor: $mediumTextActiveColor !default;
     margin-top: 3px;
     width: 160px;
     height: 30px;
-    background-color: #464646;
+    background-color: $mainMenuBackgroundColor;
     padding-left: 16px;
-    color: #FFF;
+    color: $mainMenuLinkColor;
     cursor: pointer;
     text-align: left;
     border: none;
     outline: none;
+      &.active {
+          color: $white !important;
+      }
     span {
       font-family: Roboto;
       font-size: 12px;
@@ -208,7 +219,7 @@ $workzoneTabDisabledTextColor: $mediumTextActiveColor !default;
     width: 136px;
     z-index: 1000;
     position: absolute;
-    background-color: #464646;
+    background-color: $toolsPanelBg;
     padding: 0 12px;
     overflow: hidden;
     max-height: 0;
@@ -216,7 +227,7 @@ $workzoneTabDisabledTextColor: $mediumTextActiveColor !default;
     .divider {
       width: 100%;
       height: 1px;
-      background-color: #6c6c6c;
+      background-color: $dividerBg;
       margin: 6px 0px;
     }
     img {
@@ -231,7 +242,7 @@ $workzoneTabDisabledTextColor: $mediumTextActiveColor !default;
       font-stretch: normal;
       line-height: normal;
       letter-spacing: normal;
-      color: #b9b9b9;
+          color: $toolTitleColor;
     }
     button {
       display: block;
@@ -245,7 +256,7 @@ $workzoneTabDisabledTextColor: $mediumTextActiveColor !default;
       span {
         margin-left: 6px;
         font-size: 11px;
-        color: #b9b9b9;
+        color: $toolTitleColor;
         font-family: Roboto;
       }
     }
@@ -253,7 +264,7 @@ $workzoneTabDisabledTextColor: $mediumTextActiveColor !default;
       span {
          font-size: 12px;
          font-weight: bold;
-         color: #ffffff;
+         color: $toolTitleColor;
       }
     }
   }

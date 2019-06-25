@@ -123,7 +123,7 @@
         padding-bottom: 20px;
         border-left: 1px solid #7b7b7b;
         height: calc(100% - 60px);
-        
+
         .status-section-title {
             position: relative;
             font-size: 15px;
@@ -170,7 +170,7 @@
                 top: 0;
                 padding: 6px 8px 2px;
                 color: #000;
-                background-color: #ffffff;
+                background-color: $customCheckboxUnchecked;
                 border-top-right-radius: 6px;
                 border-bottom-right-radius: 6px;
             }
@@ -300,7 +300,7 @@
     cursor: pointer;
     z-index: 2;
     position: relative;
-    
+
     &:hover + #info-box {
         display: block !important;;
     }
@@ -366,14 +366,29 @@
         width: 13px;
         background-color: #ffffff;
         border-radius: 50%;
+        .search-header-block & {
+            background-color: $customCheckboxUnchecked;
+        }
+        .advanced_search_dialog_container & {
+            background-color: #ffffff;
+        }
+
     }
+
     &:hover input ~ .custom_checkbox,
     &:hover input ~ .custom_radio {
-      background-color: #ccc;
+        .search-header-block & {
+            background-color: #2196F3;
+        }
+        .advanced_search_dialog_container & {
+            background-color: #ccc;
+        }
     }
+
     &:hover input:checked ~ .custom_checkbox,
     &:hover input:checked ~ .custom_radio {
-      background-color: #2196F3;
+        background-color: #2196F3;
+
     }
     .danger_indicator {
         padding: 2px 5px;
@@ -382,7 +397,7 @@
 }
 
 
-  
+
 /********** RESPONISVE ************/
 
 @media screen and (max-width: 1100px) {

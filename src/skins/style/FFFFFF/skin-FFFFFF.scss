@@ -99,7 +99,7 @@ $preferencesLabelColor: #333333;
 
 $activeStateIcon: 'ui-icons_ffffff_256x240.png';
 $accordionLoaderImg: 'loader-black.gif';
-$accordionBgHeaderHover: #999;
+$accordionBgHeaderHover: #dada9da;
 
 $inputButtonHoverColor: #fefefe;
 $inputFallbackBorderColor: #b1b1b1;
@@ -138,6 +138,7 @@ $linkDefaultHover: #444444;
 $uiTextContentColor: $mediumTextColor;
 $uiTextTitleColor: $mediumTextColor;
 $uiLinkColor: $darkTextColor;
+$uiLinkColor2: #383838;
 $uiLinkFocusColor: $darkTextColor;
 $uiLinkActiveColor: $darkTextColor;
 
@@ -158,7 +159,8 @@ $proposalsTitleColor: #333;
 $proposalsTitleBorder: #bfbfbf;
 $proposalsTitleHoverColor: lighten($proposalsTitleColor, 10);
 $proposalsFacetHoverColor: #fff;
-//$proposalsContentTextColor: #FF0000;
+$facetTitleBg: #e4e4e4;
+$facetContentBg: #f8f8f8;
 
 /******** WORKZONE TABS CONFIG ********/
 $workzoneBackgroundColor: $mediumBackgroundColor;
@@ -182,7 +184,7 @@ $tabDisabledTextColor: $mediumTextActiveColor;
 /******** ANSWERS INFOS CONFIG ********/
 $answersInfoDialogBg: $highlightBackgroundAltColor !default;
 $answersInfoDialogColor: #ffffff !default;
-$answersDocInfoBg: $highlightBackgroundAltColor !default;
+$answersDocInfoBg: #979797 !default;
 $answersDocInfoBorder: #fafafa !default;
 $answersDocInfoColor: #ffffff !default;
 $answersLinkColor: #ffffff !default;
@@ -195,7 +197,17 @@ $see_more_btn_border: #dbdbdb;
 
 $see_more_btn_bg_hov: #ffffff;
 $see_more_btn_color_hov: #353535;
+$white: #ffffff;
 
+$toolsPanelBg: #cdcdcd;
+$toolTitleColor: #000000;
+$basketTips: rgba(0, 0, 0, 0.1);
+$basketTips2: rgba(0, 0, 0, 0.1);
+$dividerBg: #e4e4e4;
+
+$customCheckboxUnchecked: #444444;
+$lineSeparator: #e5e5e5;
+$feedback: #ffffff;
 
 @import '../../../../stylesheets/shared/jquery-ui/ui-lightness';
 @import '../skin-shared';

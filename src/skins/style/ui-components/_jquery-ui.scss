@@ -8,6 +8,7 @@ $tabActiveBackgroundColor: $tabContentBackgroundColor !default;
 $tabActiveTextColor: $lightTextColor !default;
 $tabDisabledBackgroundColor: $tabBackgroundColor !default;
 $tabDisabledTextColor: $mediumTextActiveColor !default;
+$mediumBackgroundColor2: $mediumBackgroundColor !default;
 
 .ui-dialog .ui-dialog-content.loading,
 .loading {
@@ -150,7 +151,7 @@ $tabDisabledTextColor: $mediumTextActiveColor !default;
     margin-bottom: 0;
     height: 44px;
     line-height: 44px;
-    background-color: $mediumBackgroundColor;
+    background-color: $mediumBackgroundColor2;
     border-bottom: 1px solid $mediumBorderColor; //$accordionBorderColor;
     border-radius: 0;
 }

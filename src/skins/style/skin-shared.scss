@@ -49,6 +49,12 @@ textarea::-moz-selection {
 
 label {
     color: $textInverseColor;
+    .phrasea_query & {
+        &:not(.custom_checkbox_label) {
+        color: #ffffff;
+        }
+    }
+
 }
 
 legend {
@@ -326,17 +332,17 @@ span.ww_winTitle {
         }
     span.feedback_user_name {
         position: relative;
-        background: #292929;
+        background: $feedback;
         padding-right: 9px;
         z-index: 1;
     }
     span.line_separator {
         position: absolute;
         height: 45%;
-        width: calc(100% - 5px);
-        left: 0;
+        width: calc(100% - 10px);
+        right: 0;
         top: 0;
-        border-bottom: 1px solid #484848;
+        border-bottom: 1px solid $lineSeparator;
     }
 
     .note_tips_holder {

@@ -26,7 +26,8 @@ $darkBackgroundColor: #9c9c9c; //B1B1B1;
 $darkBorderColor: darken($darkBackgroundColor, 10);
 $darkTextColor: #ffffff;
 
-$mediumBackgroundColor: #a6a6a6; // B2B2B2 <- to try
+$mediumBackgroundColor: #a6a6a6;
+$mediumBackgroundColor2: #b2b2b2; // B2B2B2 <- to try
 $mediumBorderColor: darken($mediumBackgroundColor, 10);
 $mediumBorderHighlightColor: #666666;
 $mediumTextColor: $textPrimaryColor;
@@ -100,7 +101,7 @@ $preferencesLabelColor: #333333;
 
 $activeStateIcon: 'ui-icons_ffffff_256x240.png';
 $accordionLoaderImg: 'loader-black.gif';
-$accordionBgHeaderHover: #999;
+$accordionBgHeaderHover: #a6a6a6;
 
 $inputButtonHoverColor: #fefefe;
 $inputFallbackBorderColor: #b1b1b1;
@@ -166,11 +167,22 @@ $workzoneBasketAlertDataBg: #fff190;
 $workzoneBasketAlertDataColor: #1a1a1a;
 $workzoneToolsLabelColor: #ffffff;
 
+/******** ANSWERS INFOS CONFIG ********/
+$answersInfoDialogBg: $highlightBackgroundAltColor !default;
+$answersInfoDialogColor: #ffffff !default;
+$answersDocInfoBg: #676767 !default;
+$answersDocInfoBorder: #fafafa !default;
+$answersDocInfoColor: #ffffff !default;
+$answersLinkColor: #ffffff !default;
+$answersInfoLabelColor: #ffffff !default;
+
 /******** PROPOSALS CONFIG ********/
 $proposalsTitleColor: #ffffff;
 $proposalsTitleBorder: #666666;
 $proposalsTitleHoverColor: lighten($proposalsTitleColor, 10);
 $proposalsFacetHoverColor: #fff;
+$facetTitleBg: #969696;
+$facetContentBg: #b9b9b9;
 
 /******** FACETS SEE MORE BTN********/
 $see_more_btn_bg: #dbdbdb;
@@ -179,6 +191,17 @@ $see_more_btn_border: #dbdbdb;
 
 $see_more_btn_bg_hov: #f4f4f4;
 $see_more_btn_color_hov: #353535;
+$white: #ffffff;
+
+$toolsPanelBg: #989898;
+$toolTitleColor: #ececec;
+$basketTips: rgba(0, 0, 0, 0.1);
+$basketTips2: rgba(0, 0, 0, 0.1);
+$dividerBg: #adadad;
+
+$customCheckboxUnchecked: #444444;
+$lineSeparator: #808080;
+$feedback: #9c9c9c;
 
 @import '../../../../stylesheets/shared/jquery-ui/ui-lightness';
 @import '../skin-shared';
