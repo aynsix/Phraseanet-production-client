@@ -20,6 +20,10 @@
         box-sizing: border-box;
         border-bottom: none; //1px solid $darkerBorderColor;
     }
+    .btn-inverse .caret {
+        border-top-color: $whiteCaret;
+        border-bottom-color: $whiteCaret;
+    }
     .tools {
         &:first-child .btn-group {
             border-right: 1px solid $answersToolsBtnSeparatorBorder;
@@ -56,11 +60,13 @@
         .dropdownButton button.btn-inverse {
             border-left: 0;
             border-right: 0;
+            .open &, &:hover, &:active, &:focus {
+                background-color: $btnHovLight;
+            }
         }
         .classicButton button.btn-inverse:hover,
         .dropdownButton button.btn-inverse:hover {
-            background-color: $answersToolsBtnBg;
-            *background-color: $answersToolsBtnBg;
+            background-color: $btnHovLight;
             color: $textPrimaryHoverColor;
         }
 
@@ -81,17 +87,19 @@
             a {
                 padding: 10px 14px;
                 font-size: $mediumFontSize;
-                color: $answersToolsBtnColor;
+                color: $answersToolsBtnColorSub;
+                background-color: $answersToolsBtnBgSub;
                 cursor: pointer;
                 &:hover {
-                    background-color: $answersToolsBtnHoverBg;
+                    font-weight: bold;
+                    background-color: $answersToolsBtnHoverBgSub;
                     background-image: none;
-                    color: $highlightTextColor; //$answersToolsBtnHoverColor;
+                    color: $answersToolsBtnColorSub; //$answersToolsBtnHoverColor;
                 }
             }
             > li > a {
                 &:hover, &:focus, &:active {
-                    background-color: $answersToolsBtnHoverBg;
+                    background-color: $answersToolsBtnHoverBgSub;
                     background-image: none;
                 }
             }
@@ -109,8 +117,7 @@
             padding-left: 21px;
             margin-right: 0;
             color: $answersToolsBtnSettingsColor;
-            background: url('#{$iconsPath}icone_settings.png') right 15px
-                no-repeat;
+            background: url('#{$iconsPath}icone_settings.png') right 15px no-repeat;
             background-position: right 21px top 15px;
             border-left: 1px solid $answersToolsBtnSettingsBorder;
             &:hover {

@@ -35,7 +35,7 @@ $mediumTextActiveColor: #eaeaea;
 
 $lightBackgroundColor: #9c9c9c;
 $lightBackgroundSelectedColor: darken($lightBackgroundColor, 10);
-$lightBackgroundActiveColor: darken($lightBackgroundColor, 10);
+$lightBackgroundActiveColor: #cdcdcd;
 $lightBorderColor: #b1b1b1;
 $lightBorderSelectedColor: darken($lightBorderColor, 10);
 $lightBorderActiveColor: darken($lightBorderColor, 10);
@@ -47,7 +47,7 @@ $textInverseHoverColor: #000;
 $bgInverseHoverColor: #333;
 
 /******* GLOBAL PROD **********************************************************/
-$scrollBgColor: $mediumBackgroundColor; //#3b3b3b;
+$scrollBgColor: #cccccc; //#3b3b3b;
 
 $paginateBorderColor: #bfbfbf;
 $paginateTextColor: #ffffff;
@@ -80,9 +80,16 @@ $answersToolsBgColor: #2a2a2a;
 $answersToolsBtnSeparatorBorder: #eaeaea;
 $answersToolsBtnBg: #f2f2f2;
 $answersToolsBtnBorder: #bfbfbf;
-$answersToolsBtnColor: #5b5b5b;
-$answersToolsBtnHoverBg: #bfbfbf;
-$answersToolsBtnHoverColor: #ffffff;
+$answersToolsBtnColor: #4d4d4d;
+$answersToolsBtnHoverBg: #d8d8d8;
+$answersToolsBtnHoverColor: #4d4d4d;
+
+/*Sub nav*/
+$whiteCaret: #000000;
+$answersToolsBtnColorSub: $answersToolsBtnColor;
+$answersToolsBtnBgSub: #cdcdcd;
+$answersToolsBtnHoverBgSub: #e3e3e3;
+$answersToolsBtnHoverColorSub: $answersToolsBtnHoverColor;
 
 $answersToolsBtnSettingsColor: #000; //lighten($answersToolsBtnColor, 10);
 $answersToolsBtnSettingsHoverBg: #d6d6d6;
@@ -97,7 +104,8 @@ $editTextMultiValueHighlightBg: #d0d0d0;
 
 $preferencesLabelColor: #333333;
 
-$activeStateIcon: 'ui-icons_ffffff_256x240.png';
+//$activeStateIcon: 'ui-icons_ffffff_256x240.png';
+$activeStateIcon: 'ui-icons_222222_256x240.png';
 $accordionLoaderImg: 'loader-black.gif';
 $accordionBgHeaderHover: #dada9da;
 
@@ -139,7 +147,7 @@ $uiTextContentColor: $mediumTextColor;
 $uiTextTitleColor: $mediumTextColor;
 $uiLinkColor: $darkTextColor;
 $uiLinkColor2: #383838;
-$uiLinkFocusColor: $darkTextColor;
+$uiLinkFocusColor: #000000;
 $uiLinkActiveColor: $darkTextColor;
 
 $pushboxBadgeColor: #bfbfbf;
@@ -207,7 +215,11 @@ $dividerBg: #e4e4e4;
 
 $customCheckboxUnchecked: #444444;
 $lineSeparator: #e5e5e5;
-$feedback: #ffffff;
+$basketBg: #f8f8f8;
+$feedback: $basketBg;
+$STTHover: #dad9da;
+$basketTitleHov: #383838;
+$btnHovLight: #d8d8d8;
 
 @import '../../../../stylesheets/shared/jquery-ui/ui-lightness';
 @import '../skin-shared';

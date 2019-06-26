@@ -86,8 +86,8 @@
             background: transparent;
             background-image: none;
             -webkit-appearance: none;
-               -moz-appearance: none;
-                    appearance: none;
+            -moz-appearance: none;
+            appearance: none;
 
             &:focus {
                 outline: none;
@@ -142,7 +142,7 @@
         width: 70px !important;
         height: 25px;
         line-height: 15px;
-        box-shadow: 0 2px 4px rgba(0,0,0,.5);
+        box-shadow: 0 2px 4px rgba(0, 0, 0, .5);
         &:hover {
             background: #dadada;
             color: #000000 !important;
@@ -262,7 +262,7 @@
     }
     #ADVSRCH_SB_ZONE {
         tbody:before {
-        /* spacing between thead and tbody */
+            /* spacing between thead and tbody */
             line-height: 1em;
             content: ".";
             color: #3D3D3D;
@@ -344,7 +344,7 @@
         cursor: pointer;
         &:checked ~ .custom_checkbox,
         &:checked ~ .custom_radio {
-          background-color: #2196F3;
+            background-color: #2196F3;
         }
     }
     /* checkbox */
@@ -396,8 +396,6 @@
     }
 }
 
-
-
 /********** RESPONISVE ************/
 
 @media screen and (max-width: 1100px) {
@@ -410,6 +408,7 @@
         }
     }
 }
+
 @media screen and (max-width: 1024px) {
     .clkbas {
         width: 50%;

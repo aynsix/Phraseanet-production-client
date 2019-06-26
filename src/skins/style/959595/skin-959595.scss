@@ -82,9 +82,16 @@ $answersToolsBgColor: #ffffff;
 $answersToolsBtnSeparatorBorder: #999;
 $answersToolsBtnBg: #a4a4a4;
 $answersToolsBtnBorder: #666666;
-$answersToolsBtnColor: #eaeaea;
-$answersToolsBtnHoverBg: #666666;
-$answersToolsBtnHoverColor: #ffffff;
+$answersToolsBtnColor: #161616;
+$answersToolsBtnHoverBg: #afafaf;
+$answersToolsBtnHoverColor: #505050;
+
+/*Sub nav*/
+$whiteCaret: #000000;
+$answersToolsBtnColorSub: #505050;
+$answersToolsBtnBgSub: #c1c1c1;
+$answersToolsBtnHoverBgSub: #afafaf;
+$answersToolsBtnHoverColorSub: $answersToolsBtnColorSub;
 
 $answersToolsBtnSettingsColor: lighten($answersToolsBtnColor, 10);
 $answersToolsBtnSettingsHoverBg: #9c9c9c;
@@ -140,7 +147,7 @@ $linkDefaultHover: #444444;
 $uiTextContentColor: $mediumTextColor;
 $uiTextTitleColor: $mediumTextColor;
 $uiLinkColor: $darkTextColor;
-$uiLinkFocusColor: $darkTextColor;
+$uiLinkFocusColor: #000000;
 $uiLinkActiveColor: $darkTextColor;
 
 $pushboxBadgeColor: #666666;
@@ -201,7 +208,11 @@ $dividerBg: #adadad;
 
 $customCheckboxUnchecked: #444444;
 $lineSeparator: #808080;
-$feedback: #9c9c9c;
+$basketBg: #c9c9c9;
+$feedback: $basketBg;
+$STTHover: $mediumBackgroundColor;
+$basketTitleHov: $textPrimaryActiveColor;
+$btnHovLight: $answersToolsBtnBg;
 
 @import '../../../../stylesheets/shared/jquery-ui/ui-lightness';
 @import '../skin-shared';

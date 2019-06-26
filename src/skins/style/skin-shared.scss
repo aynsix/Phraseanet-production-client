@@ -50,9 +50,8 @@ textarea::-moz-selection {
 label {
     color: $textInverseColor;
     .phrasea_query & {
-        &:not(.custom_checkbox_label) {
         color: #ffffff;
-        }
+        text-shadow: 1px 1px 0px #000;
     }
 
 }

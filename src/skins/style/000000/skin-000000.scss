@@ -85,6 +85,14 @@ $answersToolsBtnColor: #aaaaaa;
 $answersToolsBtnHoverBg: #7f7f7f;
 $answersToolsBtnHoverColor: #aaaaaa;
 
+
+/*Sub nav*/
+$whiteCaret: #ffffff;
+$answersToolsBtnColorSub: $answersToolsBtnColor;
+$answersToolsBtnBgSub: $answersToolsBtnBg;
+$answersToolsBtnHoverBgSub: $answersToolsBtnHoverBg;
+$answersToolsBtnHoverColorSub: $answersToolsBtnHoverColor;
+
 $answersToolsBtnSettingsColor: darken($answersToolsBtnColor, 20); // ##949494
 $answersToolsBtnSettingsHoverBg: #393939;
 $answersToolsBtnSettingsHoverColor: darken($answersToolsBtnColor, 20);
@@ -176,6 +184,9 @@ $dividerBg: #6c6c6c;
 $customCheckboxUnchecked: #ffffff;
 $lineSeparator: #484848;
 $feedback: #292929;
+$STTHover: $mediumBackgroundColor;
+$basketTitleHov: $textPrimaryActiveColor;
+$btnHovLight: $answersToolsBtnBg;
 
 @import '../../../../stylesheets/shared/jquery-ui/dark-hive';
 @import '../skin-shared';
