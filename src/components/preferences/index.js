@@ -179,6 +179,7 @@ const preferences = services => {
                 'href',
                 `/assets/production/skin-${color}${minified}.css`
             );
+            $('body').removeClass('FFFFFF 000000 959595').addClass(color);
             $.post(`${configService.get('baseUrl')}/user/preferences/`, {
                 prop: 'css',
                 value: color,

@@ -91,7 +91,7 @@
                 position: absolute;
                 right: 0;
                 top: 0;
-                padding: 3px;
+                padding: 0 3px;
                 margin: 0 5px 0 0;
                 table td {
                     width: 24px;
@@ -117,11 +117,8 @@
         .menu {
             .contextMenuTrigger {
                 cursor: pointer;
-                display: block;
                 padding: 0;
                 margin: 0;
-                background: url('#{$iconsPath}contextMenuTrigger.png') 0 13px no-repeat;
-                height: 45px;
                 width: 13px;
             }
         }

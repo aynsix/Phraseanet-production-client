@@ -187,28 +187,27 @@ $dividerBg: #6c6c6c !default;
         text-align: left;
         border: none;
         outline: none;
-        &.active {
-            color: $white !important;
-        }
-        span {
-            font-family: Roboto;
-            font-size: 12px;
-            font-weight: bold;
-        }
-        i {
+        font-family: Roboto;
+        font-size: 12px;
+        font-weight: 700;
+        &:before {
+            content: "\e96c";
+            font-family: "icomoon";
             position: absolute;
-            right: 10px;
-            top: 10px;
-        }
-        .rotate {
+            right: 5px;
+            font-size: 18px;
+            font-weight: bold;
             -moz-transition: all 0.2s linear;
             -webkit-transition: all .2s linear;
             transition: all .2s linear;
         }
-        .rotate.down {
-            -moz-transform: rotate(90deg);
-            -webkit-transform: rotate(90deg);
-            transform: rotate(90deg);
+        &.active {
+           &:before {
+               color: $white !important;
+               -moz-transform: rotate(90deg);
+               -webkit-transform: rotate(90deg);
+               transform: rotate(90deg);
+           }
         }
     }
     .tools-panel {
