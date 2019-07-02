@@ -37,28 +37,49 @@
 
 .hiddenFiltersListContainer {
     .facetFilter {
-        font-weight: normal;
-        position: relative;
-        width: 140px;
-        height: 25px;
-        line-height: 25px;
+        font-weight: bold;
+        font-family: "Roboto";
+        height: 40px;
+        line-height: 38px;
         vertical-align: middle;
-        border-radius: 4px;
-        background-color: #4c5d84;
+        border-left: 7px solid #4c5d84;
         color: #FFF;
         padding-left: 13px;
         padding-right: 13px;
         display: block;
-        margin: 2px 0px;
+        margin: 5px 0;
         margin-right: 10px;
         overflow: hidden;
+        position: relative;
+        background-color: #545454;
+        box-shadow: 0 2px 4px 0 rgba(0,0,0,0.21);
+        width: 262px;
         .remove-btn {
             position: absolute;
-            right: 13px;
             cursor: pointer;
-            background: url(/assets/common/images/icons/bgd_facetFilter.png) 0 5px no-repeat;
-            height: 25px;
-            width: 14px;
+            font-family: "icomoon";
+            right:13px;
+            &:before {
+                content: "\ea50";
+                position: relative;
+                z-index: 1;
+                color: #666666;
+                font-size: 15px;
+            }
+            &:after {
+                content: "\e94b";
+                color: #eeeeee;
+                font-size: 17px;
+                position: absolute;
+                left: -1px;
+                z-index: 0;
+            }
+            &:hover, &:focus, &:active {
+                &:before {
+                    content: "\ea51";
+                    color: #333333;
+                }
+            }
         }
     }
 }
