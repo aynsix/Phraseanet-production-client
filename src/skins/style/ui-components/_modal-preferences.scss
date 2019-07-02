@@ -43,7 +43,7 @@
         line-height: 38px;
         vertical-align: middle;
         border-left: 7px solid #4c5d84;
-        color: #FFF;
+        color: $facetText;
         padding-left: 13px;
         padding-right: 13px;
         display: block;
@@ -51,7 +51,7 @@
         margin-right: 10px;
         overflow: hidden;
         position: relative;
-        background-color: #545454;
+        background-color: $facetFilterBg;
         box-shadow: 0 2px 4px 0 rgba(0,0,0,0.21);
         width: 262px;
         .remove-btn {
