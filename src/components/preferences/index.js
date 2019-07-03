@@ -179,12 +179,28 @@ const preferences = services => {
                 'href',
                 `/assets/production/skin-${color}${minified}.css`
             );
-            $('body').removeClass('FFFFFF 000000 959595').addClass(color);
-            $.post(`${configService.get('baseUrl')}/user/preferences/`, {
+
+           /* $.post(`${configService.get('baseUrl')}/user/preferences/`, {
                 prop: 'css',
                 value: color,
                 t: Math.random()
+            });*/
+            var skin = '';
+            $.ajax({
+                type: 'POST',
+                url: '/user/preferences/',
+                data: {
+                    prop: 'css',
+                    value: color,
+                    t: Math.random()
+                },
+                success: function (data) {
+                    $('body').removeClass().addClass('PNB ' + color);
+                   /* console.log('saved:' + color);*/
+                    return;
+                }
             });
+
         });
 
         $container.on('change', '.preferences-options-collection-order', event => {
