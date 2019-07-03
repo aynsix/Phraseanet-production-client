@@ -160,6 +160,9 @@ $basketBg: $darkBackgroundColor !default;
     background-color: $mediumBackgroundColor2;
     border-bottom: 1px solid $mediumBorderColor; //$accordionBorderColor;
     border-radius: 0;
+    &:hover {
+        background-color: $accordionBgHeaderHover;
+    }
 }
 
 .ui-accordion .ui-accordion-header.unread .workzone-menu-title {

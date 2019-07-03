@@ -26,7 +26,7 @@ $darkBackgroundColor: #9c9c9c; //B1B1B1;
 $darkBorderColor: darken($darkBackgroundColor, 10);
 $darkTextColor: #ffffff;
 
-$mediumBackgroundColor: #a6a6a6;
+$mediumBackgroundColor: #b3b3b3;
 $mediumBackgroundColor2: #b2b2b2; // B2B2B2 <- to try
 $mediumBorderColor: darken($mediumBackgroundColor, 10);
 $mediumBorderHighlightColor: #666666;
@@ -34,9 +34,9 @@ $mediumTextColor: $textPrimaryColor;
 $mediumTextHoverColor: #eaeaea;
 $mediumTextActiveColor: #eaeaea;
 
-$lightBackgroundColor: #b1b1b1;
+$lightBackgroundColor: #a2a2a2;
 $lightBackgroundSelectedColor: darken($lightBackgroundColor, 10);
-$lightBackgroundActiveColor: darken($lightBackgroundColor, 10);
+$lightBackgroundActiveColor: #939393;
 $lightBorderColor: #b1b1b1;
 $lightBorderSelectedColor: darken($lightBorderColor, 10);
 $lightBorderActiveColor: darken($lightBorderColor, 10);
@@ -49,7 +49,7 @@ $bgInverseHoverColor: #fff;
 
 /******* GLOBAL PROD **********************************************************/
 
-$scrollBgColor: $mediumBackgroundColor; //#3b3b3b;
+$scrollBgColor: #9a9a9a; //#3b3b3b;
 
 $paginateBorderColor: #999999;
 $paginateTextColor: #999999;
@@ -114,7 +114,7 @@ $inputButtonHoverColor: #fefefe;
 $inputFallbackBorderColor: #b1b1b1;
 
 $dropdownDividerBg: $darkerBorderColor;
-$dropdownDividerBorder: $darkerBorderColor;
+$dropdownDividerBorder: #a6a6a6;
 
 $overlayBg: #b1b1b1;
 
@@ -195,6 +195,7 @@ $facetContentBg: #b9b9b9;
 $see_more_btn_bg: #dbdbdb;
 $see_more_btn_color: #2d2d2d;
 $see_more_btn_border: #dbdbdb;
+$see_more_btn_shadow: rgba(0,0,0,0.18);
 
 $see_more_btn_bg_hov: #f4f4f4;
 $see_more_btn_color_hov: #353535;
@@ -216,6 +217,10 @@ $btnHovLight: $answersToolsBtnBg;
 
 $facetFilterBg: #737373;
 $facetText: #ffffff;
+$whiteActive: #ffffff;
+$guiVsplitter: #d7d7d7;
+$contextDivider: #939393;
+$contextMenuShadow: rgba(0,0,0,0.12);
 
 @import '../../../../stylesheets/shared/jquery-ui/ui-lightness';
 @import '../skin-shared';

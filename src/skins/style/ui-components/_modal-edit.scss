@@ -15,6 +15,9 @@
         left: 0;
         right: 0;
     }
+    .active {
+        color: $whiteActive!important;
+    }
 }
 
 #EDIT_TOP {
@@ -153,8 +156,7 @@
     }
     div.edit_field.active {
         background-color: $lightBackgroundActiveColor;
-        border: 1px solid $lightBorderActiveColor;
-        color: $white;
+        border: 1px solid $lightBackgroundActiveColor;
     }
     span.fieldvalue {
         white-space: normal;

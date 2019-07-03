@@ -22,7 +22,7 @@ $darkerTextColor: #333;
 $darkerTextColor2: #333;
 $darkerTextHoverColor: #000000;
 
-$darkBackgroundColor: #ffffff; //B1B1B1;
+$darkBackgroundColor: #bfbfbf; //B1B1B1;
 $darkBorderColor: darken($darkBackgroundColor, 10);
 $darkTextColor: #9c9c9c;
 
@@ -33,7 +33,7 @@ $mediumTextColor: $textPrimaryColor;
 $mediumTextHoverColor: #eaeaea;
 $mediumTextActiveColor: #eaeaea;
 
-$lightBackgroundColor: #9c9c9c;
+$lightBackgroundColor: #a2a2a2;
 $lightBackgroundSelectedColor: darken($lightBackgroundColor, 10);
 $lightBackgroundActiveColor: #cdcdcd;
 $lightBorderColor: #b1b1b1;
@@ -87,8 +87,8 @@ $answersToolsBtnHoverColor: #4d4d4d;
 /*Sub nav*/
 $whiteCaret: #000000;
 $answersToolsBtnColorSub: $answersToolsBtnColor;
-$answersToolsBtnBgSub: #cdcdcd;
-$answersToolsBtnHoverBgSub: #e3e3e3;
+$answersToolsBtnBgSub: #e3e3e3;
+$answersToolsBtnHoverBgSub: #cdcdcd;
 $answersToolsBtnHoverColorSub: $answersToolsBtnHoverColor;
 
 $answersToolsBtnSettingsColor: #000; //lighten($answersToolsBtnColor, 10);
@@ -107,7 +107,7 @@ $preferencesLabelColor: #333333;
 //$activeStateIcon: 'ui-icons_ffffff_256x240.png';
 $activeStateIcon: 'ui-icons_222222_256x240.png';
 $accordionLoaderImg: 'loader-black.gif';
-$accordionBgHeaderHover: #dada9da;
+$accordionBgHeaderHover: #dadada;
 
 $inputButtonHoverColor: #fefefe;
 $inputFallbackBorderColor: #b1b1b1;
@@ -147,7 +147,7 @@ $uiTextContentColor: $mediumTextColor;
 $uiTextTitleColor: $mediumTextColor;
 $uiLinkColor: $darkTextColor;
 $uiLinkColor2: #383838;
-$uiLinkFocusColor: #000000;
+$uiLinkFocusColor: #383838;
 $uiLinkActiveColor: $darkTextColor;
 
 $pushboxBadgeColor: #bfbfbf;
@@ -223,6 +223,12 @@ $btnHovLight: #d8d8d8;
 
 $facetFilterBg: #D6D6D6;
 $facetText: #4d4d4d;
+$guiVsplitter: #d7d7d7;
+$whiteActive: #000000;
+$contextDivider: #c7c7c7;
+$contextMenuShadow: rgba(0,0,0,0.07);
+
+
 
 @import '../../../../stylesheets/shared/jquery-ui/ui-lightness';
 @import '../skin-shared';

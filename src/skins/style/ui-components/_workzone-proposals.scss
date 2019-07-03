@@ -6,6 +6,7 @@ $proposalFacetColor: #FFF !default;
 $proposalsFacetHoverColor: #FFF !default;
 $facetTitleBg: #3b3b3b !default;
 $facetContentBg: #292929 !default;
+$see_more_btn_shadow: $see_more_btn_border !default;
 /******* PROPOSALS ************************************************************/
 
 #proposals {
@@ -302,7 +303,8 @@ $facetContentBg: #292929 !default;
         border-radius: 4px;
         font-size: 14px;
         margin-top: 5px;
-        box-shadow: 0 0 6px 1px $see_more_btn_border;
+        box-shadow: 0 2px 4px 0 $see_more_btn_shadow;
+        border-style: none;
 
         &:hover {
             background-color: $see_more_btn_bg_hov;

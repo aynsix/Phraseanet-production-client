@@ -129,6 +129,7 @@ const searchForm = (services) => {
         let $searchFormContainer = $container.parent();
 
         var options = {
+            title: $('#advanced-search-title').val(),
             size: (window.bodySize.x - 120) + 'x' + (window.bodySize.y - 120),
             loading: false,
             closeCallback: function (dialog) {
