@@ -59,6 +59,21 @@ form.phrasea_query input.query {
     }
 }
 
+.search-header-block {
+    background: $storyBg;
+    padding: 4px 4px 4px 10px;
+    border-radius: 5px;
+    label {
+        &.inline {
+            padding-top: 0;
+            line-height: 19px;
+        }
+    }
+    .custom_checkbox_label .custom_radio {
+        top: calc(50% - 7px);
+    }
+}
+
 /******* SEARCH ***************************************************************/
 
 #adv_search .sbasglob,
