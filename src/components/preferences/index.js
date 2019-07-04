@@ -4,6 +4,7 @@ let highlight = require('imports-loader?$=jquery!../utils/jquery-plugins/highlig
 let colorpicker = require('imports-loader?$=jquery!../utils/jquery-plugins/colorpicker/colorpicker');
 const preferences = services => {
     const { configService, localeService, appEvents } = services;
+    const url = configService.get('baseUrl');
     const initialize = (options = {}) => {
         const { $container } = options;
 
@@ -188,7 +189,7 @@ const preferences = services => {
             var skin = '';
             $.ajax({
                 type: 'POST',
-                url: '/user/preferences/',
+                url: `${url}user/preferences/`,
                 data: {
                     prop: 'css',
                     value: color,
