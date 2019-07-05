@@ -48,7 +48,7 @@ const printRecord = (services) => {
                 width: '800',
                 height: '500',
                 open: function (event, ui) {
-                    $(this).dialog('widget').css('z-index', '5000');
+                    $(this).dialog('widget').css('z-index', '1999');
                 },
                 close: function (event, ui) {
                     $(this).dialog('widget').css('z-index', 'auto');

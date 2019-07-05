@@ -230,7 +230,7 @@ $basketBg: $darkBackgroundColor !default;
 }
 
 .ui-dialog.ui-widget-content, .ui-widget-overlay {
-    z-index: 5000;
+    z-index: 1999;
 }
 
 .ui-dialog-titlebar {
