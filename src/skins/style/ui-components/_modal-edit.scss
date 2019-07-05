@@ -126,12 +126,14 @@
     left: 0px;
     bottom: 0px;
     right: 10px;
+    background: $editAllBg;
     div.edit_field {
         cursor: pointer;
         font-weight: bold;
         padding: 2px;
         margin-right: 10px;
         position: relative;
+        background-color: $editFieldBg;
 
         .fa-stack {
             font-size: 11px;

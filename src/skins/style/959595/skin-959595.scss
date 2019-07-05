@@ -222,6 +222,10 @@ $guiVsplitter: #d7d7d7;
 $contextDivider: #939393;
 $contextMenuShadow: rgba(0,0,0,0.12);
 $storyBg: #7b7b7b;
+$tooltipBg: #848484;
+$tooltipTxt: #FFFFFF;
+$editAllBg: none;
+$editFieldBg: transparent;
 
 @import '../../../../stylesheets/shared/jquery-ui/ui-lightness';
 @import '../skin-shared';
