@@ -63,10 +63,10 @@ const searchForm = (services) => {
             let $record_types = $('#recordtype_sel');
 
             if ($el.hasClass('mode_type_reg')) {
-                $record_types.css('visibility', 'hidden');  // better than hide because does not change layout
+                $record_types.css('display', 'none');  // better than hide because does not change layout
                 $record_types.prop('selectedIndex', 0);
             } else {
-                $record_types.css('visibility', 'visible');
+                $record_types.css('display', 'inline-block');
             }
         });
 
@@ -129,6 +129,7 @@ const searchForm = (services) => {
         let $searchFormContainer = $container.parent();
 
         var options = {
+            title: $('#advanced-search-title').val(),
             size: (window.bodySize.x - 120) + 'x' + (window.bodySize.y - 120),
             loading: false,
             closeCallback: function (dialog) {

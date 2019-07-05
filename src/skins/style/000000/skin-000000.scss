@@ -85,6 +85,14 @@ $answersToolsBtnColor: #aaaaaa;
 $answersToolsBtnHoverBg: #7f7f7f;
 $answersToolsBtnHoverColor: #aaaaaa;
 
+
+/*Sub nav*/
+$whiteCaret: #ffffff;
+$answersToolsBtnColorSub: $answersToolsBtnColor;
+$answersToolsBtnBgSub: $answersToolsBtnBg;
+$answersToolsBtnHoverBgSub: $answersToolsBtnHoverBg;
+$answersToolsBtnHoverColorSub: $answersToolsBtnHoverColor;
+
 $answersToolsBtnSettingsColor: darken($answersToolsBtnColor, 20); // ##949494
 $answersToolsBtnSettingsHoverBg: #393939;
 $answersToolsBtnSettingsHoverColor: darken($answersToolsBtnColor, 20);
@@ -161,5 +169,34 @@ $proposalsTitleHoverColor: lighten(
 $proposalsTitleBorder: #303030;
 $proposalsFacetHoverColor: #fff;
 
+/******** FACETS SEE MORE BTN********/
+$see_more_btn_bg: #202020;
+$see_more_btn_color: #a3a3a3;
+$see_more_btn_border: #616161;
+
+$see_more_btn_bg_hov: #454545;
+$see_more_btn_color_hov: #a3a3a3;
+
+$basketTips: rgba(0, 0, 0, 0.2);
+$basketTips2: rgba(0, 0, 0, 0.19);
+$dividerBg: #6c6c6c;
+
+$customCheckboxUnchecked: #ffffff;
+$lineSeparator: #484848;
+$feedback: #292929;
+$STTHover: $mediumBackgroundColor;
+$basketTitleHov: $textPrimaryActiveColor;
+$btnHovLight: $answersToolsBtnBg;
+$facetFilterBg: #545454;
+$facetText: #ffffff;
+$whiteActive: #4990e2;
+$guiVsplitter: $mediumBackgroundColor;
+$contextDivider: #7f7f7f;
+$contextMenuShadow: rgba(0,0,0,0.12);
+$storyBg: #3b3b3b;
+$tooltipBg: #535353;
+$tooltipTxt: #FFFFFF;
+$editAllBg: none;
+$editFieldBg: transparent;
 @import '../../../../stylesheets/shared/jquery-ui/dark-hive';
 @import '../skin-shared';

@@ -4,6 +4,7 @@ let highlight = require('imports-loader?$=jquery!../utils/jquery-plugins/highlig
 let colorpicker = require('imports-loader?$=jquery!../utils/jquery-plugins/colorpicker/colorpicker');
 const preferences = services => {
     const { configService, localeService, appEvents } = services;
+    const url = configService.get('baseUrl');
     const initialize = (options = {}) => {
         const { $container } = options;
 
@@ -179,11 +180,28 @@ const preferences = services => {
                 'href',
                 `/assets/production/skin-${color}${minified}.css`
             );
-            $.post(`${configService.get('baseUrl')}/user/preferences/`, {
+
+           /* $.post(`${configService.get('baseUrl')}/user/preferences/`, {
                 prop: 'css',
                 value: color,
                 t: Math.random()
+            });*/
+            var skin = '';
+            $.ajax({
+                type: 'POST',
+                url: `${url}user/preferences/`,
+                data: {
+                    prop: 'css',
+                    value: color,
+                    t: Math.random()
+                },
+                success: function (data) {
+                    $('body').removeClass().addClass('PNB ' + color);
+                   /* console.log('saved:' + color);*/
+                    return;
+                }
             });
+
         });
 
         $container.on('change', '.preferences-options-collection-order', event => {
