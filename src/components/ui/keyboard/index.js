@@ -33,7 +33,7 @@ const keyboard = (services) => {
                 opacity: 0.7
             },
             open: function (event, ui) {
-                $(this).dialog('widget').css('z-index', '1400');
+                $(this).dialog('widget').css('z-index', '1999');
             },
             close: function () {
                 $(this).dialog('widget').css('z-index', 'auto');

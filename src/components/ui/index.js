@@ -77,7 +77,7 @@ const ui = services => {
             } else {
                 if ($('#EDITWINDOW').is(':visible')) {
                     // access to editor instead of edit modal
-                    // specialKeyState = editRecord.onGlobalKeydown(event, specialKeyState);
+                     specialKeyState = editRecord.onGlobalKeydown(event, specialKeyState);
                 } else if (previewIsOpen) {
                     specialKeyState = previewRecord.onGlobalKeydown(
                         event,
