@@ -1,5 +1,6 @@
 import $ from 'jquery';
 import recordEditorService from './recordEditor/index';
+import * as appCommons from 'phraseanet-common';
 
 const editRecord = (services) => {
     const { configService, localeService, appEvents } = services;
@@ -96,7 +97,64 @@ const editRecord = (services) => {
         return openModal(datas);
     }
 
-    return { initialize, openModal };
+    const onGlobalKeydown = (event, specialKeyState) => {
+        if (specialKeyState === undefined) {
+            let specialKeyState = {
+                isCancelKey: false,
+                isShortcutKey: false
+            };
+        }
+        switch (event.keyCode) {
+            case 9: // tab ou shift-tab
+                fieldNavigate(
+                    event,
+                    appCommons.utilsModule.is_shift_key(event) ? -1 : 1
+                );
+                specialKeyState.isCancelKey = specialKeyState.isShortcutKey = true;
+                break;
+            case 27:
+                cancelChanges({ event });
+                specialKeyState.isShortcutKey = true;
+                break;
+
+            case 33: // pg up
+                if (
+                    !options.textareaIsDirty ||
+                    validateFieldChanges(event, 'ask_ok')
+                ) {
+                    skipImage(event, 1);
+                }
+                specialKeyState.isCancelKey = true;
+                break;
+            case 34: // pg dn
+                if (
+                    !options.textareaIsDirty ||
+                    validateFieldChanges(event, 'ask_ok')
+                ) {
+                    skipImage(event, -1);
+                }
+                specialKeyState.isCancelKey = true;
+                break;
+            default:
+        }
+        return specialKeyState;
+    };
+
+    function fieldNavigate(evt, dir) {
+        let current_field = $('#divS .edit_field.active');
+        if (current_field.length === 0) {
+            current_field = $('#divS .edit_field:first');
+            current_field.trigger('click');
+        } else {
+            if (dir >= 0) {
+                current_field.next().trigger('click');
+            } else {
+                current_field.prev().trigger('click');
+            }
+        }
+    }
+
+    return { initialize, openModal, onGlobalKeydown };
 };
 
 export default editRecord;
