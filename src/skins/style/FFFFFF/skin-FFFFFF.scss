@@ -199,12 +199,15 @@ $answersLinkColor: #ffffff !default;
 $answersInfoLabelColor: #ffffff !default;
 
 /******** FACETS SEE MORE BTN********/
-$see_more_btn_bg: #dbdbdb;
-$see_more_btn_color: #2d2d2d;
-$see_more_btn_border: #dbdbdb;
+$see_more_btn_bg: #d3d3d3;
+$see_more_btn_color: #424242;
+$see_more_btn_border: #b7b7b7;
+$see_more_btn_shadow: rgba(0,0,0,0.1);
 
-$see_more_btn_bg_hov: #ffffff;
-$see_more_btn_color_hov: #353535;
+$see_more_btn_bg_hov: #f1f1f1;
+$see_more_btn_color_hov: #424242;
+$see_more_btn_border_hov: #b7b7b7;
+
 $white: #ffffff;
 
 $toolsPanelBg: #cdcdcd;
