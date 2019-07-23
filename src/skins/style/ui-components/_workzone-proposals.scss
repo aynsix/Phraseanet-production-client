@@ -294,21 +294,22 @@ $see_more_btn_shadow: $see_more_btn_border !default;
 
     .see_more_btn {
         display: block;
-        margin: 0 auto;
-        padding: 0px 20px;
+        margin: 14px auto;
+        padding: 1px 20px;
         line-height: 21px;
         background-color: $see_more_btn_bg;
         border-color: $see_more_btn_border;
         color: $see_more_btn_color;
-        border-radius: 4px;
-        font-size: 14px;
-        margin-top: 5px;
-        box-shadow: 0 2px 4px 0 $see_more_btn_shadow;
-        border-style: none;
+        border-radius: 8px;
+        font-size: 12px;
+        font-weight: bold;
+        box-shadow: 0 -2px 3px 0 $see_more_btn_shadow;
+        border-style: solid;
 
         &:hover {
             background-color: $see_more_btn_bg_hov;
             color: $see_more_btn_color_hov;
+            border-color: $see_more_btn_border_hov;
         }
     }
 }
