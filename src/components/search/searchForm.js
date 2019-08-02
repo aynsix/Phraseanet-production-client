@@ -64,7 +64,7 @@ const searchForm = (services) => {
 
             if ($el.hasClass('mode_type_reg')) {
                 $record_types.css('display', 'none');  // better than hide because does not change layout
-                $record_types.prop('selectedIndex', 0);
+                $('#recordtype_sel select').find('option').removeAttr('selected');
             } else {
                 $record_types.css('display', 'inline-block');
             }
