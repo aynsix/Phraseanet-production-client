@@ -11,6 +11,8 @@
         background-color: #4b4b4b;
         left: 0;
         right: 0;
+        height: 100%;
+        top: 0;
     }
 
     .Basket {
@@ -52,6 +54,8 @@
             line-height: 18px;
             text-align: center;
             vertical-align: top;
+            border-top-left-radius: 5px;
+            border-bottom-left-radius: 5px;
 
             &.content {
                 width: 390px;
@@ -74,6 +78,8 @@
             bottom: 50px;
             overflow-y: auto;
             overflow-x: hidden;
+            left: 20px;
+            right: 10px;
         }
 
 
@@ -82,12 +88,19 @@
             font-size: 16px;
             padding: 18px 0;
             font-weight: 500;
+            left: 20px;
         }
 
         .footer {
             top: auto;
             font-size: 12px;
             height: 30px;
+            padding-left: 20px;
+            background-color: #3d3d3d;
+            table {
+                vertical-align: middle;
+                height: 30px;
+            }
         }
 
         .result h1.title {
@@ -100,6 +113,7 @@
     form {
         h1 {
             margin: 20px 0 10px;
+            padding-left: 14px;
         }
 
         ul {
@@ -135,6 +149,7 @@
         vertical-align: top;
         td.paginator {
             text-align: right;
+            padding-right: 14px;
         }
     }
 
@@ -144,7 +159,7 @@
             padding: 3px;
             display: block;
             border-radius: 5px;
-            width: 180px;
+            width: 160px;
             padding-left: 25px;
             margin-left: 12px;
             background-color: #efefef;
@@ -173,6 +188,7 @@
     width: 215px;
     padding-left: 0;
     padding-top: 18px;
+    height: 518px;
     h1 {
         padding-left: 12px;
     }
@@ -180,7 +196,7 @@
 
 .rightBrowser {
     background-color: #4b4b4b;
-    left: 255px;
+    left: 215px;
     .result {
         margin-bottom: 12px;
     }
@@ -202,6 +218,9 @@
         }
         .thumb_wrapper {
             height: 106px;
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
         }
     }
     .PNB {
