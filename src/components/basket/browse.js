@@ -63,8 +63,8 @@ const basketBrowse = (services) => {
                 },
                 success: function (data) {
                     $results.removeClass('loading').append(data);
-                    activateLinks(results);
-                    active_archiver(results);
+                    activateLinks($results);
+                    active_archiver($results);
 
                     return;
                 }
@@ -172,16 +172,17 @@ const basketBrowse = (services) => {
                     });
                 };
 
+                confirmBox = dialog.create(services, {
+                    size: 'Alert',
+                    closeOnEscape: true,
+                    cancelButton: true,
+                    buttons: buttons
+                }, 2);
+
                 confirmBox.setContent("{{'You are about to delete this basket. Would you like to continue ?'|trans|e('js') }}");
 
                 return false;
             });
-            confirmBox = dialog.create(services, {
-                size: 'Alert',
-                closeOnEscape: true,
-                cancelButton: true,
-                buttons: buttons
-            }, 2);
         }
 
         function active_archiver($scope) {
