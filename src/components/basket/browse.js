@@ -16,6 +16,7 @@ const basketBrowse = (services) => {
 
             if ($el.attr('title') !== undefined) {
                 dialogOptions.title = $el.attr('title');
+                dialogOptions.width = 920;
             }
 
             openModal(dialogOptions);
