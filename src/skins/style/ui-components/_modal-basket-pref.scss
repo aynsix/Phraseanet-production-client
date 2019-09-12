@@ -1,4 +1,24 @@
 #BasketBrowser {
+    .archiver {
+        width: 34px;
+        height: 34px;
+        background: url("/assets/prod/images/Basket/Browser/archive.png") no-repeat 0 0 /contain;
+        display: inline-block;
+        &:hover, &:focus {
+            background: url("/assets/prod/images/Basket/Browser/archived.png") no-repeat 0 0 /contain;
+        }
+    }
+
+    .unarchiver {
+        width: 34px;
+        height: 34px;
+        background: url("/assets/prod/images/Basket/Browser/archived.png") no-repeat 0 0 /contain;
+        display: inline-block;
+        &:hover, &:focus {
+            background: url("/assets/prod/images/Basket/Browser/archive.png") no-repeat 0 0 /contain;
+        }
+    }
+
     h1 {
         font-size: 16px;
         line-height: 20px;
@@ -39,7 +59,7 @@
             height: 100%;
         }
 
-        &.odd {
+        &.unarchived {
             background-color:#9a9a9a;
         }
 
