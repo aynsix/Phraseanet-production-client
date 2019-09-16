@@ -95,3 +95,19 @@ $mainMenuBottomBorder: none !default;
         }
     }
 }
+.contextMenu.helpcontextmenu {
+    display: none;
+    &.shown {
+        display: block;
+        position: absolute;
+        z-index: 101;
+    }
+}
+.help-trigger {
+    display:inline-block;
+    cursor:pointer;
+    padding: 0 4px;
+    border:none;
+    margin-left: -12px;
+}
+
