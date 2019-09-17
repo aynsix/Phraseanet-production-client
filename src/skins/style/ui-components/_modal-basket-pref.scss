@@ -1,21 +1,24 @@
 #BasketBrowser {
-    .archiver {
+    .archive_toggler {
+        position: absolute;
+        left: 137px;
+        top: 8px;
         width: 34px;
         height: 34px;
+    }
+    .archiver {
         background: url("/assets/prod/images/Basket/Browser/archive.png") no-repeat 0 0 /contain;
         display: inline-block;
         &:hover, &:focus {
-            background: url("/assets/prod/images/Basket/Browser/archived.png") no-repeat 0 0 /contain;
+            background-image: url("/assets/prod/images/Basket/Browser/archived.png");
         }
     }
 
     .unarchiver {
-        width: 34px;
-        height: 34px;
         background: url("/assets/prod/images/Basket/Browser/archived.png") no-repeat 0 0 /contain;
         display: inline-block;
         &:hover, &:focus {
-            background: url("/assets/prod/images/Basket/Browser/archive.png") no-repeat 0 0 /contain;
+            background-image: url("/assets/prod/images/Basket/Browser/archive.png");
         }
     }
 
@@ -25,6 +28,8 @@
         margin: 0;
         padding: 0;
         padding-left: 12px;
+        display: inline-block ;
+        width: 100%;
     }
 
     .Browser {
@@ -63,8 +68,8 @@
             background-color:#9a9a9a;
         }
 
-        td.thumbnail {
-            display: table-cell;
+        .thumbnail {
+            display: flex;
             width: 131px;
             height: 106px;
             padding: 0;
@@ -76,20 +81,36 @@
             vertical-align: top;
             border-top-left-radius: 5px;
             border-bottom-left-radius: 5px;
-
-            &.content {
-                width: 390px;
-                vertical-align: top;
-            }
-
-            .counter {
-                bottom: 18px;
-                font-size: 14px;
-                position: relative;
-                right: 5px;
-                text-align: right;
-            }
         }
+        .content {
+            display: inline-block;
+            width: 318px;
+            padding-left: 10px;
+             > p {
+                height: 57px;
+                overflow-y: auto;
+                 a {
+                     display: inline-block!important;
+                     width: auto!important;
+                 }
+            }
+
+        }
+
+        .counter {
+            bottom: 18px;
+            font-size: 14px;
+            position: relative;
+            right: 5px;
+            text-align: right;
+        }
+
+    }
+    .item-table {
+        display: flex;
+        flex-wrap: wrap;
+        justify-content: left;
+        align-content: center;
     }
 
     .results {
@@ -125,7 +146,7 @@
 
         .result h1.title {
             font-size: 14px;
-            margin-top: 5px;
+            margin-top: 10px;
             line-height: 1;
             padding-left: 0;
         }
@@ -223,6 +244,9 @@
     }
     .basket_link {
         color: #212121;
+        padding-left: 37px;
+        line-height: 16px;
+        display: inline-block;
     }
     p, .UserTips {
         color: #595959;
@@ -270,7 +294,7 @@
     }
 }
 .PNB10.rightBrowserInner {
-    right: 30px;
+    right: 0;
     left: 0;
     bottom: 0;
 }
@@ -292,4 +316,7 @@
     border-radius: 50%;
     margin-top: 6px;
     margin-right: 6px;
+    top: 0;
+    right: 0;
+    z-index: 1;
 }
