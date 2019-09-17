@@ -26,9 +26,9 @@ const mainMenu = (services) => {
          * mainMenu > help context menu
          */
 
-        $('body').on('click', '#help-trigger', function (event) {
+     /*   $('body').on('click', '#help-trigger', function (event) {
             $('#mainMenu .helpcontextmenu').toggleClass('shown');
-        });
+        });*/
     };
 
     const _stateNavigator = (...state) => {
