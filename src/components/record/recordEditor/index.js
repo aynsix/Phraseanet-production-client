@@ -124,7 +124,7 @@ const recordEditorService = services => {
 
                 fieldNavigate(event, dir);
             })
-            .on('click submit', '.add-multivalued-field-action', event => {
+            .on('submit', '.add-multivalued-field-action', event => {
                 event.preventDefault();
                 let $el = $(event.currentTarget);
                 let fieldValue = $('#' + $el.data('input-id')).val();
