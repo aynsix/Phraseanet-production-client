@@ -76,5 +76,13 @@ $paginationLinkColor: $linkDefaultColor !default;
     }
     &.icon {
         font-size: 18px;
+        &#last {
+            font-size: 10px;
+        }
+    }
+    .icon-inverse {
+        transform: rotate(180deg);
+        font-size: 10px;
     }
 }
+
