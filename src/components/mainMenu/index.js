@@ -26,12 +26,9 @@ const mainMenu = (services) => {
          * mainMenu > help context menu
          */
 
-        $('#help-trigger').contextMenu('#mainMenu .helpcontextmenu', {
-            openEvt: 'click', dropDown: true, theme: 'vista',
-            showTransition: 'slideDown',
-            hideTransition: 'hide',
-            shadow: false
-        });
+     /*   $('body').on('click', '#help-trigger', function (event) {
+            $('#mainMenu .helpcontextmenu').toggleClass('shown');
+        });*/
     };
 
     const _stateNavigator = (...state) => {
