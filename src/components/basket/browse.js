@@ -225,9 +225,11 @@ const basketBrowse = (services) => {
                         if (data.archive === true) {
                             $('.unarchiver', parent).show();
                             $('.archiver', parent).hide();
+                            $($this).closest('.result').removeClass('unarchived');
                         } else {
                             $('.unarchiver', parent).hide();
                             $('.archiver', parent).show();
+                            $($this).closest('.result').addClass('unarchived');
                         }
 
                         appEvents.emit('workzone.refresh');
