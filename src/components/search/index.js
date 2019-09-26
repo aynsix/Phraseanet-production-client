@@ -96,7 +96,7 @@ const search = services => {
                     if (inputPage > 0 && inputPage <= totalPages) {
                         navigate(inputPage);
                     } else {
-                        $el.val(initialPage);
+                        navigate(totalPages);
                     }
                 }
             });
