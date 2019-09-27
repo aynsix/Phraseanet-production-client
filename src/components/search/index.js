@@ -96,7 +96,7 @@ const search = services => {
                     if (inputPage > 0 && inputPage <= totalPages) {
                         navigate(inputPage);
                     } else {
-                        $el.val(initialPage);
+                        navigate(totalPages);
                     }
                 }
             });
@@ -262,6 +262,12 @@ const search = services => {
                 appEvents.emit('search.updateFacetData');
             }
         });
+        /*script for pagination*/
+        setTimeout(function(){
+            if ($( "#tool_navigate").length) {
+                $("#tool_navigate .btn-mini").last().addClass("last");
+            }
+        }, 5000);
 
     };
 
