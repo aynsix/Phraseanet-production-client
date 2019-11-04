@@ -677,9 +677,7 @@ const orderItem = services => {
             //element.removeClass('to_be_validated');
 
             element.toggleClass(ELEMENT_TYPE.WAITINGFORVALIDATION);
-
-
-            element.addClass('to_be_'+order.newState);
+            //element.addClass('to_be_'+order.newState);
 
             element.find('td:first-child').empty();
             element
