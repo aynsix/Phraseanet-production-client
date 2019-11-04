@@ -199,6 +199,9 @@ const orderItem = services => {
             }
             resetItemForValidation(itemsToBeReset);
             toggleValidationButton();
+
+           //$('.order_row.selected').removeClass('to_be_denied');
+           //$('.order_row.selected').removeClass('to_be_validated');
         });
 
         $('.force_sender', $dialog.getDomElement()).bind('click', function () {
@@ -669,11 +672,19 @@ const orderItem = services => {
             order.oldState = oldState;
             order.newState = newState;
             elementsForValidation.push(order);
+
+            //element.removeClass('to_be_denied');
+            //element.removeClass('to_be_validated');
+
             element.toggleClass(ELEMENT_TYPE.WAITINGFORVALIDATION);
+
+
+            element.addClass('to_be_'+order.newState);
+
             element.find('td:first-child').empty();
             element
                 .find('td:first-child')
-                .append('<i style="font-size: 20px;" class="fa fa check-circle-o">');
+                .append('<img style="cursor:help;" src="/assets/common/images/icons/to_be_'+order.newState+'.png" title="">');
             updateButtonStatus(element.attr('class').split(/\s+/));
         }
 
