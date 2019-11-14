@@ -517,6 +517,7 @@ const search = services => {
                     'type'   : facetValue.value.type,
                     'field'  : facetValue.value.field,
                     'value'  : facetValue.value.raw_value,
+                    'query'  : facetValue.value.query,
                     'negated': facetValue.negated,
                     'enabled': facetValue.enabled
                 });
@@ -574,7 +575,14 @@ const search = services => {
         return json;
     }
 
-    var _ALL_Clause_ = "(created_on>1900/01/01)";
+    var _ALL_Clause_ = "created_on>0";
+
+    function pjoin(glue, a)
+    {
+        var r = a.join(glue);
+        return a.length===1 ? r : ('('+r+')');
+    }
+
     function buildQ(clause) {
         if (clause.enabled === false) {
             return "";
@@ -600,22 +608,22 @@ const search = services => {
                         // some "yes" and and some "neg" clauses
                         if (clause.must_match === "ONE") {
                             // some "yes" and and some "neg" clauses, one is enough to match
-                            var neg = "(" + _ALL_Clause_ + " EXCEPT (" + t_neg.join(" OR ") + "))";
+                            var neg = "(" + _ALL_Clause_ + " EXCEPT " + pjoin(" OR ", t_neg) + ")";
                             t_pos.push(neg);
                             return "(" + t_pos.join(" OR ") + ")";
                         } else {
                             // some "yes" and and some "neg" clauses, all must match
-                            return "((" + t_pos.join(" AND ") + ") EXCEPT (" + t_neg.join(" OR ") + "))";
+                            return "(" + pjoin(" AND ", t_pos) + " EXCEPT " + pjoin(" OR ", t_neg) + ")";
                         }
                     } else {
                         // only "yes" clauses
-                        return "(" + t_pos.join(clause.must_match === "ONE" ? " OR " : " AND ") + ")";
+                        return pjoin(clause.must_match=="ONE" ? " OR " : " AND ", t_pos);
                     }
                 } else {
                     // no "yes" clauses
                     if (t_neg.length > 0) {
                         // only "neg" clauses
-                        return "(" + _ALL_Clause_ + " EXCEPT (" + t_neg.join(clause.must_match === "ONE" ? " OR " : " AND ") + "))";
+                        return "(" + _ALL_Clause_ + " EXCEPT " + pjoin(clause.must_match == "ALL" ? " OR " : " AND ", t_neg) + ")";
                     } else {
                         // no clauses at all
                         return "";
@@ -632,14 +640,14 @@ const search = services => {
                 if (clause.to) {
                     t += (t ? " AND " : "") + clause.field + "<=" + clause.to;
                 }
-                return t ? "(" + t + ")" : '';
+                return (clause.from && clause.to) ? ("(" + t + ")") : t;
 
             case "TEXT-FIELD":
                 return clause.field + clause.operator + "\"" + clause.value + "\"";
 
             case "GEO-DISTANCE":
                 return clause.field + "=\"" + clause.lat + " " + clause.lon + " " + clause.distance + "\"";
-
+/*
             case "STRING-AGGREGATE":
                 return clause.field + ":\"" + clause.value + "\"";
 
@@ -654,6 +662,13 @@ const search = services => {
 
             case "BOOL-AGGREGATE":
                 return clause.field + "=" + (clause.value ? "1" : "0");
+*/
+            case "STRING-AGGREGATE":
+            case "DATE-AGGREGATE":
+            case "COLOR-AGGREGATE":
+            case "NUMBER-AGGREGATE":
+            case "BOOLEAN-AGGREGATE":
+                return clause.query;
 
             default:
                 console.error("Unknown clause type \"" + clause.type + "\"");
