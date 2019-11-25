@@ -101,7 +101,8 @@ class Bootstrap {
                         visibility: 'hidden'
                     });
                     if (data.datas) {
-                        alert(data.datas);
+                  //      alert(data.datas);
+                        window.location.href = "/lightbox";
                     }
                     if (!data.error) {
                         this.isReleasable = false;
