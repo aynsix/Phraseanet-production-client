@@ -191,7 +191,7 @@ class Bootstrap {
                     }
 
                     $('#notes_' + sselcont_id).empty().append(datas.datas);
-                    window.history.back();
+                    window.location.reload();
                     return;
                 }
             });
