@@ -72,6 +72,7 @@ class Bootstrap {
 
     mobileValidator() {
 
+        display_basket();
 
         $('body').on('touchstart click', '.confirm_report', (event) => {
             event.preventDefault();
@@ -100,7 +101,8 @@ class Bootstrap {
                         visibility: 'hidden'
                     });
                     if (data.datas) {
-                        alert(data.datas);
+                  //      alert(data.datas);
+                        window.location.href = "/lightbox";
                     }
                     if (!data.error) {
                         this.isReleasable = false;
@@ -189,12 +191,39 @@ class Bootstrap {
                     }
 
                     $('#notes_' + sselcont_id).empty().append(datas.datas);
-                    window.history.back();
+                    window.location.reload();
                     return;
                 }
             });
             return false;
         });
+
+
+        function display_basket() {
+            let sc_wrapper = $('#sc_wrapper');
+
+
+            $('.basket_element', sc_wrapper).parent()
+                .bind('click', function (event) {
+                    scid_click(event, this);
+                    adjust_visibility(this);
+                    return false;
+                });
+
+            $('.agree_button, .disagree_button', sc_wrapper).bind('click',function (event) {
+
+                var sselcont_id = $(this).closest('.basket_element').attr('id').split('_').pop();
+
+                var agreement = $(this).hasClass('agree_button') ? '1' : '-1';
+
+                set_agreement(event, $(this), sselcont_id, agreement);
+                return false;
+            }).addClass('clickable');
+
+            var n = $('.basket_element', sc_wrapper).length;
+            $('#sc_container').width(n * $('.basket_element_wrapper:first', sc_wrapper).outerWidth() + 1);
+
+        }
 
         this.validatorLoaded = true;
     }
