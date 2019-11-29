@@ -175,7 +175,7 @@ input.text_input_white {
             color: #FFFFFF;
         }
         button.ui-button:first-child {
-            float: right;   
+            float: right;
             background-color: $orangeThemeColor;
             color: #FFFFFF;
         }
@@ -210,7 +210,7 @@ input.text_input_white {
             color: #FFFFFF;
         }
         button.ui-button:first-child {
-            float: right;   
+            float: right;
             background-color: $pushThemeColor;
             color: #FFFFFF;
         }
@@ -231,7 +231,7 @@ input.text_input_white {
             background-color: $orangeThemeColor;
         }
         button.ui-button:first-child {
-            float: right;   
+            float: right;
             background-color: $orangeThemeColor;
         }
     }
@@ -428,7 +428,6 @@ input.text_input_white {
 }
 
 .PushBox .round-blue-border-btn {
-    height: 27px;
     border-radius: 13.5px;
     background-color: #ffffff;
     border: 0 none;
@@ -437,10 +436,10 @@ input.text_input_white {
     font-weight: 500;
     font-style: normal;
     font-stretch: normal;
-    line-height: 27px;
+    line-height: 12px;
     letter-spacing: normal;
     color: $pushThemeColor;
-    padding: 0px 20px;
+    padding: 8px 20px;
     box-shadow: 0 0 5px rgba(0, 0, 0, 0.3);
     border: 1px solid $pushThemeColor;
 }
@@ -745,7 +744,7 @@ input.text_input_white {
 .list_link:focus {
     text-decoration: none;
   }
-  
+
 .lists_manager_list:hover .list_link {
     background-color: #b8b8b8;
 }
@@ -1104,7 +1103,7 @@ input.text_input_white {
     color: #fff;
 }
 
-#list-editor-search-results table tr th:first-child, 
+#list-editor-search-results table tr th:first-child,
 #list-editor-search-results table tr td:first-child {
   padding-left: 10px !important;
 }
@@ -1174,7 +1173,7 @@ input.text_input_white {
     .info-box-share-holder {
         position: fixed;
         margin: -35px 0 0 115px;
-        
+
         #info-box-trigger {
             cursor: pointer;
         }
@@ -1390,7 +1389,7 @@ input.text_input_white {
     .list_refresh:hover {
         background: $pushThemeColor;
     }
-} 
+}
 
 
 #find-user {
@@ -1595,7 +1594,7 @@ input.text_input_white {
 #quickAddUser table tr:first-child td {
     padding-top: 0;
 }
-  
+
   #quickAddUser table tr:last-child td {
     padding: 0;
 }
