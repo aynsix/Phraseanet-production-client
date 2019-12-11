@@ -217,7 +217,7 @@ const storyReorderContent = (services) => {
         });
 
 
-        $('form[name="reorder"] button').bind('click', function (event) {
+        $('form[name="reorder"] .btn').bind('click', function (event) {
             var $form = $(this).closest('form');
 
             $('.elements form', container).each(function (i, el) {

@@ -217,10 +217,10 @@ const basketReorderContent = (services) => {
             selector: '.CHIM'
         });
 
-        $('form[name="reorder"]', container).bind('submit', function (event) {
+        $('form[name="reorder"] .btn').bind('click', function (event) {
 
             //$this.SetLoader(true);
-            var $form = $(this);
+            var $form =$(this).closest('form');
 
             $('.elements form', container).each(function (i, el) {
                 var id = $('input[name="id"]', $(el)).val();
