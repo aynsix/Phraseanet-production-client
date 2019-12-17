@@ -21,6 +21,20 @@ const basketBrowse = (services) => {
 
             openModal(dialogOptions);
         });
+
+        /*left filter*/
+            $('#feedback-list').click(function() {
+                $('.feedbacks-block').toggleClass('hidden');
+            });
+            $('#push-list').click(function() {
+                $('.pushes-block').toggleClass('hidden');
+            });
+            $('#basket-list').click(function() {
+                $('.baskets-block').toggleClass('hidden');
+            });
+            $('#story-list').click(function() {
+                $('.stories-block').toggleClass('hidden');
+            });
     };
 
     const openModal = (options = {}) => {
