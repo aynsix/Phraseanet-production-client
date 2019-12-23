@@ -46,6 +46,10 @@ const videoScreenCapture = (services, datas, activeTab = false) => {
 
                 var screenshot = ThumbEditor.screenshot();
 
+                if($container.find('#thumb_canvas').height() >= 210) {
+                    $container.find('#thumb_canvas').css('height', '210px');
+                    $container.find('#grid').css('min-height', '210px');
+                }
                 $container.find('.frame_canva').css('width', $container.find('#thumb_canvas').width());
 
                 $('.selected', $gridContainer).removeClass('selected');
@@ -63,6 +67,10 @@ const videoScreenCapture = (services, datas, activeTab = false) => {
 
                 var grid_item = document.createElement('div');
                 $(grid_item).addClass('grid-item').append($(grid_wrapper)).appendTo($gridContainer);
+            });
+
+            $container.on('mouseup', '#thumb_camera_button', function () {
+                $container.find('#thumb_canvas').removeAttr('style');
             });
 
             $gridContainer.on('click', '#small_thumb_download_button', function () {
