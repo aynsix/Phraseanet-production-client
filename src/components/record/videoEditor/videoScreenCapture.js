@@ -15,15 +15,25 @@ const videoScreenCapture = (services, datas, activeTab = false) => {
 
             var $gridContainer = $('#grid', $container);
 
-            $gridContainer.on('click', '.grid-wrapper', function () {
+            $gridContainer.on('mousedown', '.grid-wrapper', function () {
                 $('.selected', $gridContainer).removeClass('selected');
                 $(this).addClass('selected');
+
+                $container.find('.canvas-wrap').css('max-height','210px').css('width','auto');
+                $container.find('#thumb_canvas').removeAttr('style').removeAttr('height');
 
                 var $self = this;
                 var selectedScreenId = $self.getAttribute('id').split('_').pop();
                 var screenshots = ThumbEditor.store.get(selectedScreenId);
 
                 ThumbEditor.copy(screenshots.getDataURI(), screenshots.getAltScreenShots());
+            });
+
+            $gridContainer.on('mouseup', '.grid-wrapper', function () {
+                if ($container.find('#thumb_canvas').height() >= 210) {
+                    $container.find('#thumb_canvas').css('height', '210px');
+                }
+
             });
 
             $container.on('click', '#thumb_download_button', function() {
@@ -51,6 +61,7 @@ const videoScreenCapture = (services, datas, activeTab = false) => {
                     $container.find('#grid').css('min-height', '210px');
                 }
                 $container.find('.frame_canva').css('width', $container.find('#thumb_canvas').width());
+                $container.find('.canvas-wrap').css('overflow','hidden').css('width', $container.find('#thumb_canvas').width());
 
                 $('.selected', $gridContainer).removeClass('selected');
                 var grid_wrapper = document.createElement('div');
