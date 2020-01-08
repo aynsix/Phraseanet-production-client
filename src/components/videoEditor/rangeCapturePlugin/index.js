@@ -200,7 +200,6 @@ const plugin = function (options) {
             default:
         }
         console.log('<<< =================== RANGE EVENT COMPLETE')
-        //this.setEditorHeight()
 
     });
 
@@ -306,6 +305,12 @@ const plugin = function (options) {
     }
 
     this.ready(() => {
+
+        /*resize video*/
+        var videoChapterH = $('#rangeExtractor').height();
+        $('#rangeExtractor .video-player-container').css('max-height', videoChapterH);
+        $('#rangeExtractor .video-range-editor-container').css('max-height', videoChapterH).css('overflow','hidden');
+
 
         this.setVTT();
         // if we have to load existing chapters, let's trigger loadedmetadata:
