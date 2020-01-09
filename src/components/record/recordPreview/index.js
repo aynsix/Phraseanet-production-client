@@ -719,6 +719,19 @@ const previewRecordService = services => {
     function resizePreview() {
         options.height = $('#PREVIEWIMGCONT').height();
         options.width = $('#PREVIEWIMGCONT').width();
+
+        /*Resize portrait Video*/
+        var originalWidth = $('#phraseanet-embed-preview-frame').data('original-width');
+        var originalHeight = $('#phraseanet-embed-preview-frame').data('original-height');
+        var realHeight = $('#phraseanet-embed-preview-frame').height();
+     //   var realWidth = $('#phraseanet-embed-preview-frame').width();
+        var ratioWi = originalWidth / originalHeight;
+        var newW = ratioWW * realHeight;
+        var testRatio = originalWidth / newW;
+        if (testRatio < ratioWi ) {
+            $('#phraseanet-embed-preview-frame iframe').css('width', newW).css('height', realHeight);
+        }
+
         _setPreview();
     }
 
