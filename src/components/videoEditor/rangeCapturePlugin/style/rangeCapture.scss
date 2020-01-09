@@ -73,10 +73,7 @@
   .btn-container{
     margin: 10px 0px;
     text-align: center;
-    position: absolute;
-    left: 0;
-    right: 0;
-    bottom: 0;
+    position: relative;
       .btn {
           border-radius: 15px;
           padding-left: 10px;
@@ -226,13 +223,8 @@
     padding-right: 4px;
     .range-collection-container {
         margin-top: 48px;
-        /* margin-bottom: 50px; */
-        bottom: 60px;
-        left: 0;
-        right: 0;
         overflow: auto;
-        position: absolute;
-        top: 0;
+        position: relative;
         .range-item-index-div {
             padding: 0;
             width: 22px;
