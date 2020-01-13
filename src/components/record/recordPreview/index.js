@@ -327,6 +327,7 @@ const previewRecordService = services => {
                     .width('100%')
                     .height('100%')
                     .image_enhance({ zoomable: true });
+                resizeVideoPreview();
 
                 $('#PREVIEWIMGDESCINNER').empty().append(data.desc);
                 $('#HISTORICOPS').empty().append(data.history);
@@ -439,6 +440,28 @@ const previewRecordService = services => {
                 return;
             }
         });
+    }
+
+    function resizeVideoPreview() {
+        /*Resize portrait Video*/
+        var originalWidth = $('#phraseanet-embed-preview-frame').data('original-width');
+        var originalHeight = $('#phraseanet-embed-preview-frame').data('original-height');
+        var realHeight = $('#phraseanet-embed-preview-frame').height();
+        var realWidth = $('#phraseanet-embed-preview-frame').width();
+        var ratioWi = originalWidth / originalHeight;
+        var realRatio = realWidth /realHeight;
+        var newW = ratioWi * realHeight;
+        var newH = realWidth / ratioWi;
+        if (ratioWi <= 1) {
+            $('#phraseanet-embed-preview-frame iframe').css('width', newW).css('height', realHeight);
+        }
+        else {
+            if (realRatio >= ratioWi) {
+                $('#phraseanet-embed-preview-frame iframe').css('width', newW).css('height', realHeight);
+            } else {
+                $('#phraseanet-embed-preview-frame iframe').css('width', realWidth).css('height', newH);
+            }
+        }
     }
 
     function closePreview() {
@@ -720,18 +743,7 @@ const previewRecordService = services => {
         options.height = $('#PREVIEWIMGCONT').height();
         options.width = $('#PREVIEWIMGCONT').width();
 
-        /*Resize portrait Video*/
-        var originalWidth = $('#phraseanet-embed-preview-frame').data('original-width');
-        var originalHeight = $('#phraseanet-embed-preview-frame').data('original-height');
-        var realHeight = $('#phraseanet-embed-preview-frame').height();
-     //   var realWidth = $('#phraseanet-embed-preview-frame').width();
-        var ratioWi = originalWidth / originalHeight;
-        var newW = ratioWW * realHeight;
-        var testRatio = originalWidth / newW;
-        if (testRatio < ratioWi ) {
-            $('#phraseanet-embed-preview-frame iframe').css('width', newW).css('height', realHeight);
-        }
-
+        resizeVideoPreview();
         _setPreview();
     }
 
