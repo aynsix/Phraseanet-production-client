@@ -443,25 +443,21 @@ const previewRecordService = services => {
     }
 
     function resizeVideoPreview() {
-        /*Resize portrait Video*/
-        var originalWidth = $('#phraseanet-embed-preview-frame').data('original-width');
-        var originalHeight = $('#phraseanet-embed-preview-frame').data('original-height');
-        var realHeight = $('#phraseanet-embed-preview-frame').height();
-        var realWidth = $('#phraseanet-embed-preview-frame').width();
-        var ratioWi = originalWidth / originalHeight;
-        var realRatio = realWidth /realHeight;
-        var newW = ratioWi * realHeight;
-        var newH = realWidth / ratioWi;
-        if (ratioWi <= 1) {
-            $('#phraseanet-embed-preview-frame iframe').css('width', newW).css('height', realHeight);
+
+        var $sel = $('#phraseanet-embed-preview-frame');
+        // V is for "video" ; K is for "container" ; N is for "new"
+        var VW = $sel.data('originalWidth');
+        var VH = $sel.data('originalHeight');
+        var KW = $sel.width();
+        var KH = $sel.height();
+
+        var NW, NH;
+        if( (NH = (VH / VW) * (NW=KW) ) > KH )  {   // try to fit exact horizontally, adjust vertically
+            // too bad... new height overflows container height
+            NW = (VW / VH) * (NH=KH);      // so fit exact vertically, adjust horizontally
         }
-        else {
-            if (realRatio >= ratioWi) {
-                $('#phraseanet-embed-preview-frame iframe').css('width', newW).css('height', realHeight);
-            } else {
-                $('#phraseanet-embed-preview-frame iframe').css('width', realWidth).css('height', newH);
-            }
-        }
+        $("iframe", $sel).css('width', NW).css('height', NH);
+
     }
 
     function closePreview() {
