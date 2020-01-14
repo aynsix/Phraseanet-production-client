@@ -244,14 +244,14 @@
 
   .grid-item {
       width: 105px;
-      height: 65px;
+      height: auto;
       float: left;
       margin: 10px;
       position: relative;
     }
 
   .grid-wrapper {
-      position: absolute;
+      position: relative;
       &.selected {
         border: 2px solid $bgInverseHoverColor;
       }

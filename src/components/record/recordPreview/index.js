@@ -327,6 +327,7 @@ const previewRecordService = services => {
                     .width('100%')
                     .height('100%')
                     .image_enhance({ zoomable: true });
+                resizeVideoPreview();
 
                 $('#PREVIEWIMGDESCINNER').empty().append(data.desc);
                 $('#HISTORICOPS').empty().append(data.history);
@@ -439,6 +440,24 @@ const previewRecordService = services => {
                 return;
             }
         });
+    }
+
+    function resizeVideoPreview() {
+
+        var $sel = $('#phraseanet-embed-preview-frame');
+        // V is for "video" ; K is for "container" ; N is for "new"
+        var VW = $sel.data('originalWidth');
+        var VH = $sel.data('originalHeight');
+        var KW = $sel.width();
+        var KH = $sel.height();
+
+        var NW, NH;
+        if( (NH = (VH / VW) * (NW=KW) ) > KH )  {   // try to fit exact horizontally, adjust vertically
+            // too bad... new height overflows container height
+            NW = (VW / VH) * (NH=KH);      // so fit exact vertically, adjust horizontally
+        }
+        $("iframe", $sel).css('width', NW).css('height', NH);
+
     }
 
     function closePreview() {
@@ -719,6 +738,8 @@ const previewRecordService = services => {
     function resizePreview() {
         options.height = $('#PREVIEWIMGCONT').height();
         options.width = $('#PREVIEWIMGCONT').width();
+
+        resizeVideoPreview();
         _setPreview();
     }
 
