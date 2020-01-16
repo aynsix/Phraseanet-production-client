@@ -155,7 +155,8 @@
     position: relative;
     height: 20px;
     z-index: 15;
-    font-size: 0.8em
+    font-size: 0.8em;
+    background: rgba(0,0,0,0.4);
 }
 
 .CHIM.diapo .title {
@@ -172,6 +173,41 @@
     vertical-align: middle;
     .WorkZoneElementRemover {
         padding: 3px;
+    }
+}
+.WorkZoneElementRemover {
+    display: inline-block;
+    height: 17px;
+    width: 12px;
+    position: relative;
+    bottom: -6px;
+    .icomoon {
+        font-size: 14px;
+    }
+}
+
+.contextMenuTrigger {
+    .fa-inverse-bg {
+        color: $stackInverseBg;
+    }
+    .fa-inverse {
+        color : $stackInverse;
+    }
+}
+.WorkZoneElementRemover {
+    .fa-stack-1x {
+        color: $stackInverse;
+    }
+
+}
+.captionTips {
+    .icomoon {
+        color: $stackInverse;
+        background: $stackInverseBg;
+        border-radius: 2px;
+        padding: 0px 1px;
+        line-height: 1;
+        margin: 0 4px 4px 4px;
     }
 }
 
