@@ -70,16 +70,17 @@ $diapoBorderColor: #404040 !default;
       }
       .fa-stack-2x {
         color: $stackBg;
+          &.fa-inverse-bg {
+              color:$stackInverse;
+          }
       }
 
-      .fa-inverse-bg {
-           color:$stackText;
-      }
         .icomoon.white {
             color: $stackText;
             &.fa-inverse {
                 color: $stackInverse; //$darkerTextColor;
             }
+
         }
         .fa-stack {
             transition: 0.3s all;
@@ -91,6 +92,9 @@ $diapoBorderColor: #404040 !default;
                     color: $stackInverse;
                     &.fa-inverse {
                         color: $stackText; //$darkerTextColor;
+                    }
+                    &.fa-inverse-bg {
+                        color:$stackBg;
                     }
                 }
                 .fa-inverse-bg {
@@ -149,8 +153,15 @@ $diapoBorderColor: #404040 !default;
       }
   }
 }
+.diapo.CHIM {
+    border: 0!important;
+    background: $chimImg;
+}
 .diapo.CHIM .thumb_wrapper {
   padding: 0;
+  border: 0;
+  margin: 5px 0;
+  background: $chimImg;
     .record_image {
         position: absolute;
         top: 50%!important;

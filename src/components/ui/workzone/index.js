@@ -127,6 +127,15 @@ const workzone = (services) => {
             shadow: false
         });
 
+        $('.contextMenuTrigger').hide();
+        $('.workzone-menu-title').on('mouseover', function () {
+            $(this).parent().find('.menu .contextMenuTrigger').show();
+        });
+        $('.workzone-menu-title').on('mouseout', function () {
+            $(this).parent().find('.menu .contextMenuTrigger').hide();
+        });
+
+
         $('#basket_menu_trigger').trigger('click');
         $('#basket_menu_trigger').trigger('click');
 

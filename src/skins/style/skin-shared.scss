@@ -328,6 +328,10 @@ span.ww_winTitle {
         #baskets & {
             margin-bottom: 42px;
         }
+    background: $chimWrap;
+    margin-right: 4px;
+    width: 107px;
+
     span.feedback_user_name {
         position: relative;
         background: $feedback;
@@ -355,6 +359,13 @@ span.ww_winTitle {
                 display: none;
             }
         }
+    }
+    .title , .status {
+        width: 100px;
+        overflow: hidden;
+        padding: 4px;
+        text-align: center;
+        font-size: 10px;
     }
 }
 

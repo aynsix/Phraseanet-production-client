@@ -241,8 +241,10 @@ $editFieldBg: #f2f2f2;
 
 $stackText: #ffffff;
 $stackBg: #808080;
-$stackInverse: #000000;
-$stackInverseBg: #d8d8d8;
+$stackInverse: #333;
+$stackInverseBg: #cccccc;
+$chimWrap: #e8e8e8;
+$chimImg: #cacaca;
 
 @import '../../../../stylesheets/shared/jquery-ui/ui-lightness';
 @import '../skin-shared';
