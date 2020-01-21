@@ -320,17 +320,15 @@ span.ww_winTitle {
         margin: 10px 30px 10px 0;
     }
 }
-
+.chim-content {
+    display: inline-block;
+}
 .chim-wrapper {
     position: relative;
-    float: left;
-    margin-bottom: 20px;
-        #baskets & {
-            margin-bottom: 42px;
-        }
+    margin-bottom: 15px;
     background: $chimWrap;
-    margin-right: 4px;
-    width: 107px;
+    margin-right: 1px;
+    display: inline-block;
 
     span.feedback_user_name {
         position: relative;
@@ -363,9 +361,10 @@ span.ww_winTitle {
     .title , .status {
         width: 100px;
         overflow: hidden;
-        padding: 4px;
+        padding: 2px 4px;
         text-align: center;
         font-size: 10px;
+        line-height: 1;
     }
 }
 

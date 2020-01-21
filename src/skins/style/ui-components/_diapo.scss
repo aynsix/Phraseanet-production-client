@@ -32,9 +32,9 @@ $diapoBorderColor: #404040 !default;
   display: block;
   float: left;
   border: 1px solid $diapoBorderColor;
-  border-radius: $defaultBorderRadius;
+//  border-radius: $defaultBorderRadius;
   text-align: center;
-  margin: 8px 5px;
+  margin: 8px 0;
   &.selected {
     cursor: url('#{$iconsPath}cursor-move.png'), -moz-grab;
   }

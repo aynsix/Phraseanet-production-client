@@ -147,8 +147,15 @@
 }
 
 .CHIM.diapo {
-    width: 100px;
+    width: 108px;
     overflow: hidden;
+    margin: 0;
+}
+.basket-content {
+    margin: 0 7px;
+    overflow: hidden;
+    position: relative;
+    padding-left: 25px;
 }
 
 .CHIM.diapo .title, .CHIM.diapo .status {
@@ -160,9 +167,10 @@
 }
 
 .CHIM.diapo .title {
-    height: 15px;
     margin: 2px 0;
     overflow: hidden;
+    height: 26px;
+    text-overflow: ellipsis;
 }
 
 .CHIM.diapo .bottom {
