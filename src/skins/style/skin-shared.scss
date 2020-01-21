@@ -320,53 +320,7 @@ span.ww_winTitle {
         margin: 10px 30px 10px 0;
     }
 }
-.chim-content {
-    display: inline-block;
-}
-.chim-wrapper {
-    position: relative;
-    margin-bottom: 15px;
-    background: $chimWrap;
-    margin-right: 1px;
-    display: inline-block;
 
-    span.feedback_user_name {
-        position: relative;
-        background: $feedback;
-        padding-right: 9px;
-        z-index: 1;
-    }
-    span.line_separator {
-        position: absolute;
-        height: 45%;
-        width: calc(100% - 10px);
-        right: 0;
-        top: 0;
-        border-bottom: 1px solid $lineSeparator;
-    }
-
-    .note_tips_holder {
-        .image-hover {
-            display: none;
-        }
-        &:hover {
-            .image-hover {
-                display: block;
-            }
-            .image-normal {
-                display: none;
-            }
-        }
-    }
-    .title , .status {
-        width: 100px;
-        overflow: hidden;
-        padding: 2px 4px;
-        text-align: center;
-        font-size: 10px;
-        line-height: 1;
-    }
-}
 
 #tooltip {
     position: absolute;

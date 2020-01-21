@@ -113,15 +113,21 @@
             img.basket_title {
                 margin: -5px 9px 0 -9px;
             }
-        }
-        .menu {
             .contextMenuTrigger {
                 cursor: pointer;
                 padding: 0;
                 margin: 0;
-                width: 13px;
+                width: 26px;
+                height: 35px;
+                display: none;
+            }
+            &:hover, &:focus {
+                .contextMenuTrigger {
+                    display: inline-block;
+                }
             }
         }
+
         .ui-state-active a {
             &:link, &:visited, &:hover, &:focus {
                 color: $basketTitleHov;
@@ -144,6 +150,68 @@
     float: right;
     font-size: 9px;
     cursor: pointer;
+}
+
+.chim-content {
+    display: inline-block;
+}
+.chim-wrapper {
+    position: relative;
+    margin-bottom: 15px;
+    background: $chimWrap;
+    margin-right: 1px;
+    display: inline-block;
+
+    span.feedback_user_name {
+        position: relative;
+        background: $feedback;
+        padding-right: 9px;
+        z-index: 1;
+    }
+    span.line_separator {
+        position: absolute;
+        height: 45%;
+        width: calc(100% - 10px);
+        right: 0;
+        top: 0;
+        border-bottom: 1px solid $lineSeparator;
+    }
+
+    .note_tips_holder {
+        .image-hover {
+            display: none;
+        }
+        &:hover {
+            .image-hover {
+                display: block;
+            }
+            .image-normal {
+                display: none;
+            }
+        }
+    }
+    .title , .status {
+        width: 100px;
+        overflow: hidden;
+        padding: 2px 4px;
+        text-align: center;
+        font-size: 10px;
+        line-height: 1;
+    }
+    .title {
+        height: 26px;
+        text-overflow: ellipsis
+    }
+
+}
+.record-number {
+    position: absolute;
+    background-color: #959595;
+    color: black;
+    font-weight: bold;
+    padding: 3px;
+    z-index: 16;
+    bottom: 0;
 }
 
 .CHIM.diapo {
@@ -169,8 +237,6 @@
 .CHIM.diapo .title {
     margin: 2px 0;
     overflow: hidden;
-    height: 26px;
-    text-overflow: ellipsis;
 }
 
 .CHIM.diapo .bottom {
