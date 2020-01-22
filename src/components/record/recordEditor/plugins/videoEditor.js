@@ -20,15 +20,15 @@ const videoEditor = (services) => {
             options.seekForwardStep = data.videoEditorConfig.seekForwardStep;
             options.playbackRates = data.videoEditorConfig.playbackRates === undefined ? [1, 2, 3] : data.videoEditorConfig.playbackRates;
             options.vttFieldValue = false;
-            options.vttFieldName = data.videoEditorConfig.vttFieldName === undefined ? false : data.videoEditorConfig.vttFieldName;
+            options.ChapterVttFieldName = data.videoEditorConfig.ChapterVttFieldName === undefined ? false : data.videoEditorConfig.ChapterVttFieldName;
         }
 
         options.techOrder = ['html5', 'flash'];
         $container.addClass('video-range-editor-container');
 
         // get default videoTextTrack value
-        if (options.vttFieldName !== false) {
-            let vttField = parentOptions.fieldCollection.getFieldByName(options.vttFieldName);
+        if (options.ChapterVttFieldName !== false) {
+            let vttField = parentOptions.fieldCollection.getFieldByName(options.ChapterVttFieldName);
             if (vttField !== false) {
                 options.vttFieldValue = vttField._value
             }
@@ -52,12 +52,12 @@ const videoEditor = (services) => {
             rangeCaptureInstance.getPlayer().rangeStream.subscribe((params) => {
                 switch (params.action) {
                     case 'export-vtt-ranges':
-                        if (options.vttFieldName !== false) {
+                        if (options.ChapterVttFieldName !== false) {
 
                             let presets = {
                                 fields: {}
                             };
-                            presets.fields[options.vttFieldName] = [params.data];
+                            presets.fields[options.ChapterVttFieldName] = [params.data];
                             recordEditorEvents.emit('recordEditor.addPresetValuesFromDataSource', {
                                 data: presets
                             });
