@@ -8,6 +8,9 @@ $diapoBorderColor: #404040 !default;
   height: 130px;
   width: 100px;
 }
+.editDiaButtons .icomoon {
+    color: gray;
+}
 
 #reorder_box .diapo.ui-sortable-placeholder,
 #reorder_box .diapo.ui-sortable-placeholderfollow {
