@@ -32,9 +32,9 @@ $diapoBorderColor: #404040 !default;
   display: block;
   float: left;
   border: 1px solid $diapoBorderColor;
-  border-radius: $defaultBorderRadius;
+//  border-radius: $defaultBorderRadius;
   text-align: center;
-  margin: 8px 5px;
+  margin: 8px 0;
   &.selected {
     cursor: url('#{$iconsPath}cursor-move.png'), -moz-grab;
   }
@@ -53,11 +53,6 @@ $diapoBorderColor: #404040 !default;
     bottom: 0;
     z-index: 99;
     &.actions {
-      /*.action-icon {
-        cursor: pointer;
-        font-size: 12px;
-
-      }*/
       tr {
         td {
           &:first-child {
@@ -72,19 +67,57 @@ $diapoBorderColor: #404040 !default;
         font-size: 11px;
         cursor: pointer;
         width: 19px;
-        //height: 15px;
-        //line-height: 12px;
-        //padding: 0;
-        //margin: 0;
       }
       .fa-stack-2x {
-        color: #777777; //darken($darkerBackgroundColor, 10);
+        color: $stackBg;
+          &.fa-inverse-bg {
+              color:$stackInverse;
+          }
       }
-      .fa-inverse {
-        color: $darkerBackgroundColor; //$darkerTextColor;
-      }
+
+        .icomoon.white {
+            color: $stackText;
+            &.fa-inverse {
+                color: $stackInverse; //$darkerTextColor;
+            }
+
+        }
+        .fa-stack {
+            transition: 0.3s all;
+            &:hover {
+                .fa-stack-2x {
+                    color: $stackInverseBg;
+                }
+                .icomoon.white {
+                    color: $stackInverse;
+                    &.fa-inverse {
+                        color: $stackText; //$darkerTextColor;
+                    }
+                    &.fa-inverse-bg {
+                        color:$stackBg;
+                    }
+                }
+                .fa-inverse-bg {
+                    color:$stackBg;
+                }
+            }
+        }
     }
+
   }
+ //.rounded_bordered {
+ //    background: $stackIconWhiteHow;
+ //    border-radius: 50px;
+ //    padding: 0px 0.5px;
+ //    box-shadow: 0px 0px 0px 0.5px grey;
+ //    transition: 0.3s all;
+ //    color : $stackBg;
+ //    &:hover {
+ //        background: $stackHover;
+ //        color : $stackIconWhiteHow;
+ //    }
+ //}
+
 
   .title {
     overflow: hidden;
@@ -120,8 +153,25 @@ $diapoBorderColor: #404040 !default;
       }
   }
 }
+.diapo.CHIM {
+    border: 0!important;
+    background: $chimImg;
+}
 .diapo.CHIM .thumb_wrapper {
-  padding: 6px 0px;
+  padding: 0;
+  border: 0;
+  margin: 5px 0;
+  background: $chimImg;
+    .record_image {
+        position: absolute;
+        top: 50%!important;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        max-height: 100%;
+        max-width: 100%;
+        object-fit: contain;
+        margin-top: 0;
+    }
 }
 
 .diapo.IMGT .thumb_wrapper {

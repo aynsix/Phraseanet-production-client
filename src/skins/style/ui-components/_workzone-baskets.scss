@@ -113,15 +113,21 @@
             img.basket_title {
                 margin: -5px 9px 0 -9px;
             }
-        }
-        .menu {
             .contextMenuTrigger {
                 cursor: pointer;
                 padding: 0;
                 margin: 0;
-                width: 13px;
+                width: 26px;
+                height: 35px;
+                display: none;
+            }
+            &:hover, &:focus {
+                .contextMenuTrigger {
+                    display: inline-block;
+                }
             }
         }
+
         .ui-state-active a {
             &:link, &:visited, &:hover, &:focus {
                 color: $basketTitleHov;
@@ -146,20 +152,89 @@
     cursor: pointer;
 }
 
+.chim-content {
+    display: inline-block;
+}
+.chim-wrapper {
+    position: relative;
+    margin-bottom: 15px;
+    background: $chimWrap;
+    margin-right: 1px;
+    display: inline-block;
+
+    span.feedback_user_name {
+        position: relative;
+        background: $feedback;
+        padding-right: 9px;
+        z-index: 1;
+    }
+    span.line_separator {
+        position: absolute;
+        height: 45%;
+        width: calc(100% - 10px);
+        right: 0;
+        top: 0;
+        border-bottom: 1px solid $lineSeparator;
+    }
+
+    .note_tips_holder {
+        .image-hover {
+            display: none;
+        }
+        &:hover {
+            .image-hover {
+                display: block;
+            }
+            .image-normal {
+                display: none;
+            }
+        }
+    }
+    .title , .status {
+        width: 100px;
+        overflow: hidden;
+        padding: 2px 4px;
+        text-align: center;
+        font-size: 10px;
+        line-height: 1;
+    }
+    .title {
+        height: 26px;
+        text-overflow: ellipsis
+    }
+
+}
+.record-number {
+    position: absolute;
+    background-color: #959595;
+    color: black;
+    font-weight: bold;
+    padding: 3px;
+    z-index: 16;
+    bottom: 0;
+}
+
 .CHIM.diapo {
-    width: 100px;
+    width: 108px;
     overflow: hidden;
+    margin: 0;
+}
+.basket-content {
+    margin: 0 7px;
+    overflow: hidden;
+    position: relative;
+    padding-left: 25px;
 }
 
 .CHIM.diapo .title, .CHIM.diapo .status {
     position: relative;
     height: 20px;
     z-index: 15;
-    font-size: 0.8em
+    font-size: 0.8em;
+    background: rgba(0,0,0,0.4);
 }
 
 .CHIM.diapo .title {
-    height: 15px;
     margin: 2px 0;
     overflow: hidden;
 }
@@ -172,6 +247,48 @@
     vertical-align: middle;
     .WorkZoneElementRemover {
         padding: 3px;
+    }
+}
+.WorkZoneElementRemover {
+    display: inline-block;
+    height: 17px;
+    width: 12px;
+    position: relative;
+    bottom: -5px;
+    .icomoon {
+        font-size: 16px;
+        color: #d8d8d8;
+    }
+}
+
+.contextMenuTrigger {
+    .fa-inverse-bg {
+        color: $stackInverseBg!important;
+    }
+    .fa-inverse {
+        color : $stackInverse;
+    }
+    &:hover {
+
+        .fa-inverse-bg {
+            color: $stackBg!important;
+        }
+    }
+}
+.WorkZoneElementRemover {
+    .fa-stack-1x {
+        color: $stackInverse;
+    }
+
+}
+.captionTips {
+    .icomoon {
+        color: $stackInverse;
+        background: $stackInverseBg;
+        border-radius: 2px;
+        padding: 0px 1px;
+        line-height: 1;
+        margin: 0 4px 4px 4px;
     }
 }
 

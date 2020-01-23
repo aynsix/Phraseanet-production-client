@@ -231,5 +231,12 @@ $tooltipTxt: #FFFFFF;
 $editAllBg: none;
 $editFieldBg: transparent;
 
+$stackText: #ffffff;
+$stackBg: #808080;
+$stackInverse: #000000;
+$stackInverseBg: #cccccc;
+$chimWrap: #d1d1d1;
+$chimImg: #b5b5b5;
+
 @import '../../../../stylesheets/shared/jquery-ui/ui-lightness';
 @import '../skin-shared';
