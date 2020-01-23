@@ -321,42 +321,6 @@ span.ww_winTitle {
     }
 }
 
-.chim-wrapper {
-    position: relative;
-    float: left;
-    margin-bottom: 20px;
-        #baskets & {
-            margin-bottom: 42px;
-        }
-    span.feedback_user_name {
-        position: relative;
-        background: $feedback;
-        padding-right: 9px;
-        z-index: 1;
-    }
-    span.line_separator {
-        position: absolute;
-        height: 45%;
-        width: calc(100% - 10px);
-        right: 0;
-        top: 0;
-        border-bottom: 1px solid $lineSeparator;
-    }
-
-    .note_tips_holder {
-        .image-hover {
-            display: none;
-        }
-        &:hover {
-            .image-hover {
-                display: block;
-            }
-            .image-normal {
-                display: none;
-            }
-        }
-    }
-}
 
 #tooltip {
     position: absolute;
@@ -1168,9 +1132,7 @@ h4 {
     margin-bottom: 4px;
     margin-top: 3px;
 }
-.icomoon.white {
-    color: $darkerTextColor2;
-}
+
 
 @import 'ui-components/jquery-ui';
 @import 'ui-components/context-menu';
