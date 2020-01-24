@@ -255,6 +255,10 @@ recordField.prototype = {
         VocabularyId = checkVocabId(VocabularyId);
 
         for (let d in this.datas) {
+            $(".edit-multivalued-field-action ").on('click',function() {
+                $(this).parent().find('.hilighted').removeClass('hilighted');
+                $(this).addClass('hilighted');
+            });
             if (VocabularyId !== null) {
                 if (this.datas[d].getVocabularyId() === VocabularyId) {
                     if (window.console) {

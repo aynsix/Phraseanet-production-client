@@ -100,13 +100,15 @@ const leafletMap = (services) => {
         }
         let {selection} = params;
 
-        if (shouldUseMapboxGl() && !map.loaded()) {
-            //refresh marker after 2 sec
-            setTimeout(function () {
+        if(map != null ) {
+            if (shouldUseMapboxGl() && !map.loaded()) {
+                //refresh marker after 2 sec
+                setTimeout(function () {
+                    refreshMarkers(selection);
+                }, 2000);
+            } else {
                 refreshMarkers(selection);
-            }, 2000);
-        } else {
-            refreshMarkers(selection);
+            }
         }
     };
 

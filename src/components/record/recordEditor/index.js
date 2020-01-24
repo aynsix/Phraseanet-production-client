@@ -869,12 +869,11 @@ const recordEditorService = services => {
             }
 
             t +=
-                '<div data-index="' +
+                '<div  data-index="' +
                 i +
                 '" class="edit-multivalued-field-action ' +
-                ((value.getVocabularyId() === null ||
-                    value.getVocabularyId() === vocabularyId) &&
-                highlightValue === word
+                (((value.getVocabularyId() === null ||
+                    value.getVocabularyId() === vocabularyId) && highlightValue === word )
                     ? ' hilighted '
                     : '') +
                 (a[key].n !== n ? ' hetero ' : '') +
@@ -886,11 +885,12 @@ const recordEditorService = services => {
                 '">' +
                 $('<div/>').text(word).html() +
                 "</span></td><td class='options'>" +
-                '<a href="#" class="add_all"><img src="/assets/common/images/icons/plus11.png"/></a> ' +
-                '<a href="#" class="remove_all"><img src="/assets/common/images/icons/minus11.png"/></a>' +
+                '<a href="#" class="add_all"><span class="icon-round-add_box-24px icomoon" style="font-size: 15px"></span></a> ' +
+                '<a href="#" class="remove_all"><span class="icon-baseline-indeterminate_check_box-24px icomoon" style="font-size: 15px;"></span></a>' +
                 '</td></tr></table>' +
                 '</div>';
         }
+
         $('#ZTextMultiValued_values', options.$container).html(t);
 
         $('#ZTextMultiValued_values .add_all', options.$container)
@@ -1344,6 +1344,18 @@ const recordEditorService = services => {
 
         refreshFields(null); // null : no evt available
     }
+
+
+    // ---------------------------------------------------------------------------
+    // on a clique sur une des multi-valeurs dans la liste
+    // ---------------------------------------------------------------------------
+    function _edit_clkmval(mvaldiv, ival) {
+        $(mvaldiv).parent().find('.hilighted').removeClass('hilighted');
+        $(mvaldiv).addClass('hilighted');
+        _reveal_mval(options.T_mval[ival].getValue(), options.T_mval[ival].getVocabularyId());
+    }
+
+
 
     // ---------------------------------------------------------------------------
     // highlight la valeur en cours de saisie dans la liste des multi-valeurs
