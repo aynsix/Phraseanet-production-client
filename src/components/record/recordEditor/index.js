@@ -135,7 +135,7 @@ const recordEditorService = services => {
                 event.preventDefault();
                 let $el = $(event.currentTarget);
 
-                _editMultivaluedField(event, $el.data('index'));
+                _editMultivaluedField($el, $el.data('index'));
             })
             .on('click', '.toggle-status-field-action', event => {
                 event.preventDefault();
@@ -1344,17 +1344,6 @@ const recordEditorService = services => {
 
         refreshFields(null); // null : no evt available
     }
-
-
-    // ---------------------------------------------------------------------------
-    // on a clique sur une des multi-valeurs dans la liste
-    // ---------------------------------------------------------------------------
-    function _edit_clkmval(mvaldiv, ival) {
-        $(mvaldiv).parent().find('.hilighted').removeClass('hilighted');
-        $(mvaldiv).addClass('hilighted');
-        _reveal_mval(options.T_mval[ival].getValue(), options.T_mval[ival].getVocabularyId());
-    }
-
 
 
     // ---------------------------------------------------------------------------
