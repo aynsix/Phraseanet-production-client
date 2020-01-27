@@ -1,4 +1,6 @@
-
+.contextMenuWrapper {
+    position: relative;
+}
 #idFrameC {
     #baskets {
         top: $tabHeight !important;
@@ -94,7 +96,8 @@
                 padding: 0 3px;
                 margin: 0 5px 0 0;
                 table td {
-                    width: 24px;
+                    width: 27px;
+                    position: relative;
                 }
             }
             .workzone-menu-title {
@@ -112,6 +115,9 @@
             }
             img.basket_title {
                 margin: -5px 9px 0 -9px;
+                position: absolute;
+                right: 0;
+                top: 16px;
             }
             .contextMenuTrigger {
                 cursor: pointer;
@@ -200,7 +206,8 @@
     }
     .title {
         height: 26px;
-        text-overflow: ellipsis
+        text-overflow: ellipsis;
+        margin-top: 6px;
     }
 
 }
