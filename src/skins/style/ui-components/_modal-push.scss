@@ -381,7 +381,10 @@ input.text_input_white {
         background-color: $feedbackThemeColor;
     }
     .PushBox .user_content .badges .badge.selected {
-        border-color: $feedbackThemeColor;
+        border-color: #000000;
+    }
+    .PushBox .user_content .badges .badge.selected .icon {
+        background-color: #000000;
     }
     .general_togglers button {
         color: $feedbackThemeColor;
@@ -882,7 +885,7 @@ input.text_input_white {
 }
 
 .PushBox .user_content .badges .badge.selected {
-    border: 3px solid $pushThemeColor;
+    border: 3px solid #000000;
 }
 
 .PushBox .user_content .badges .badge .toggles .status_on .toggle_off {
@@ -910,6 +913,9 @@ input.text_input_white {
     padding: 0 7px;
     background-color: $pushThemeColor;
     border-radius: 7px 0px 0px 7px;
+}
+.PushBox .user_content .badges .badge.selected .icon {
+    background-color: #000000;
 }
 
 .PushBox .user_content .badges .badge .infos {
