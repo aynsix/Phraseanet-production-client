@@ -682,7 +682,7 @@ const orderItem = services => {
             element.find('td:first-child').empty();
             element
                 .find('td:first-child')
-                .append('<img style="cursor:help;" src="/assets/common/images/icons/to_be_'+order.newState+'.png" title="">');
+                .append('<img style="cursor:help;" src="/assets/common/images/icons/to_be_'+order.newState+'.svg" title="">');
             updateButtonStatus(element.attr('class').split(/\s+/));
         }
 
