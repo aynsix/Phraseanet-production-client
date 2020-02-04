@@ -129,10 +129,6 @@ const workzoneFacets = services => {
             })
         );
 
-        if (data.facetOrder == ORDER_BY_BCT) {
-            treeSource = _sortByPredefinedFacets(treeSource, 'name', ['base_aggregate', 'collection_aggregate', 'doctype_aggregate']);
-        }
-
         if (data.filterFacet == true) {
             treeSource = _hideSingleValueFacet(treeSource);
         }
@@ -414,6 +410,8 @@ const workzoneFacets = services => {
                                             selectedFacets[facetField].values = _.reject(selectedFacets[facetField].values, function (facetValue) {
                                                 return (facetValue.value.label == facetLabel && facetValue.negated == facetNegated);
                                             });
+                                            /*Remove this from selected facet list*/
+                                            delete selectedFacets[facetField];
 
                                             appEvents.emit('search.doRefreshState');
                                             return false;
