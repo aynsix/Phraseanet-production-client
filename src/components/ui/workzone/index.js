@@ -127,6 +127,7 @@ const workzone = (services) => {
             shadow: false
         });
 
+
         $('#basket_menu_trigger').trigger('click');
         $('#basket_menu_trigger').trigger('click');
 

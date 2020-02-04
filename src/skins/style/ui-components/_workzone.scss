@@ -172,12 +172,17 @@ $dividerBg: #6c6c6c !default;
     }
     div.basketTips {
         box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 12px 0 rgba(0, 0, 0, 0.19);
+        &.hidden {
+            display: none;
+            box-shadow: none;
+        }
     }
     .tools-accordion {
         display: block;
         z-index: 100;
         position: relative;
         margin-top: 3px;
+        margin-bottom: 10px;
         width: 160px;
         height: 30px;
         background-color: $mainMenuBackgroundColor;

@@ -122,16 +122,7 @@ const workzoneFacets = services => {
             };
 
         });
-
-        treeSource.sort(
-            _sortFacets('title', true, function (a) {
-                return a.toUpperCase();
-            })
-        );
-
-        if (data.facetOrder == ORDER_BY_BCT) {
-            treeSource = _sortByPredefinedFacets(treeSource, 'name', ['base_aggregate', 'collection_aggregate', 'doctype_aggregate']);
-        }
+        
 
         if (data.filterFacet == true) {
             treeSource = _hideSingleValueFacet(treeSource);
@@ -414,6 +405,8 @@ const workzoneFacets = services => {
                                             selectedFacets[facetField].values = _.reject(selectedFacets[facetField].values, function (facetValue) {
                                                 return (facetValue.value.label == facetLabel && facetValue.negated == facetNegated);
                                             });
+                                            /*Remove this from selected facet list*/
+                                            delete selectedFacets[facetField];
 
                                             appEvents.emit('search.doRefreshState');
                                             return false;
@@ -453,7 +446,6 @@ const workzoneFacets = services => {
 
                                     /*add selected facet tooltip*/
                                     s_facet.attr('title', facetValue.value.value);
-                                    s_facet.tooltip();
 
                                     s_facet.hover(function () {
                                         $(buttonsSpan).show();
