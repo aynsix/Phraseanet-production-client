@@ -30,7 +30,7 @@ const videoRangeCapture = (services, datas, activeTab = false) => {
             options.seekForwardStep = initData.videoEditorConfig.seekForwardStep;
             options.playbackRates = initData.videoEditorConfig.playbackRates === undefined ? [1, 2, 3] : initData.videoEditorConfig.playbackRates;
             options.vttFieldValue = false;
-            options.vttFieldName = initData.videoEditorConfig.vttFieldName === undefined ? false : initData.videoEditorConfig.vttFieldName;
+            options.ChapterVttFieldName = initData.videoEditorConfig.ChapterVttFieldName === undefined ? false : initData.videoEditorConfig.ChapterVttFieldName;
         }
 
         options.techOrder = ['html5', 'flash'];
@@ -43,9 +43,9 @@ const videoRangeCapture = (services, datas, activeTab = false) => {
         options.preferences = initData.preferences;
 
         // get default videoTextTrack value
-        if (options.vttFieldName !== false) {
+        if (options.ChapterVttFieldName !== false) {
             var fieldCollection = new FieldCollection(initData.T_fields);
-            let vttField = fieldCollection.getFieldByName(options.vttFieldName);
+            let vttField = fieldCollection.getFieldByName(options.ChapterVttFieldName);
             if (vttField !== false) {
                 if(vttField._value.VideoTextTrackChapters != undefined) {
                     options.vttFieldValue = vttField._value.VideoTextTrackChapters[0];

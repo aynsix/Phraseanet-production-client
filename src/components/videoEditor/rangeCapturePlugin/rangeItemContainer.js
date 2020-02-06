@@ -27,7 +27,7 @@ class RangeItemContainer extends Component {
             this.rangeCollection.exportRangeEvent();
         });
 
-        if(this.settings.vttFieldName == false
+        if(this.settings.ChapterVttFieldName == false
             || this.settings.meta_struct_id == undefined) {
             this.$el.find('.export-vtt-ranges').prop('disabled', true);
         }else {
