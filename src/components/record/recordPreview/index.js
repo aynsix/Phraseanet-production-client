@@ -444,7 +444,7 @@ const previewRecordService = services => {
 
     function resizeVideoPreview() {
 
-        var $sel = $('#phraseanet-embed-preview-frame');
+        var $sel = $('#phraseanet-embed-preview-frame.videoTips');
         // V is for "video" ; K is for "container" ; N is for "new"
         var VW = $sel.data('originalWidth');
         var VH = $sel.data('originalHeight');
