@@ -14,6 +14,8 @@ const geonameDatasource = (services) => {
     let cityFields = [];
     let provinceFields = [];
     let countryFields = [];
+    let latitudeFields = [];
+    let longitudeFields = [];
 
     const initialize = (options) => {
         let initWith = {$container, parentOptions, $editTextArea} = options;
@@ -29,6 +31,12 @@ const geonameDatasource = (services) => {
                 }
                 if (provider['countryfields']) {
                     countryFields = provider['countryfields'].split(',').map(item => item.trim());
+                }
+                if (provider['latitudefields']) {
+                    latitudeFields = provider['latitudefields'].split(',').map(item => item.trim());
+                }
+                if (provider['longitudefields']) {
+                    longitudeFields = provider['longitudefields'].split(',').map(item => item.trim());
                 }
             }
         });
@@ -91,6 +99,9 @@ const geonameDatasource = (services) => {
             case 'Province':
                 value = $el.data('province');
                 break;
+            case 'Latitude':
+                value = $el.data('latitude');
+                break;
             default:
                 break;
         }
@@ -107,6 +118,12 @@ const geonameDatasource = (services) => {
         });
         _.each(countryFields, function (field) {
             fields[field] = [$el.data('country')];
+        });
+        _.each(latitudeFields, function (field) {
+            fields[field] = [String($el.data('latitude'))];
+        });
+        _.each(longitudeFields, function (field) {
+            fields[field] = [String($el.data('longitude'))];
         });
 
         presets.fields = fields;
@@ -159,6 +176,9 @@ const geonameDatasource = (services) => {
         } else if (countryFields.filter(item => item.toLowerCase() == field.name.toLowerCase()).length > 0) {
             searchType = 'city';
             datas.country = $.trim(name);
+        // } else if (latitudeFields.filter(item => item.toLowerCase() == field.name.toLowerCase()).length > 0) {
+        //     searchType = 'latitude';
+        //     datas.latitude = $.trim(name);
         }
 
         if (searchType === false) {
@@ -211,7 +231,7 @@ const geonameDatasource = (services) => {
                     };
 
                     template += `
-                    <li class="geoname-add-action" data-city="${item.name}" data-country="${item.country.name}" data-province="${regionName}"><p>
+                    <li class="geoname-add-action" data-city="${item.name}" data-country="${item.country.name}" data-province="${regionName}" data-latitude="${item.location.latitude}" data-longitude="${item.location.longitude}"><p>
                         <span>${location.value}</span>
                         <br>
                         <span>${location.label}</span></p>
