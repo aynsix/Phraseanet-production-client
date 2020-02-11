@@ -12,9 +12,15 @@ const order = services => {
             event.preventDefault();
             orderModal(event);
         });
+        $container.on('click', '.order-notif', function (event) {
+            event.preventDefault();
+            $('#notification_box').hide();
+            orderModal(event, this);
+        });
+
     };
 
-    const orderModal = event => {
+    const orderModal = (event, id) => {
         var $dialog = dialog.create(services, {
             size: 'Full',
             title: $(event).attr('title')
@@ -26,6 +32,12 @@ const order = services => {
             success: function (data) {
                 $dialog.setContent(data);
                 _onOrderReady($dialog);
+                if ($(id).length) {
+                    $('#order_manager').css('opacity',0).hide(function () {
+                        console.log($(id).data("id"));
+                        $('#order_' + $(id).data("id")).trigger('click');
+                    });
+                }
             }
         });
 
