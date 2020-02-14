@@ -65,7 +65,6 @@ const searchAdvancedForm = (services) => {
             resetSearch();
         });
         $container.on('click', '.reload-search', () => {
-            e.preventDefault();
             resetSearch();
             $('#searchForm').submit();
 
