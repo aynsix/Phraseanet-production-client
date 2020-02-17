@@ -64,6 +64,11 @@ const searchAdvancedForm = (services) => {
         $container.on('click', '.search-reset-action', () => {
             resetSearch();
         });
+        $container.on('click', '.reload-search', () => {
+            resetSearch();
+            $('#searchForm').submit();
+
+        });
 
         $(document).on('focus', 'select.term_select_field', (event) => {
             previousVal = $(event.currentTarget).val();
