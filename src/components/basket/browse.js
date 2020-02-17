@@ -22,20 +22,6 @@ const basketBrowse = (services) => {
             openModal(dialogOptions);
         });
 
-        /*left filter*/
-        $('#feedback-list input').click(function () {
-            $('.feedbacks-block').toggleClass('hidden');
-        });
-        $('#push-list input').click(function () {
-            $('.pushes-block').toggleClass('hidden');
-        });
-        $('#basket-list input').click(function () {
-            $('.baskets-block').toggleClass('hidden');
-        });
-        $('#story-list input').click(function () {
-            $('.stories-block').toggleClass('hidden');
-        });
-
     };
 
     const openModal = (options = {}) => {
