@@ -160,13 +160,12 @@ form.phrasea_query input.query {
     list-style: none;
     width: calc(100% - 70px);
     overflow: hidden;
+    column-count: 3;
 }
 
 .clkbas {
     white-space: normal;
     margin: 0 0 10px;
-    float: left;
-    width: 30%;
     .checkbox {
         padding-top: 0;
         padding-left: 0;
