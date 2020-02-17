@@ -222,10 +222,27 @@ const workzone = (services) => {
                 }
             }
         };
+        filterBaskets();
 
     };
 
     const getResultSelectionStream = () => workzoneOptions.selection.stream;
+
+    /*left filter basket*/
+    function filterBaskets() {
+        $('#feedback-list input').click(function () {
+            $('.feedbacks-block').toggleClass('hidden');
+        });
+        $('#push-list input').click(function () {
+            $('.pushes-block').toggleClass('hidden');
+        });
+        $('#basket-list input').click(function () {
+            $('.baskets-block').toggleClass('hidden');
+        });
+        $('#story-list input').click(function () {
+            $('.stories-block').toggleClass('hidden');
+        });
+    }
 
     function refreshBaskets(options) {
         let {basketId = false, sort, scrolltobottom, type} = options || {};
@@ -264,6 +281,7 @@ const workzone = (services) => {
                 }
 
                 activeBaskets();
+                filterBaskets();
                 $('.basketTips').tooltip({
                     delay: 200
                 });
