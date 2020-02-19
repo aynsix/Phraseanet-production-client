@@ -13,7 +13,9 @@ const workzoneFacets = services => {
 
     const ORDER_BY_BCT = 'ORDER_BY_BCT';
     const ORDER_ALPHA_ASC = 'ORDER_ALPHA_ASC';
+    const ORDER_ALPHA_DESC = 'ORDER_ALPHA_DESC';
     const ORDER_BY_HITS = 'ORDER_BY_HITS';
+    const ORDER_BY_HITS_ASC = 'ORDER_BY_HITS_ASC';
 
     let facetStatus = $.parseJSON(sessionStorage.getItem('facetStatus')) || [];
     let hiddenFacetsList = [];
@@ -50,6 +52,9 @@ const workzoneFacets = services => {
                 case ORDER_ALPHA_ASC:
                     return i.value.toString().toLowerCase();
                     break;
+                case ORDER_BY_HITS_ASC:
+                    return i.count ;
+                    break;;
                 case ORDER_BY_HITS:
                     return i.count * -1;
                     break;
@@ -126,6 +131,15 @@ const workzoneFacets = services => {
         if (data.facetOrder == ORDER_ALPHA_ASC) {
             treeSource.sort(
                 _sortFacets('title', true, function (a) {
+                    return a.toUpperCase();
+                })
+            );
+
+        }
+
+        if (data.facetOrder == ORDER_ALPHA_DESC) {
+            treeSource.sort(
+                _sortFacets('title', false, function (a) {
                     return a.toUpperCase();
                 })
             );
