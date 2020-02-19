@@ -122,7 +122,15 @@ const workzoneFacets = services => {
             };
 
         });
-        
+
+        if (data.facetOrder == ORDER_ALPHA_ASC) {
+            treeSource.sort(
+                _sortFacets('title', true, function (a) {
+                    return a.toUpperCase();
+                })
+            );
+
+        }
 
         if (data.filterFacet == true) {
             treeSource = _hideSingleValueFacet(treeSource);
