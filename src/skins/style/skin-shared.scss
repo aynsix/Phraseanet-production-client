@@ -1135,6 +1135,39 @@ h4 {
 
 
 /*facet filter*/
+
+.btn-facet-option {
+    &.collapsed {
+        color: $mainMenuLinkColor!important;
+        .icomoon {
+            transform: rotate(0);
+            color: $mainMenuLinkColor!important;
+        }
+    }
+    background: $mainMenuBackgroundColor!important;
+    color: $whiteActive!important;
+    border: 1px solid $see_more_btn_bg;
+    box-shadow: 0px 0px 3px 1px $mainMenuBackgroundColor!important;
+    position: relative;
+    padding-right: 20px;
+    .icomoon {
+        font-size: 18px;
+        position: absolute;
+        right: 0;
+        top: 4px;
+        color: $whiteActive!important;
+        transition: all .2s linear;
+        transform: rotate(90deg);
+    }
+    &:hover {
+        color: $whiteActive!important;
+        .icomoon {
+            color: $whiteActive!important;
+        }
+
+    }
+
+}
 .facet-filter {
     width: 50%;
     float: left;
