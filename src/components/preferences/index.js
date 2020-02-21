@@ -213,8 +213,8 @@ const preferences = services => {
             );
         });
 
-        $container.on('change', '.preferences-facet-order', event => {
-            let el = $('#look_box_settings select[name=orderFacet]');
+        $('.preferences-facet-order').change( function (event) {
+            let el = $('.look_box_settings select[name=orderFacet]');
             event.preventDefault();
             appCommons.userModule.setPref(
                 'order_facet',
@@ -223,8 +223,8 @@ const preferences = services => {
             appEvents.emit('search.updateFacetData');
         });
 
-        $container.on('change', '.preferences-facet-values-order', event => {
-            let el = $('#look_box_settings select[name=facetValuesOrder]');
+        $('.preferences-facet-values-order').change( function (event) {
+            let el = $('.look_box_settings select[name=facetValuesOrder]');
             event.preventDefault();
             appCommons.userModule.setPref(
                 'facet_values_order',
