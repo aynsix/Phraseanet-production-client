@@ -108,8 +108,8 @@ const workzoneFacets = services => {
                     type:      type,              // todo ? define a new phraseanet "color" type for fields. for now we push a "type" for every value
                     count:     value.count,
                     // jquerytree data
-                    title:     title + ' (' + value.count + ')',
-                    tooltip:   tooltip + ' (' + value.count + ')'
+                    title:     title + ' (' + formatNumber(value.count) + ')',
+                    tooltip:   tooltip + ' (' + formatNumber(value.count) + ')'
                 };
             });
             // Facet
@@ -287,6 +287,12 @@ const workzoneFacets = services => {
         }
         return ordered;
     }
+    /*Format number to local fr */
+    function formatNumber(number) {
+        var locale = 'fr';
+        var formatter = new Intl.NumberFormat(locale);
+        return formatter.format(number);
+    }
 
     function _getFacetsTree() {
         var $facetsTree = $('#proposals');
@@ -381,7 +387,7 @@ const workzoneFacets = services => {
                                 _.each(selectedFacets[data.node.data.field].values, function (facetValue) {
                                     var label = facetValue.value.label;
                                     var facetFilter = facetValue.value.label;
-                                    var facetTitle = facetValue.value.value + ' ('+facetValue.value.count+')';
+                                    var facetTitle = facetValue.value.value + ' ('+formatNumber(facetValue.value.count)+')';
 
                                     var s_label = document.createElement('SPAN');
                                     s_label.setAttribute('class', 'facetFilter-label');
