@@ -212,9 +212,16 @@ $see_more_btn_shadow: $see_more_btn_border !default;
         overflow: hidden;
         .buttons-span {
             background-color: $proposalColor_AND;
+            max-width: 86px;
+            left: 67px;
         }
         .facetFilter-inverse {
             background: url('#{$iconsPath}inverse-negative.png') 10px 2px no-repeat;
+        }
+        &:hover {
+            .facetFilter-label {
+                color: transparent;
+            }
         }
     }
 
@@ -239,9 +246,16 @@ $see_more_btn_shadow: $see_more_btn_border !default;
         overflow: hidden;
         .buttons-span {
             background-color: $proposalColor_EXCEPT;
+            max-width: 86px;
+            left: 67px;
         }
         .facetFilter-inverse {
             background: url('#{$iconsPath}inverse-positive.png') 10px 2px no-repeat;
+        }
+        &:hover {
+            .facetFilter-label {
+                color: transparent;
+            }
         }
     }
 
@@ -251,6 +265,7 @@ $see_more_btn_shadow: $see_more_btn_border !default;
         cursor: pointer;
         line-height: 25px;
         display: inline-block;
+        min-width: 54px;
         .color-dot {
             height: 16px;
             width: 16px;

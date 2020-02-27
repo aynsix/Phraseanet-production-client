@@ -108,8 +108,8 @@ const workzoneFacets = services => {
                     type:      type,              // todo ? define a new phraseanet "color" type for fields. for now we push a "type" for every value
                     count:     value.count,
                     // jquerytree data
-                    title:     title + ' (' + value.count + ')',
-                    tooltip:   tooltip + ' (' + value.count + ')'
+                    title:     title + ' (' + formatNumber(value.count) + ')',
+                    tooltip:   tooltip + ' (' + formatNumber(value.count) + ')'
                 };
             });
             // Facet
@@ -287,6 +287,12 @@ const workzoneFacets = services => {
         }
         return ordered;
     }
+    /*Format number to local fr */
+    function formatNumber(number) {
+        var locale = 'fr';
+        var formatter = new Intl.NumberFormat(locale);
+        return formatter.format(number);
+    }
 
     function _getFacetsTree() {
         var $facetsTree = $('#proposals');
@@ -381,10 +387,19 @@ const workzoneFacets = services => {
                                 _.each(selectedFacets[data.node.data.field].values, function (facetValue) {
                                     var label = facetValue.value.label;
                                     var facetFilter = facetValue.value.label;
+                                    var facetTitle = facetValue.value.value + ' ('+formatNumber(facetValue.value.count)+')';
 
                                     var s_label = document.createElement('SPAN');
                                     s_label.setAttribute('class', 'facetFilter-label');
-                                    s_label.setAttribute('title', facetFilter);
+                                    s_label.setAttribute('title', facetTitle );
+
+
+                                    var f_except =  $('#facet_except').val();
+                                    var f_and =  $('#facet_and').val();
+                                    var f_close =  $('#facet_remove').val();
+                                    var selected_facet_tooltip = (facetValue.negated ? f_and : f_except) + ' ' + facetTitle;
+                                    var remove_facet_tooltip = f_close + ' ' + facetTitle;
+
 
                                     var length = 15;
                                     var facetFilterString = _formatColorText(facetFilter.toString(), length);
@@ -398,9 +413,11 @@ const workzoneFacets = services => {
 
                                     var s_inverse = document.createElement('A');
                                     s_inverse.setAttribute('class', 'facetFilter-inverse');
+                                    s_inverse.setAttribute('title', selected_facet_tooltip);
 
                                     var s_closer = document.createElement('A');
                                     s_closer.setAttribute('class', 'facetFilter-closer');
+                                    s_closer.setAttribute('title', remove_facet_tooltip);
 
                                     var s_gradient = document.createElement('SPAN');
                                     s_gradient.setAttribute('class', 'facetFilter-gradient');
@@ -411,6 +428,7 @@ const workzoneFacets = services => {
                                     var s_facet = document.createElement('SPAN');
                                     var s_class = 'facetFilter' + '_' + (facetValue.negated ? 'EXCEPT' : 'AND');
                                     s_facet.setAttribute('class', s_class);
+                                    s_facet.removeAttribute('title');
                                     s_facet.appendChild(s_label);
                                     s_facet.appendChild(buttonsSpan);
 
@@ -467,10 +485,12 @@ const workzoneFacets = services => {
                                     s_facet.data('facetNegated', facetValue.negated);
 
                                     /*add selected facet tooltip*/
-                                    s_facet.attr('title', facetValue.value.value);
+                                   // s_facet.attr('title', facetValue.value.value);
 
                                     s_facet.hover(function () {
                                         $(buttonsSpan).show();
+
+
                                     }, function () {
                                         $(buttonsSpan).hide();
                                     });
