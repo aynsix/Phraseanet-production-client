@@ -445,8 +445,6 @@ const workzoneFacets = services => {
                                             selectedFacets[facetField].values = _.reject(selectedFacets[facetField].values, function (facetValue) {
                                                 return (facetValue.value.label == facetLabel && facetValue.negated == facetNegated);
                                             });
-                                            /*Remove this from selected facet list*/
-                                            delete selectedFacets[facetField];
 
                                             appEvents.emit('search.doRefreshState');
                                             return false;
