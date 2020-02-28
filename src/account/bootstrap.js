@@ -20,20 +20,7 @@ class Bootstrap {
 
         this.appEvents = new Emitter();
         this.configService = new ConfigService(configuration);
-        this.onConfigReady();
-        /*
-        this.localeService = new LocaleService({
-            configService: this.configService
-        });
 
-        this.localeService.fetchTranslations()
-            .then(() => {
-                this.onConfigReady();
-            });*/
-        return this;
-    }
-
-    onConfigReady() {
         this.appServices = {
             configService: this.configService,
             localeService: this.localeService,
@@ -61,6 +48,12 @@ class Bootstrap {
                 default:
             }
         });
+
+        return this;
+    }
+
+    onConfigReady() {
+
 
     }
 }

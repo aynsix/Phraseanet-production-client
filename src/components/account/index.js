@@ -173,7 +173,6 @@ const account = (services) => {
             e.preventDefault();
             var $this = $(this);
             var li = $this.closest('li');
-
             $.ajax({
                 type: 'DELETE',
                 url: $this.attr('href'),
