@@ -397,8 +397,8 @@ const workzoneFacets = services => {
                                     var f_except =  $('#facet_except').val();
                                     var f_and =  $('#facet_and').val();
                                     var f_close =  $('#facet_remove').val();
-                                    var selected_facet_tooltip = (facetValue.negated ? f_and : f_except) + ' ' + facetTitle;
-                                    var remove_facet_tooltip = f_close + ' ' + facetTitle;
+                                    var selected_facet_tooltip = (facetValue.negated ? f_and : f_except) + ' : ' + facetTitle;
+                                    var remove_facet_tooltip = f_close + ' : ' + facetTitle;
 
 
                                     var length = 15;
