@@ -6,6 +6,17 @@ import defaultConfig from './config';
 import Emitter from '../components/core/emitter';
 import account from './../components/account';
 
+$(document).ready(() => {
+// hide or show callback url input whether user choose a web or dektop application
+    $('#form_create input[name=type]').bind('click', function () {
+        if ($(this).val() === 'desktop') {
+            $('#form_create .callback-control-group').hide().find('input').val('');
+        } else {
+            $('#form_create .callback-control-group').show();
+        }
+    });
+});
+
 
 class Bootstrap {
 
@@ -15,12 +26,16 @@ class Bootstrap {
     appServices;
 
     constructor(userConfig) {
-
         const configuration = merge({}, defaultConfig, userConfig);
 
         this.appEvents = new Emitter();
         this.configService = new ConfigService(configuration);
+        this.onConfigReady();
 
+        return this;
+    }
+
+    onConfigReady() {
         this.appServices = {
             configService: this.configService,
             localeService: this.localeService,
@@ -48,12 +63,6 @@ class Bootstrap {
                 default:
             }
         });
-
-        return this;
-    }
-
-    onConfigReady() {
-
 
     }
 }
