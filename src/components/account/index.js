@@ -147,13 +147,13 @@ const account = (services) => {
         });
 
         // hide or show callback url input whether user choose a web or dektop application
-        $('#form_create input[name=type]').bind('click', function () {
+     /*   $('#form_create input[name=type]').bind('click', function () {
             if ($(this).val() === 'desktop') {
                 $('#form_create .callback-control-group').hide().find('input').val('');
             } else {
                 $('#form_create .callback-control-group').show();
             }
-        });
+        });*/
 
         // authorize password grant type or not
         $('.grant-type').bind('click', function () {
@@ -169,7 +169,7 @@ const account = (services) => {
         });
 
         // delete an application
-        $('a.delete-app').bind('click', function (e) {
+      /*  $('a.delete-app').bind('click', function (e) {
             e.preventDefault();
             var $this = $(this);
             var li = $this.closest('li');
@@ -186,7 +186,7 @@ const account = (services) => {
                     }
                 }
             });
-        });
+        });*/
     };
 
     const editAccount = () => {
