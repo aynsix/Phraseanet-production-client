@@ -151,16 +151,16 @@ const lightbox = services => {
                 return false;
             })
             .addClass('clickable');
-        //	$('#basket_infos .report').button({
-        //					icons: {
-        //						primary: 'ui-icon-document'
-        //    				}
-        //				}).bind('click',function(){
-        //					$(this).blur();
-        //				});
+
         $('.confirm_report', basket_options).button().bind('click', function () {
-            _setRelease($(this));
+            _getReseaseStatus($(this));
         });
+
+        $('#validate-release').click(function () {
+            $("#FeedbackRelease").modal("hide");
+            _setRelease($(this));
+            console.log('validation is done');
+        })
 
         $('.basket_element', sc_wrapper)
             .parent()
@@ -1061,6 +1061,47 @@ const lightbox = services => {
             top: '-100%'
         });
         $('.lightbox_container', container).removeClass('note_editing');
+    }
+
+    /*Get status before send validation*/
+    function _getReseaseStatus(el) {
+        $.ajax({
+            url: '/lightbox/ajax/GET_ELEMENTS/' + $('#navigation').val() + '/',
+            dataType: 'json',
+            error: function (data) {
+                $('.loader', el).css({
+                    visibility: 'hidden'
+                });
+            },
+            timeout: function (data) {
+                $('.loader', el).css({
+                    visibility: 'hidden'
+                });
+            },
+            success: function (data) {
+                $('.loader', el).css({
+                    visibility: 'hidden'
+                });
+                if (data.datas) {
+                    if (data.datas) {
+                        if (data.datas.counts.nul == 0) {
+                            _setRelease($(this));
+                        }
+                        else {
+                            console.log(data.datas.counts);
+                            $("#FeedbackRelease .record_accepted").html(data.datas.counts.yes);
+                            $("#FeedbackRelease .record_refused").html(data.datas.counts.no);
+                            $("#FeedbackRelease .record_null").html(data.datas.counts.nul);
+                            $("#FeedbackRelease").modal("show");
+                        }
+                    }          }
+                if (!data.error) {
+                    _releasable = false;
+                }
+
+                return;
+            }
+        });
     }
 
     function _setRelease(el) {
