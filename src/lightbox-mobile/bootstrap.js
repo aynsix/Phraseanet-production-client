@@ -74,34 +74,68 @@ class Bootstrap {
 
         display_basket();
 
-        $('body').on('touchstart click', '.confirm_report', (event) => {
-            event.preventDefault();
-            const $el = $(event.currentTarget);
+        /*Get status before send validation*/
+        function _getReseaseStatus(el) {
+            $.ajax({
+                url: '/lightbox/ajax/GET_ELEMENTS/' + $('#basket_validation_id').val() + '/',
+                dataType: 'json',
+                error: function (data) {
+                    $('.loader', el).css({
+                        visibility: 'hidden'
+                    });
+                },
+                timeout: function (data) {
+                    $('.loader', el).css({
+                        visibility: 'hidden'
+                    });
+                },
+                success: function (data) {
+                    $('.loader', el).css({
+                        visibility: 'hidden'
+                    });
+                    if (data.datas) {
+                        if (data.datas) {
+                            if (data.datas.counts.nul == 0) {
+                                _setRelease($(this));
+                            }
+                            else {
+                                console.log(data.datas.counts);
+                                $("#FeedbackRelease .record_accepted").html(data.datas.counts.yes);
+                                $("#FeedbackRelease .record_refused").html(data.datas.counts.no);
+                                $("#FeedbackRelease .record_null").html(data.datas.counts.nul);
+                                $("#FeedbackRelease").modal("show");
+                            }
+                        }
+                    }
 
-            $('.loader', $el).css({
-                visibility: 'visible'
+
+                    return;
+                }
             });
+        }
 
+        /*Send validation*/
+        function _setRelease(el) {
             $.ajax({
                 type: 'POST',
                 url: '/lightbox/ajax/SET_RELEASE/' + $('#basket_validation_id').val() + '/',
                 dataType: 'json',
                 error: (data) => {
-                    $('.loader', $el).css({
+                    $('.loader', el).css({
                         visibility: 'hidden'
                     });
                 },
                 timeout: (data) => {
-                    $('.loader', $el).css({
+                    $('.loader', el).css({
                         visibility: 'hidden'
                     });
                 },
                 success: (data) => {
-                    $('.loader', $el).css({
+                    $('.loader', el).css({
                         visibility: 'hidden'
                     });
                     if (data.datas) {
-                  //      alert(data.datas);
+                        //      alert(data.datas);
                         window.location.href = "/lightbox";
                     }
                     if (!data.error) {
@@ -112,6 +146,23 @@ class Bootstrap {
                     return;
                 }
             });
+        };
+
+        $('body').on('touchstart click', '.confirm_report', (event) => {
+            event.preventDefault();
+            const $el = $(event.currentTarget);
+            _getReseaseStatus($el);
+
+
+            return false;
+        });
+        $('body').on('touchstart click', '#validate-release', (event) => {
+            event.preventDefault();
+            $("#FeedbackRelease").modal("hide");
+            _setRelease($(this));
+            console.log('validation is done');
+
+
             return false;
         });
 
