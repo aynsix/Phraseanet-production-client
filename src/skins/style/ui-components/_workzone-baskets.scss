@@ -157,6 +157,33 @@
     font-size: 9px;
     cursor: pointer;
 }
+.feedback-info {
+    background: $chimWrap;
+    padding: 14px;
+    margin: 10px;
+    position: relative;
+    button.submit {
+        background: transparent;
+        border: 1px solid;
+        border-radius: 4px;
+        margin-top: -8px;
+        color: #009de0;
+        font-size: 23px;
+        padding: 2px 5px;
+    }
+    .record-number {
+        bottom: inherit;
+        top: 0;
+        right: 0;
+    }
+    form.update-feed-validation {
+        margin-bottom: 0;
+        display: inline-block;
+    }
+    .expiredDate {
+        text-align: right;
+    }
+}
 
 .chim-content {
     display: inline-block;
