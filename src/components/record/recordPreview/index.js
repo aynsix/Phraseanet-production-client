@@ -80,7 +80,7 @@ const previewRecordService = services => {
                 event.preventDefault();
                 closePreview();
             })
-            .on('dblclick', '.open-preview-action', event => {
+            .on('click', '.open-preview-action', event => {
                 let $el = $(event.currentTarget);
                 // env, pos, contId, reload
                 let reload = $el.data('reload') === true ? true : false;
