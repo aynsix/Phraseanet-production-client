@@ -80,7 +80,7 @@ const previewRecordService = services => {
                 event.preventDefault();
                 closePreview();
             })
-            .on('click', '.open-preview-action', event => {
+            .on('dblclick', '.open-preview-action', event => {
                 let $el = $(event.currentTarget);
                 // env, pos, contId, reload
                 let reload = $el.data('reload') === true ? true : false;
@@ -91,7 +91,12 @@ const previewRecordService = services => {
                     $el.data('id'),
                     $el.data('kind')
                 );
-            });
+            })
+            .on('click', '.to-open-preview-action', event => {
+                event.preventDefault();
+                $( '.open-preview-action' ).trigger( "dblclick" );
+            })
+        ;
         $previewContainer
             .on('click', '.preview-navigate-action', event => {
                 event.preventDefault();

@@ -94,9 +94,9 @@
     border-radius: $defaultBorderRadius;
     cursor: pointer;
     position: relative;
-    padding-bottom: 3px;
+    padding-bottom: 8px;
     margin-bottom: 0px;
-    margin-top: 3px;
+    margin-top: 8px;
     &:after {
         width: 60%;
         height: 1px;
@@ -107,6 +107,11 @@
         bottom: 0;
         transform: translateX(-50%);
         opacity: 0.4;
+    }
+    &:last-child {
+        &:after {
+            content: none;
+        }
     }
 }
 
