@@ -208,11 +208,12 @@
         cursor: pointer;
         .fa {
             font-size: 24px;
-            color: #5cb85c;
+            color: #da4f49;
+            transition: 0.1s all;
         }
         &:hover {
             .fa {
-                color: #3d8b3d;
+                color: red;
             }
         }
     }
