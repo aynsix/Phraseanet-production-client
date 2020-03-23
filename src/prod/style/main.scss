@@ -160,7 +160,9 @@
     background-image: url('#{$iconsPath}ppen_history.png');
 }
 
-.history-validate,
+.history-validate {
+    background-image: url('#{$iconsPath}basket_validation.png');
+}
 .history-push {
     background-image: url('#{$iconsPath}push16.png');
 }
@@ -169,7 +171,7 @@
     background-image: url('#{$iconsPath}add.png');
 }
 
-.history-collection,
+/*.history-collection,
 .history-status,
 .history-print,
 .history-substit,
@@ -182,7 +184,7 @@
 .history-push,
 .history-add {
     background-image: url('#{$iconsPath}add.png');
-}
+}*/
 
 .history-collection,
 .history-status,
@@ -197,9 +199,9 @@
 .history-push,
 .history-add {
     background-repeat: no-repeat;
-    background-position: center left;
-    background-size: 16px 16px;
-    padding-left: 24px;
+    background-position: 3px center;
+    background-size: 24px;
+    padding-left: 37px;
     min-height: 16px;
 }
 
