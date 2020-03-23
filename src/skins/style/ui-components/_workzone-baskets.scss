@@ -190,8 +190,6 @@
         bottom: inherit;
         top: 10px;
         right: 0;
-        background-color: #5cb85c;
-        color: #ffffff;
         padding: 4px 8px;
     }
     form.update-feed-validation {
@@ -208,11 +206,12 @@
         cursor: pointer;
         .fa {
             font-size: 24px;
-            color: #5cb85c;
+            color: #da4f49;
+            transition: 0.1s all;
         }
         &:hover {
             .fa {
-                color: #3d8b3d;
+                color: red;
             }
         }
     }
@@ -273,11 +272,11 @@
 }
 .record-number {
     position: absolute;
-    background-color: #959595;
-    color: black;
+    background-color: #5cb85c;
+    color: #ffffff;
     font-weight: bold;
     padding: 3px;
-    z-index: 16;
+    z-index: 1;
     bottom: 0;
 }
 
