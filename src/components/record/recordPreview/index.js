@@ -91,7 +91,12 @@ const previewRecordService = services => {
                     $el.data('id'),
                     $el.data('kind')
                 );
-            });
+            })
+            .on('click', '.to-open-preview-action', event => {
+                event.preventDefault();
+                $( '.open-preview-action' ).trigger( "dblclick" );
+            })
+        ;
         $previewContainer
             .on('click', '.preview-navigate-action', event => {
                 event.preventDefault();
