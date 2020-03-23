@@ -190,8 +190,6 @@
         bottom: inherit;
         top: 10px;
         right: 0;
-        background-color: #5cb85c;
-        color: #ffffff;
         padding: 4px 8px;
     }
     form.update-feed-validation {
@@ -274,11 +272,11 @@
 }
 .record-number {
     position: absolute;
-    background-color: #959595;
-    color: black;
+    background-color: #5cb85c;
+    color: #ffffff;
     font-weight: bold;
     padding: 3px;
-    z-index: 16;
+    z-index: 1;
     bottom: 0;
 }
 
