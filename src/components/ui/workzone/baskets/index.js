@@ -22,6 +22,13 @@ const workzoneBaskets = (services) => {
         basketReorderContent(services).initialize();
         storyReorderContent(services).initialize();
 
+        $( window ).on( "load", function() {
+            appEvents.emit('workzone.refresh', {
+                basketId: 'current',
+                sort: 'date'
+            });
+        });
+
         $('body').on('click', '.basket-filter-action', (event) => {
                 event.preventDefault();
                 const $el = $(event.currentTarget);
