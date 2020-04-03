@@ -348,9 +348,9 @@ const leafletMap = (services) => {
         if (bounds !== undefined) {
             var LngLat = [];
             var sw = bounds._sw;
-            var nw = {lng: bounds._sw.lon, lat: bounds._ne.lat};
+            var nw = {lon: bounds._sw.lon, lat: bounds._ne.lat};
             var ne = bounds._ne;
-            var se = {lng: bounds._ne.lon, lat: bounds._sw.lat};
+            var se = {lon: bounds._ne.lon, lat: bounds._sw.lat};
             var LngLat = [sw, nw, ne, se];
             return LngLat;
         }
