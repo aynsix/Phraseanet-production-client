@@ -974,16 +974,16 @@ const leafletMap = (services) => {
             _.each(fieldMapping, (mapping) => {
                 // latitude and longitude are combined in a composite field
                 if (mapping.type === 'latlng') {
-                    mappedFields[mapping.name] = `${position.lat} ${position.lon}`;
+                    mappedFields[mapping.name] = `${position.lat} ${position.lng}`;
                 } else if (mapping.type === 'lat') {
                     mappedFields[mapping.name] = `${position.lat}`;
                 } else if (mapping.type === 'lon') {
-                    mappedFields[mapping.name] = `${position.lon}`;
+                    mappedFields[mapping.name] = `${position.lng}`;
                 }
             });
         } else {
             mappedFields["meta.Latitude"] = `${position.lat}`;
-            mappedFields["meta.Longitude"] = `${position.lon}`;
+            mappedFields["meta.Longitude"] = `${position.lng}`;
         }
         return mappedFields;
     }
