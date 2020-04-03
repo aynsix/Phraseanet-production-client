@@ -30,7 +30,7 @@ const provider = (services) => {
                 if (fieldMapping.length > 0) {
                     _.each(fieldMapping, (mapping) => {
                         // latitude and longitude are combined in a composite field
-                        if (mapping.type === 'latlon') {
+                        if (mapping.type === 'latlng') {
                             fieldPosition = {
                                 latitude: (poi) => extractFromPosition('lat', poi[mapping.name]),
                                 longitude: (poi) => extractFromPosition('lon', poi[mapping.name])

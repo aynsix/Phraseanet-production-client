@@ -199,7 +199,7 @@ const leafletMap = (services) => {
                 map = new mapboxgl.Map({
                     container: mapUID,
                     style: activeProvider.mapLayers[0].value,
-                    center: mapboxGLDefaultPosition, // format different lon/lat
+                    center: mapboxGLDefaultPosition, // format different lng/lat
                     zoom: activeProvider.defaultZoom
                 });
 
@@ -337,7 +337,7 @@ const leafletMap = (services) => {
         var refactoredBoundsCoordinates = refactoredBounds(bounds);
         shapesWebGl['0'] = {
             type: 'rectangle',
-            latlon: refactoredBoundsCoordinates,
+            latlng: refactoredBoundsCoordinates,
             bounds: getMappedFieldsCollection(refactoredBoundsCoordinates),
             originalBounds: bounds
         };
@@ -346,13 +346,13 @@ const leafletMap = (services) => {
 
     const refactoredBounds = (bounds) => {
         if (bounds !== undefined) {
-            var LonLat = [];
+            var LngLat = [];
             var sw = bounds._sw;
-            var nw = {lng: bounds._sw.lng, lat: bounds._ne.lat};
+            var nw = {lng: bounds._sw.lon, lat: bounds._ne.lat};
             var ne = bounds._ne;
-            var se = {lng: bounds._ne.lng, lat: bounds._sw.lat};
-            var LonLat = [sw, nw, ne, se];
-            return LonLat;
+            var se = {lng: bounds._ne.lon, lat: bounds._sw.lat};
+            var LngLat = [sw, nw, ne, se];
+            return LngLat;
         }
     }
 
@@ -420,21 +420,21 @@ const leafletMap = (services) => {
         // });
 
         map.on('contextmenu', function (e) {
-            addCircle(e.lonLat, boundsTo5percentRadius(map.getBounds()));
+            addCircle(e.lngLat, boundsTo5percentRadius(map.getBounds()));
         });
     }
 
     const addCircleGeoDrawing = (drawnItems) => {
         _.map(drawnItems, function (items) {
-            var lonLat = {};
-            lonLat['lon'] = items.center.lon;
-            lonLat['lat'] = items.center.lat;
-            addCircle(lonLat, items.radius);
+            var lngLat = {};
+            lngLat['lon'] = items.center.lon;
+            lngLat['lat'] = items.center.lat;
+            addCircle(lngLat, items.radius);
         });
     }
 
-    const addCircle = (lonLat, radius) => {
-        var myCircle = new MapboxCircle(lonLat, radius, editableCircleOpts)
+    const addCircle = (lngLat, radius) => {
+        var myCircle = new MapboxCircle(lngLat, radius, editableCircleOpts)
             .once('click', function (mapMouseEvent) {
                 var instanceId = myCircle.__instanceId;
                 myCircle.remove();
@@ -571,8 +571,8 @@ const leafletMap = (services) => {
             shapesDrawned[layerId] = {
                 type: type,
                 options: layer.options,
-                latlon: layer.getlatlons(),
-                bounds: getMappedFieldsCollection(layer.getlatlons())
+                latlng: layer.getLatLngs(),
+                bounds: getMappedFieldsCollection(layer.getLatLngs())
             };
             drawingGroup.addLayer(layer);
             eventEmitter.emit('shapeCreated', {shapes: shapesDrawned, drawnItems: shapesDrawned});
@@ -587,8 +587,8 @@ const leafletMap = (services) => {
                 let currentType = shapesDrawned[layerId].type;
                 shapesDrawned[layerId] = merge(shapesDrawned[layerId], {
                     options: layer.options,
-                    latlon: layer.getlatlons(),
-                    bounds: getMappedFieldsCollection(layer.getlatlons())
+                    latlng: layer.getLatLngs(),
+                    bounds: getMappedFieldsCollection(layer.getLatLngs())
                 })
             });
             eventEmitter.emit('shapeEdited', {shapes: shapesDrawned, drawnItems: shapesDrawned});
@@ -617,15 +617,15 @@ const leafletMap = (services) => {
             if (shapesDrawned.hasOwnProperty(shapeIndex)) {
                 let shape = shapesDrawned[shapeIndex];
 
-                let newShape = L.rectangle(shape.latlon, shape.options);
+                let newShape = L.rectangle(shape.latlng, shape.options);
                 let newShapeType = '';
                 switch (shape.type) {
                     case 'rectangle':
-                        newShape = L.rectangle(shape.latlon, shape.options);
+                        newShape = L.rectangle(shape.latlng, shape.options);
                         newShapeType = L.Draw.Rectangle.TYPE;
                         break;
                     default:
-                        newShape = L.rectangle(shape.latlon, shape.options);
+                        newShape = L.rectangle(shape.latlng, shape.options);
                         newShapeType = L.Draw.Rectangle.TYPE;
                 }
                 // start editor for new shape:
@@ -639,7 +639,7 @@ const leafletMap = (services) => {
     }
     const addMarkerOnce = (e, poiIndex, poi) => {
         // inject coords into poi's fields:
-        let mappedCoords = getMappedFields(e.latlon);
+        let mappedCoords = getMappedFields(e.latlng);
         let pois = [merge(poi, mappedCoords)];
         refreshMarkers(pois).then(() => {
             // broadcast event:
@@ -743,19 +743,19 @@ const leafletMap = (services) => {
                         shouldUpdateZoom = true;
                         // var popup = new mapboxgl.Popup()
                         //     .setText(geojson.features[0].properties.title);
-                        //markerMapboxGl.setlonLat(geojson.features[0].geometry.coordinates).setPopup(popup).addTo(map);
+                        //markerMapboxGl.setLngLat(geojson.features[0].geometry.coordinates).setPopup(popup).addTo(map);
                         map.flyTo({
                             center: geojson.features[0].geometry.coordinates, zoom: currentZoomLevel,
                             ...activeProvider.transitionOptions
                         });
                         var position = {};
-                        position.lng = geojson.features[0].geometry.coordinates[0];
+                        position.lon = geojson.features[0].geometry.coordinates[0];
                         position.lat = geojson.features[0].geometry.coordinates[1];
                         updateMarkerPosition(geojson.features[0].properties.recordIndex, position);
 
                     } else {
                         shouldUpdateZoom = false;
-                        //markerMapboxGl.setlonLat(activeProvider.defaultPosition).addTo(map);
+                        //markerMapboxGl.setLngLat(activeProvider.defaultPosition).addTo(map);
                         map.flyTo({
                             center: mapboxGLDefaultPosition, zoom: activeProvider.defaultZoom,
                             ...activeProvider.transitionOptions
@@ -771,7 +771,7 @@ const leafletMap = (services) => {
                         shouldUpdateZoom = true;
                         map.fitBounds(featureLayer.getBounds(), {maxZoom: currentZoomLevel});
                         var position = {};
-                        position.lng = featureLayer.getGeoJSON()[0].geometry.coordinates[0];
+                        position.lon = featureLayer.getGeoJSON()[0].geometry.coordinates[0];
                         position.lat = featureLayer.getGeoJSON()[0].geometry.coordinates[1];
                         updateMarkerPosition(featureLayer.getGeoJSON()[0].properties.recordIndex, position);
                     } else {
@@ -914,14 +914,14 @@ const leafletMap = (services) => {
                 map.resize();
                 if (geojson.hasOwnProperty('features') && geojson.features.length > 0) {
                     shouldUpdateZoom = true;
-                    //markerMapboxGl.setlonLat(geojson.features[0].geometry.coordinates).addTo(map);
+                    //markerMapboxGl.setLngLat(geojson.features[0].geometry.coordinates).addTo(map);
                     map.flyTo({
                         center: geojson.features[0].geometry.coordinates, zoom: currentZoomLevel,
                         ...activeProvider.transitionOptions
                     });
                 } else {
                     shouldUpdateZoom = false;
-                    //markerMapboxGl.setlonLat(activeProvider.defaultPosition).addTo(map);
+                    //markerMapboxGl.setLngLat(activeProvider.defaultPosition).addTo(map);
                     map.flyTo({
                         center: mapboxGLDefaultPosition, zoom: activeProvider.defaultZoom,
                         ...activeProvider.transitionOptions
@@ -973,7 +973,7 @@ const leafletMap = (services) => {
 
             _.each(fieldMapping, (mapping) => {
                 // latitude and longitude are combined in a composite field
-                if (mapping.type === 'latlon') {
+                if (mapping.type === 'latlng') {
                     mappedFields[mapping.name] = `${position.lat} ${position.lon}`;
                 } else if (mapping.type === 'lat') {
                     mappedFields[mapping.name] = `${position.lat}`;
