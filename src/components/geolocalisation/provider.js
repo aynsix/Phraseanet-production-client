@@ -30,15 +30,15 @@ const provider = (services) => {
                 if (fieldMapping.length > 0) {
                     _.each(fieldMapping, (mapping) => {
                         // latitude and longitude are combined in a composite field
-                        if (mapping.type === 'latlng') {
+                        if (mapping.type === 'latlon') {
                             fieldPosition = {
                                 latitude: (poi) => extractFromPosition('lat', poi[mapping.name]),
-                                longitude: (poi) => extractFromPosition('lng', poi[mapping.name])
+                                longitude: (poi) => extractFromPosition('lon', poi[mapping.name])
                             };
                         } else if (mapping.type === 'lat') {
                             // if latitude field mapping is provided, fallback:
                             fieldPosition.latitude = (poi) => isNaN(parseFloat(poi[mapping.name], 10)) ? false : parseFloat(poi[mapping.name], 10);
-                        } else if (mapping.type === 'lng') {
+                        } else if (mapping.type === 'lon') {
                             // if longitude field mapping is provided, fallback:
                             fieldPosition.longitude = (poi) => isNaN(parseFloat(poi[mapping.name], 10)) ? false : parseFloat(poi[mapping.name], 10);
                         }
@@ -49,7 +49,7 @@ const provider = (services) => {
                 } else {
                     fieldPosition = {
                         latitude: (poi) => getCoordinatesFromTechnicalInfo(poi, 'lat'),
-                        longitude: (poi) => getCoordinatesFromTechnicalInfo(poi, 'lng')
+                        longitude: (poi) => getCoordinatesFromTechnicalInfo(poi, 'lon')
                     };
                     isValid = true;
                 }
