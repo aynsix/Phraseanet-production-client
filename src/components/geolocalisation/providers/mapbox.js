@@ -749,7 +749,7 @@ const leafletMap = (services) => {
                             ...activeProvider.transitionOptions
                         });
                         var position = {};
-                        position.lon = geojson.features[0].geometry.coordinates[0];
+                        position.lng = geojson.features[0].geometry.coordinates[0];
                         position.lat = geojson.features[0].geometry.coordinates[1];
                         updateMarkerPosition(geojson.features[0].properties.recordIndex, position);
 
@@ -771,7 +771,7 @@ const leafletMap = (services) => {
                         shouldUpdateZoom = true;
                         map.fitBounds(featureLayer.getBounds(), {maxZoom: currentZoomLevel});
                         var position = {};
-                        position.lon = featureLayer.getGeoJSON()[0].geometry.coordinates[0];
+                        position.lng = featureLayer.getGeoJSON()[0].geometry.coordinates[0];
                         position.lat = featureLayer.getGeoJSON()[0].geometry.coordinates[1];
                         updateMarkerPosition(featureLayer.getGeoJSON()[0].properties.recordIndex, position);
                     } else {
