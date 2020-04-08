@@ -99,6 +99,9 @@ const geonameDatasource = (services) => {
             case 'Province':
                 value = $el.data('province');
                 break;
+            case 'Longitude':
+                value = $el.data('longitude');
+                break;
             case 'Latitude':
                 value = $el.data('latitude');
                 break;
@@ -119,19 +122,48 @@ const geonameDatasource = (services) => {
         _.each(countryFields, function (field) {
             fields[field] = [$el.data('country')];
         });
-        _.each(latitudeFields, function (field) {
-            fields[field] = [String($el.data('latitude'))];
+
+        $("#dialog-edit_lat_lon").dialog({
+            resizable: false,
+            height: "auto",
+            width: 400,
+            modal: true,
+            buttons: {
+                confirmYes : function () {
+                    $(this).dialog("close");
+                    _.each(latitudeFields, function (field) {
+                        fields[field] = [String($el.data('latitude'))];
+                    });
+                    _.each(longitudeFields, function (field) {
+                        fields[field] = [String($el.data('longitude'))];
+                    });
+                    presets.fields = fields;
+                    recordEditorEvents.emit('recordEditor.addPresetValuesFromDataSource', {data: presets, mode: ''});
+                    // force update on current field:
+                    recordEditorEvents.emit('recordEditor.addValueFromDataSource', {value: value, field: field});
+                    console.log('Lat & Lon updated')
+                },
+                confirmNo: function () {
+                    presets.fields = fields;
+                    recordEditorEvents.emit('recordEditor.addPresetValuesFromDataSource', {data: presets, mode: ''});
+                    // force update on current field:
+                    recordEditorEvents.emit('recordEditor.addValueFromDataSource', {value: value, field: field});
+                    $(this).dialog("close");
+                },
+                confirmCancel: function () {
+                    $(this).dialog("close");
+                },
+
+            },
+            open: function open() {
+                $('.ui-button-text:contains(confirmYes)').html($('#dialog-edit-yes').val());
+                $('.ui-button-text:contains(confirmNo)').html($('#dialog-edit-no').val());
+                $('.ui-button-text:contains(confirmCancel)').html($('#dialog-edit-cancel').val());
+            },
+            close:  function () {
+            },
         });
-        _.each(longitudeFields, function (field) {
-            fields[field] = [String($el.data('longitude'))];
-        });
 
-        presets.fields = fields;
-
-        recordEditorEvents.emit('recordEditor.addPresetValuesFromDataSource', {data: presets, mode: ''});
-
-        // force update on current field:
-        recordEditorEvents.emit('recordEditor.addValueFromDataSource', {value: value, field: field});
     };
 
     const highlight = (s, t) => {
