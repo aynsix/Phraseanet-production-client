@@ -288,6 +288,16 @@ const recordEditorService = services => {
             _edit_select_all();
         }
 
+        /**Edit Story Select all item **/
+        $('#select-all-diapo').change(function() {
+            if(this.checked) {
+                _edit_select_all();
+            }
+            else{
+                _toggleGroupSelection();
+            }
+        });
+
         $('.previewTips, .DCESTips, .fieldTips', options.$container).tooltip({
             fixable: true,
             fixableIndex: 1200
@@ -1105,6 +1115,7 @@ const recordEditorService = services => {
         }
 
         let selection = [];
+        let allRecords = $('#EDIT_FILM2 .diapo');
         let selected = $('#EDIT_FILM2 .diapo.selected');
         if (selected.length === 1) {
             let r = selected.attr('id').split('_').pop();
@@ -1121,7 +1132,15 @@ const recordEditorService = services => {
                 selection: getRecordSelection()
             });
         }
+        /**trigger select all checkbox**/
+        if (selected.length < allRecords.length) {
+            $("#select-all-diapo").removeAttr("checked");
+        }else{
+            if (selected.length == allRecords.length) {
+                $("#select-all-diapo").trigger("click");
+            }
 
+        };
         options.lastClickId = recordIndex;
         refreshFields(event);
     }
