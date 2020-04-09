@@ -348,9 +348,9 @@ const leafletMap = (services) => {
         if (bounds !== undefined) {
             var LngLat = [];
             var sw = bounds._sw;
-            var nw = {lng: bounds._sw.lng, lat: bounds._ne.lat};
+            var nw = {lon: bounds._sw.lon, lat: bounds._ne.lat};
             var ne = bounds._ne;
-            var se = {lng: bounds._ne.lng, lat: bounds._sw.lat};
+            var se = {lon: bounds._ne.lon, lat: bounds._sw.lat};
             var LngLat = [sw, nw, ne, se];
             return LngLat;
         }
@@ -415,7 +415,7 @@ const leafletMap = (services) => {
         //
         // map.on('click', function (e) {
         //     if (shouldDrawCircle) {
-        //         addCircle(e.lngLat, boundsTo5percentRadius(map.getBounds()));
+        //         addCircle(e.lonLat, boundsTo5percentRadius(map.getBounds()));
         //     }
         // });
 
@@ -427,7 +427,7 @@ const leafletMap = (services) => {
     const addCircleGeoDrawing = (drawnItems) => {
         _.map(drawnItems, function (items) {
             var lngLat = {};
-            lngLat['lng'] = items.center.lng;
+            lngLat['lon'] = items.center.lon;
             lngLat['lat'] = items.center.lat;
             addCircle(lngLat, items.radius);
         });
@@ -977,7 +977,7 @@ const leafletMap = (services) => {
                     mappedFields[mapping.name] = `${position.lat} ${position.lng}`;
                 } else if (mapping.type === 'lat') {
                     mappedFields[mapping.name] = `${position.lat}`;
-                } else if (mapping.type === 'lng') {
+                } else if (mapping.type === 'lon') {
                     mappedFields[mapping.name] = `${position.lng}`;
                 }
             });
