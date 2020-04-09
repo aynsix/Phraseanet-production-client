@@ -150,9 +150,6 @@ const geonameDatasource = (services) => {
                     recordEditorEvents.emit('recordEditor.addValueFromDataSource', {value: value, field: field});
                     $(this).dialog("close");
                 },
-                confirmCancel: function () {
-                    $(this).dialog("close");
-                },
 
             },
             open: function open() {
