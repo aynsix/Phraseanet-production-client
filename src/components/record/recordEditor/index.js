@@ -291,10 +291,10 @@ const recordEditorService = services => {
         /**Edit Story Select all item **/
         $('#select-all-diapo').change(function() {
             if(this.checked) {
-                _edit_select_all();
+                _edit_select_all_right(true);
             }
             else{
-                _toggleGroupSelection();
+                _edit_select_all_right(false);
             }
         });
 
@@ -1360,6 +1360,24 @@ const recordEditorService = services => {
         }
 
         options.lastClickId = 1;
+
+        refreshFields(null); // null : no evt available
+    }
+
+    function _edit_select_all_right(check) {
+        let records = options.recordCollection.getRecords();
+        console.log(records);
+        if (check == true) {
+            $('#EDIT_FILM2 .diapo', options.$container).addClass('selected');
+        } else {
+            $('#EDIT_FILM2 .diapo', options.$container).removeClass('selected');
+        }
+        for (let i in records) {
+            if (records[i].type !== "unknown") {
+                records[i]._selected = check;
+            }
+        }
+        options.lastClickId = 0;
 
         refreshFields(null); // null : no evt available
     }
