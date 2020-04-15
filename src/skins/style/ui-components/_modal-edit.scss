@@ -73,7 +73,7 @@
     position: absolute;
     top: 7px;
     width: 80px;
-    right: 7px;
+    right: 50px;
     z-index: 9999;
 }
 
@@ -533,12 +533,19 @@ div.thesaurus {
     }
 
     .zoom-menu-icon {
-        position: relative;
-        float: right;
-        width: 10px;
-        padding-right: 100px;
-        padding-top: 4px;
-        padding-top: 4px;
+        position: absolute;
+        width: 28px;
+    }
+    .zoom-menu-left {
+        left: calc(100% - 168px);
+        top: 3px;
+        font-size: 12px;
+    }
+
+    .zoom-menu-right {
+        left: 98%;
+        top: 3px;
+        font-size: 21px;
     }
 }
 
