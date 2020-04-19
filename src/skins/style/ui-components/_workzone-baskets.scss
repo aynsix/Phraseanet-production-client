@@ -2,6 +2,13 @@
     position: relative;
 }
 #idFrameC {
+    .ui-accordion .ui-accordion-content {
+        padding: 0 10px;
+        &.content {
+            padding: 0 5px;
+            text-align: center;
+        }
+    }
     #baskets {
         top: $tabHeight !important;
         border-top: 1px solid $darkBorderColor;
@@ -227,7 +234,6 @@
     background: $chimWrap;
     margin-right: 1px;
     display: inline-block;
-
     span.feedback_user_name {
         position: relative;
         background: $feedback;
@@ -290,7 +296,10 @@
     margin: 0 7px;
     overflow: hidden;
     position: relative;
-    padding-left: 25px;
+    padding-left: 0;
+}
+.chim-feedback-item {
+    padding: 10px;
 }
 
 .CHIM.diapo .title, .CHIM.diapo .status {
