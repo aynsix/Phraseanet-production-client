@@ -6,7 +6,6 @@
         padding: 0 10px;
         &.content {
             padding: 0 5px;
-            text-align: center;
         }
     }
     #baskets {
@@ -179,6 +178,7 @@
     }
         input.feed-datepicker {
         width: 135px;
+        margin-left: 63px;
     }
     button.submit {
         background: transparent;
@@ -195,7 +195,7 @@
     }
     .record-number {
         bottom: inherit;
-        top: 10px;
+        top: -36px;
         right: 0;
         padding: 4px 8px;
         z-index: 1;
