@@ -34,7 +34,7 @@ const workzone = (services) => {
             },
             stop: function () {
 
-                var el = $('.SSTT.active').next().find('div:first');
+                var el = $('.SSTT.active').next();
                 var w = el.find('div.chim-wrapper:first').outerWidth();
                 var iw = el.innerWidth();
                 var diff = $container.width() - el.outerWidth();
@@ -42,13 +42,13 @@ const workzone = (services) => {
 
                 $container.height('auto');
 
-                var nwidth = (n) * w + diff + n;
+                var nwidth = n * w + diff + n + 10;
                 if (isNaN(nwidth)) {
                     appEvents.emit('ui.saveWindow');
                     return;
                 }
-                if (nwidth < 265) {
-                    nwidth = 265;
+                if (nwidth < 247) {
+                    nwidth = 247;
                 }
                 if (el.find('div.chim-wrapper:first').hasClass('valid') && nwidth < 410) {
                     nwidth = 410;

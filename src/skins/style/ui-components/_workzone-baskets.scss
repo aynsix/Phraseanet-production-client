@@ -234,6 +234,7 @@
     background: $chimWrap;
     margin-right: 1px;
     display: inline-block;
+    float: left;
     span.feedback_user_name {
         position: relative;
         background: $feedback;
@@ -312,7 +313,6 @@
 
 .CHIM.diapo .title {
     margin: 0;
-    margin-bottom: 2px;
     padding: 3px;
     width: 100%;
     line-height: 20px;
@@ -380,7 +380,6 @@
 }
 
 .CHIM.diapo img {
-    margin-top: 9px;
     z-index: 14;
     position: relative;
 }
