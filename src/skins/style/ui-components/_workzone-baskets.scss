@@ -226,7 +226,7 @@
 }
 
 .chim-content {
-    display: inline-block;
+    display: block;
 }
 .chim-wrapper {
     position: relative;
@@ -311,7 +311,11 @@
 }
 
 .CHIM.diapo .title {
-    margin: 2px 0;
+    margin: 0;
+    margin-bottom: 2px;
+    padding: 3px;
+    width: 100%;
+    line-height: 20px;
     overflow: hidden;
 }
 
