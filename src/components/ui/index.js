@@ -347,8 +347,8 @@ const ui = services => {
         appEvents.emit('preview.doResize');
 
         if ($('#idFrameC').data('ui-resizable')) {
-            $('#idFrameC').resizable('option', 'maxWidth', 480);
-            $('#idFrameC').resizable('option', 'minWidth', 300);
+            $('#idFrameC').resizable('option', 'maxWidth', 600);
+            $('#idFrameC').resizable('option', 'minWidth', 360);
         }
 
         answerSizer();
@@ -370,11 +370,11 @@ const ui = services => {
         if (list.length > 0) {
             fllWidth -= 16;
 
-            var stdWidth = 460;
+            var stdWidth = 567;
             var diff = 28;
             n = Math.round(fllWidth / stdWidth);
             var w = Math.floor(fllWidth / n) - diff;
-            if (w < 460 && n > 1) {
+            if (w < 567 && n > 1) {
                 w = Math.floor(fllWidth / (n - 1)) - diff;
             }
             $('#answers .list').width(w);

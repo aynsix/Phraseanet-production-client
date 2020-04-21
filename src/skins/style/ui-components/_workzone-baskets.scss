@@ -2,6 +2,12 @@
     position: relative;
 }
 #idFrameC {
+    .ui-accordion .ui-accordion-content {
+        padding: 0 10px;
+        &.content {
+            padding: 0 5px;
+        }
+    }
     #baskets {
         top: $tabHeight !important;
         border-top: 1px solid $darkBorderColor;
@@ -172,6 +178,7 @@
     }
         input.feed-datepicker {
         width: 135px;
+        margin-left: 63px;
     }
     button.submit {
         background: transparent;
@@ -188,7 +195,7 @@
     }
     .record-number {
         bottom: inherit;
-        top: 10px;
+        top: -36px;
         right: 0;
         padding: 4px 8px;
         z-index: 1;
@@ -219,7 +226,7 @@
 }
 
 .chim-content {
-    display: inline-block;
+    display: block;
 }
 .chim-wrapper {
     position: relative;
@@ -227,7 +234,7 @@
     background: $chimWrap;
     margin-right: 1px;
     display: inline-block;
-
+    float: left;
     span.feedback_user_name {
         position: relative;
         background: $feedback;
@@ -290,7 +297,10 @@
     margin: 0 7px;
     overflow: hidden;
     position: relative;
-    padding-left: 25px;
+    padding-left: 0;
+}
+.chim-feedback-item {
+    padding: 10px;
 }
 
 .CHIM.diapo .title, .CHIM.diapo .status {
@@ -302,7 +312,10 @@
 }
 
 .CHIM.diapo .title {
-    margin: 2px 0;
+    margin: 0;
+    padding: 3px;
+    width: 100%;
+    line-height: 20px;
     overflow: hidden;
 }
 
@@ -367,7 +380,6 @@
 }
 
 .CHIM.diapo img {
-    margin-top: 9px;
     z-index: 14;
     position: relative;
 }
