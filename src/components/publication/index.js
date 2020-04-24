@@ -109,7 +109,18 @@ const publication = (services) => {
                                 overlay: {
                                     backgroundColor: '#000',
                                     opacity: 0.7
-                                }
+                                },
+                                open: function() {
+                                    $('#copy-feed').on('click', function (event) {
+                                        event.preventDefault();
+                                        var copyText = document.getElementById('input-select-copy');
+                                        /* Select the text field */
+                                        copyText.select();
+                                        copyText.setSelectionRange(0, 99999); /*For mobile devices*/
+
+                                        document.execCommand('copy');
+                                    });
+                                },
                             }).dialog('open');
 
                     }

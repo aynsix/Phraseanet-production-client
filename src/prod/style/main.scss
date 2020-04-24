@@ -375,6 +375,26 @@ td span.text_block_bold {
     }
 }
 
+/** Publication modal**/
+.copy-feed {
+    float: right;
+    width: 150px;
+    margin: 0;
+    padding: 4px 0;
+    box-sizing: border-box;
+    border-radius: 4px;
+    background: #5cb85c;
+    &:hover, &:active, &:focus {
+        background: #3d8b3d;
+    }
+}
+/** End Publication modal**/
+.input_select_copy {
+    width: calc(100% - 180px);
+    float: left;
+    margin-left: 0;
+}
+
 .hidden {
     height: 0!important;
 }
