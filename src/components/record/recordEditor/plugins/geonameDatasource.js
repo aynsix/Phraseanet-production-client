@@ -155,7 +155,6 @@ const geonameDatasource = (services) => {
             open: function open() {
                 $('.ui-button-text:contains(confirmYes)').html($('#dialog-edit-yes').val());
                 $('.ui-button-text:contains(confirmNo)').html($('#dialog-edit-no').val());
-                $('.ui-button-text:contains(confirmCancel)').html($('#dialog-edit-cancel').val());
             },
             close:  function () {
             },
