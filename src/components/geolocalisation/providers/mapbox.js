@@ -750,7 +750,7 @@ const leafletMap = (services) => {
                         });
                         var position = {};
                         position.lng = geojson.features[0].geometry.coordinates[0];
-                        position.lat = geojson.features[0].geometry.coordinates[1];;
+                        position.lat = geojson.features[0].geometry.coordinates[1];
                         updateMarkerPosition(geojson.features[0].properties.recordIndex, position);
 
                     } else {
