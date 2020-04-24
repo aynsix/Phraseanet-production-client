@@ -491,18 +491,7 @@ ${JSON.stringify(exportableData)}
                 if (!data.success) {
                     humane.error(data.message);
                 } else {
-                    let confirmationDialog = dialog.create(services, {
-                        size: 'Alert',
-                        title: title,
-                        closeOnEscape: true
-                    }, 3);
-
-                    let content = $('<div />').css({
-                        'text-align': 'center',
-                        width: '100%',
-                        'font-size': '14px'
-                    }).append(message);
-                    confirmationDialog.setContent(content);
+                    humane.info(message);
                 }
             }
         });
