@@ -348,9 +348,9 @@ const leafletMap = (services) => {
         if (bounds !== undefined) {
             var LngLat = [];
             var sw = bounds._sw;
-            var nw = {lon: bounds._sw.lon, lat: bounds._ne.lat};
+            var nw = {lng: bounds._sw.lng, lat: bounds._ne.lat};
             var ne = bounds._ne;
-            var se = {lon: bounds._ne.lon, lat: bounds._sw.lat};
+            var se = {lng: bounds._ne.lng, lat: bounds._sw.lat};
             var LngLat = [sw, nw, ne, se];
             return LngLat;
         }
@@ -427,7 +427,7 @@ const leafletMap = (services) => {
     const addCircleGeoDrawing = (drawnItems) => {
         _.map(drawnItems, function (items) {
             var lngLat = {};
-            lngLat['lon'] = items.center.lon;
+            lngLat['lng'] = items.center.lng;
             lngLat['lat'] = items.center.lat;
             addCircle(lngLat, items.radius);
         });
@@ -710,14 +710,14 @@ const leafletMap = (services) => {
             featureLayer.clearLayers();
         } else {
             featureLayer = L.mapbox.featureLayer([], {
-                pointToLayer: function (feature, latlon) {
+                pointToLayer: function (feature, latlng) {
                     if (feature.properties.radius !== undefined) {
                         // L.circleMarker() draws a circle with fixed radius in pixels.
                         // To draw a circle overlay with a radius in meters, use L.circle()
-                        return L.circleMarker(latlon, {radius: feature.properties.radius || 10});
+                        return L.circleMarker(latlng, {radius: feature.properties.radius || 10});
                     } else {
                         let marker = require('mapbox.js/src/marker.js'); //L.marker(feature);
-                        return marker.style(feature, latlon, {accessToken: activeProvider.accessToken});
+                        return marker.style(feature, latlng, {accessToken: activeProvider.accessToken});
                     }
                 }
             }).addTo(map);
@@ -750,7 +750,7 @@ const leafletMap = (services) => {
                         });
                         var position = {};
                         position.lng = geojson.features[0].geometry.coordinates[0];
-                        position.lat = geojson.features[0].geometry.coordinates[1];
+                        position.lat = geojson.features[0].geometry.coordinates[1];;
                         updateMarkerPosition(geojson.features[0].properties.recordIndex, position);
 
                     } else {

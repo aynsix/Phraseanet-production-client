@@ -49,7 +49,7 @@ const provider = (services) => {
                 } else {
                     fieldPosition = {
                         latitude: (poi) => getCoordinatesFromTechnicalInfo(poi, 'lat'),
-                        longitude: (poi) => getCoordinatesFromTechnicalInfo(poi, 'lon')
+                        longitude: (poi) => getCoordinatesFromTechnicalInfo(poi, 'lng')
                     };
                     isValid = true;
                 }
