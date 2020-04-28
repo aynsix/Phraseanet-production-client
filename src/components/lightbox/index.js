@@ -361,7 +361,12 @@ const lightbox = services => {
                 //     .append(data.preview + data.selector_html + data.note_html);
 
                 _display_basket_element(compare, sselcont_id);
-
+                $('.report')
+                    .on('click', function () {
+                        _loadReport();
+                        return false;
+                    })
+                    .addClass('clickable');
                 return;
             }
         });
