@@ -305,9 +305,10 @@ class RangeCollection extends Component {
     exportVttRanges = () => {
         let exportedRanges = [`WEBVTT
 `];
+        let titleValue= document.getElementById("default-video-chapter-label").value;
         for (let i = 0; i < this.rangeCollection.length; i++) {
             let exportableData = {
-                title: this.rangeCollection[i].title!= "" ? this.rangeCollection[i].title : document.getElementById("default-video-chapter-label").value
+                title: this.rangeCollection[i].title != "" ? this.rangeCollection[i].title : titleValue
             };
 
             if (this.rangeCollection[i].image.src !== '') {
