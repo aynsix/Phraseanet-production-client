@@ -7,6 +7,7 @@ import SortableComponent from './sortableComponent';
  * VideoJs Range bar
  */
 const Component = videojs.getComponent('Component');
+let chapterLabel = document.getElementById("default-video-chapter-label").value;
 let rangeItemTemplate = (model, frameRate) => {
     let image = '';
     if (model.image.src !== '') {
@@ -25,13 +26,13 @@ let rangeItemTemplate = (model, frameRate) => {
 ${image}
 <div class="range-item-time-data">
     <span class="range-item-title">
-     <input class="range-title range-input" type="text" value="${model.title}" placeholder="entrez un titre">
+     <input class="range-title range-input" type="text" value="${model.title != chapterLabel ? model.title : ''}" placeholder="${chapterLabel}">
     </span>
     <div class="display-time-container">
-      <span class="icon-container small-icon"><svg class="icon icon-cue-start"><use xlink:href="#icon-cue-start"></use></svg></span> 
+      <span class="icon-container small-icon"><svg class="icon icon-cue-start"><use xlink:href="#icon-cue-start"></use></svg></span>
       <span class="display-time">${formatTime(model.startPosition, 'hms', frameRate)}</span>
       <span class="display-time">${formatTime(model.endPosition, 'hms', frameRate)}</span>
-      <span class="icon-container small-icon"><svg class="icon icon-cue-end"><use xlink:href="#icon-cue-end"></use></svg></span> 
+      <span class="icon-container small-icon"><svg class="icon icon-cue-end"><use xlink:href="#icon-cue-end"></use></svg></span>
     </div>
     <div class="progress-container">
     <div class="progress-bar" style="left:${model.handlePositions.left}%;width:${model.handlePositions.right - model.handlePositions.left}%; height: 100%"></div>
