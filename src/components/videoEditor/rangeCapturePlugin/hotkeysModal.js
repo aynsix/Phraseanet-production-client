@@ -13,7 +13,7 @@ class HotkeyModal extends ModalDialog {
     }
 
     modalTemplate = () => {
-        return `<div class="vjs-hotkeys-modal"><h1>${this.player_.localize('Keyboard shortcuts')}</h1>
+        return `<div class="vjs-hotkeys-modal video-tools-help"><h1>${this.player_.localize('Keyboard shortcuts')}</h1>
             <dl class="dl-horizontal">
             <dt>${this.player_.localize('Play')}</dt><dd><span class="shortcut-label">${this.player_.localize('Space bar')}</span> ${this.player_.localize('or')} <span class="shortcut-label">L</span></dd>
             <dt>${this.player_.localize('Change play speed')}</dt><dd><span class="shortcut-label">L</span> &nbsp;...&nbsp; <span class="shortcut-label">L</span> <span class="shortcut-label">L</span> &nbsp;...&nbsp; <span class="shortcut-label">L</span> <span class="shortcut-label">L</span> <span class="shortcut-label">L</span> ...</dd>

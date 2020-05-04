@@ -477,7 +477,11 @@
   }
 
 }
-
+.video-range-editor-container {
+    .video-js .vjs-modal-dialog {
+        background: rgba(0,0,0,.8);
+    }
+}
 
 .vjs-modal-dialog-content {
   overflow: auto;
@@ -497,6 +501,16 @@
       width: 200px;
       color: #FFF;
     }
+      &.video-tools-help {
+          h1 {
+              text-align: center;
+          }
+          .dl-horizontal dt {
+              width: 50%;
+              padding-right: 25px;
+              text-align: right;
+          }
+      }
   }
 }
 .vjs-button {

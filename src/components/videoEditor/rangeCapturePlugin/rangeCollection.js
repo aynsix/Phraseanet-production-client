@@ -307,7 +307,7 @@ class RangeCollection extends Component {
 `];
         for (let i = 0; i < this.rangeCollection.length; i++) {
             let exportableData = {
-                title: this.rangeCollection[i].title
+                title: this.rangeCollection[i].title!= "" ? this.rangeCollection[i].title : document.getElementById("default-video-chapter-label").value
             };
 
             if (this.rangeCollection[i].image.src !== '') {
