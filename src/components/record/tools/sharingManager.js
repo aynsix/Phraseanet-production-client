@@ -12,7 +12,7 @@ const sharingManager = (services, datas, activeTab = false) => {
         console.log('>>>>', dialogParams)
 
         if (params.data.selectionLength === 1) {
-            _onUniqueSelection(params.data.databaseId, params.data.recordId, params.tabs);
+            _onUniqueSelection(params.data.databaseId, params.data.records[0].id, params.tabs);
         }
     }
 
