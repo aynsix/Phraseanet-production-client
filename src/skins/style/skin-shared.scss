@@ -1102,11 +1102,6 @@ h4 {
 .tools-sharing-btn {
     padding: 6px 25px;
 }
-#prod-tool-box {
-    .ui-tabs .ui-tabs-nav {
-        background: #626262;
-    }
-}
 .metadatas-top-block {
     text-align: right;
 }
@@ -1116,7 +1111,7 @@ h4 {
         margin-bottom: 15px;
     }
 }
-#tool-tabs {
+.tool-modal-wrapper {
     & > div {
         background: none;
         height: 100%;
