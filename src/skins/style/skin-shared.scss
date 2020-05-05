@@ -1101,36 +1101,30 @@ h4 {
 }
 .tools-sharing-btn {
     padding: 6px 25px;
+    min-width: 250px;
 }
 .metadatas-top-block {
     text-align: right;
 }
 h3.metadatas-title {
-    display: inline-block;
-    float: right;
-    padding-right: 170px;
-    margin-top: -5px;
     position: relative;
+    margin-bottom: 20px;
     &:after {
         content: '';
-        width: calc( 100% - 10px);
+        width: 100%;
         height: 1px;
         background: #fff;
         position: absolute;
-        bottom: -10px;
+        bottom: -4px;
         left: 2px;
     };
 }
 #select-meta-subdef {
-    margin-bottom: -70px;
     z-index: 1;
     position: relative;
 }
 #metadata-content {
     padding: 10px;
-    img {
-        margin-bottom: 15px;
-    }
 }
 .tool-modal-wrapper {
     & > div {
