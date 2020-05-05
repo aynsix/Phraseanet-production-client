@@ -1105,6 +1105,27 @@ h4 {
 .metadatas-top-block {
     text-align: right;
 }
+h3.metadatas-title {
+    display: inline-block;
+    float: right;
+    padding-right: 170px;
+    margin-top: -5px;
+    position: relative;
+    &:after {
+        content: '';
+        width: calc( 100% - 10px);
+        height: 1px;
+        background: #fff;
+        position: absolute;
+        bottom: -10px;
+        left: 2px;
+    };
+}
+#select-meta-subdef {
+    margin-bottom: -70px;
+    z-index: 1;
+    position: relative;
+}
 #metadata-content {
     padding: 10px;
     img {
