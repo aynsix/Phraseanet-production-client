@@ -50,11 +50,16 @@ const videoScreenCapture = (services, datas, activeTab = false) => {
 
 
             $container.on('click', '#thumb_camera_button', function () {
-                //$('#thumb_info', $container).hide();
+                /** set current time on real video capture**/
+                var realVideoCurrent = document.getElementById('thumb_video_A').currentTime;
+                document.getElementById('thumb_video').currentTime = realVideoCurrent;
+
                 $('#thumb_delete_button', $container).show();
                 $('#thumb_download_button', $container).show();
 
                 var screenshot = ThumbEditor.screenshot();
+                /**screenshot at the real currentTime**/
+                screenshot = ThumbEditor.screenshot();
 
                 if($container.find('#thumb_canvas').height() >= 210) {
                     $container.find('#thumb_canvas').css('height', '210px');

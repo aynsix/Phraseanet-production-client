@@ -65,9 +65,15 @@
       margin: 0 auto;
       background-color: #333333;
   }
-  #thumb_video {
+  thumb_video {
     height: 100%;
     width: 100%;
+      &.real-video {
+          position: fixed;
+          z-index: -9999;
+          visibility: hidden;
+          height: auto;
+      }
   }
   #frame {
      overflow: auto;
