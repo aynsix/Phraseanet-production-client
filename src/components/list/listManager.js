@@ -25,7 +25,7 @@ const ListManager = function (services, options) {
     this.addUserMethod = '';
 
     pushAddUser(services).initialize({$container: this.container});
-    
+
     $container.on('click', '.back_link', function () {
             $('#PushBox').show();
             $('#ListManager').hide();
@@ -90,7 +90,7 @@ const ListManager = function (services, options) {
             var $el = $(event.currentTarget);
             var list_id = $el.parent().data('list-id');
             appEvents.emit('push.removeList', {
-                    list_id: list_id, 
+                    list_id: list_id,
                     container: containerId
                 }
             );
@@ -104,7 +104,7 @@ const ListManager = function (services, options) {
             // /prod/lists/all/
 
             var selectedList = $('.lists_manager_list.selected').data('list-id');
-            
+
             var callback = function (datas, selected) {
                 $('.all-lists', $container).removeClass('loading').append(datas);
 
@@ -136,7 +136,7 @@ const ListManager = function (services, options) {
                     var name = $('input[name="name"]', dialog.get(2).getDomElement()).val();
 
                     if ($.trim(name) === '') {
-                        alert(localeService.t('listNameCannotBeEmpty'));
+                        alert($('#push-list-name-empty').val());
                         return;
                     }
 
@@ -146,13 +146,13 @@ const ListManager = function (services, options) {
                 var options = {
                     cancelButton: true,
                     buttons: buttons,
-                    title: localeService.t('New list'),
+                    title: $('#push-new-list-title').val(),
                     size: '315x170'
                 };
 
                 const $dialog = dialog.create(services, options, 2);
                 $dialog.getDomElement().closest('.ui-dialog').addClass('dialog_container dialog_add_list')
-                    .find('.ui-dialog-buttonset button:first-child .ui-button-text').text('Add');
+                    .find('.ui-dialog-buttonset button:first-child .ui-button-text').text($('#btn-add').val());
                 $dialog.setContent(box);
             };
 
@@ -367,10 +367,10 @@ const ListManager = function (services, options) {
         })
         .data('ui-autocomplete')._renderItem = function (ul, item) {
             var html = '';
-    
+
             if (item.type === 'USER') {
                 html = _.template($('#list_user_tpl').html())({
-    
+
                     item: item
                 });
             } else if (item.type === 'LIST') {
@@ -378,7 +378,7 @@ const ListManager = function (services, options) {
                     item: item
                 });
             }
-    
+
             return $(html).data('ui-autocomplete-item', item).appendTo(ul);
         };
 
@@ -397,7 +397,7 @@ const ListManager = function (services, options) {
             _.each($elems, function(item) {
                 var $elem = $(item);
                 var $elemID = $elem.find('input[name=id]').val();
-                if($elem.hasClass('selected') 
+                if($elem.hasClass('selected')
                 && _this.removeUserItemsArray.indexOf($elemID) === -1) {
                     _this.updateUsersHandler('remove', $elemID);
                 }
@@ -423,11 +423,11 @@ const ListManager = function (services, options) {
                     var $editor = $('#list-editor-search-results');
 
                     _.each(_this.removeUserItemsArray, function (item) {
- 
+
                         $('tbody tr', $editor).each(function(i, el) {
                             var $el = $(el);
                             var $elID = $('input[name="usr_id"]', $el).val();
-                            if(item == $elID) 
+                            if(item == $elID)
                                 $el.removeClass('selected');
                         });
 
@@ -435,44 +435,44 @@ const ListManager = function (services, options) {
                     });
 
                     var ListCounter = $('#ListManager .counter.current, #ListManager .lists .list.selected .counter');
-                    
+
                     ListCounter.each(function (i, el) {
                         var n = parseInt($(el).text(), 10);
-                        if($(el).hasClass('current')) 
+                        if($(el).hasClass('current'))
                             $(el).text(n - _this.removeUserItemsArray.length + ' people');
-                        else 
+                        else
                             $(el).text(n - _this.removeUserItemsArray.length);
                     });
- 
+
                     $('#saveListFooter').hide();
                     _this.removeUserItemsArray = [];
                     _this.removeUserMethod = '';
                 }
-                else if (_this.addUserMethod === 'add' && _this.addUserItemsArray.length > 0) { 
+                else if (_this.addUserMethod === 'add' && _this.addUserItemsArray.length > 0) {
                     var $editor = $('#list-editor-search-results');
- 
+
                     _.each(_this.addUserItemsArray, function (item) {
- 
+
                         $('tbody tr', $editor).each(function(i, el) {
- 
+
                             var $el = $(el);
                             var $elID = $('input[name="usr_id"]', $el).val();
-                            
-                            if(item == $elID) 
+
+                            if(item == $elID)
                                 $el.addClass('selected');
                         });
- 
+
                         _this.getList().addUser(item);
                     });
-    
+
                     var ListCounter = $('#ListManager .counter.current, #ListManager .lists .list.selected .counter');
-                    
+
                     ListCounter.each(function (i, el) {
                         var n = parseInt($(el).text(), 10);
-                        
-                        if($(el).hasClass('current')) 
+
+                        if($(el).hasClass('current'))
                             $(el).text(n + _this.addUserItemsArray.length + ' people');
-                        else 
+                        else
                             $(el).text(n + _this.addUserItemsArray.length);
                     });
 
@@ -489,11 +489,11 @@ const ListManager = function (services, options) {
             var usr_id = badge.find('input[name="id"]').val();
             var ListCounter = $('#ListManager .counter.current, #ListManager .lists .list.selected .counter');
             var $editor = $('#list-editor-search-results');
-    
+
             var callback = function callback(list, datas) {
                 ListCounter.each(function (i, el) {
                     var n = parseInt($(el).text(), 10);
-                    
+
                     if($(el).hasClass('current'))
                         $(el).text(n - 1 + ' people');
                     else
@@ -503,17 +503,17 @@ const ListManager = function (services, options) {
                     badge.remove();
                 });
             };
-    
+
             _this.getList().removeUser(usr_id, callback);
 
             $('tbody tr', $editor).each(function(i, el) {
                 var $el = $(el);
                 var $elID = $('input[name="usr_id"]', $el).val();
-                
+
                 if(usr_id === $elID)
                     $el.removeClass('selected');
             });
-                    
+
             return false;
         });
     };
@@ -539,7 +539,7 @@ ListManager.prototype = {
             var html = _.template($('#list_manager_badge_tpl').html())({
                 user: user
             });
-    
+
             // p4.Feedback.appendBadge(html);
             // this.getList().addUser(user.usr_id);
             this.appendBadge(html);
@@ -580,7 +580,7 @@ ListManager.prototype = {
     },
     updateUsers: function (action) {
         if(action === 'remove') {
- 
+
         }
         return removedItems;
     },
