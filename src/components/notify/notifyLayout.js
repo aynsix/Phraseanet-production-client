@@ -126,7 +126,7 @@ const notifyLayout = (services) => {
 
         $notificationDialog
             .dialog({
-                title: localeService.t('notifications'),
+                title: $('#notification-title').val(),
                 autoOpen: false,
                 closeOnEscape: true,
                 resizable: false,

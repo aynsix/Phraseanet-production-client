@@ -12,7 +12,7 @@ const propertyRecord = (services) => {
     const doProperty = (datas) => {
         var $dialog = dialog.create(services, {
             size: 'Medium',
-            title: localeService.t('property')
+            title: $('#property-title').val()
         });
 
         $.ajax({
