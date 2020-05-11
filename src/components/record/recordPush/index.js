@@ -27,6 +27,10 @@ const pushRecord = (services) => {
         listManagerInstance.createList(listOptions);
     }
 
+    function addUser(userOptions) {
+        feedbackInstance.addUser(userOptions);
+    }
+
     function setActiveList() {
 
     }
@@ -78,7 +82,7 @@ const pushRecord = (services) => {
 
     appEvents.listenAll({
         // 'push.doInitialize': initialize,
-        'push.addUser': Feedback.addUser,
+        'push.addUser': addUser,
         'push.setActiveList': setActiveList,
         'push.createList': createList,
         'push.reload': reloadBridge,
@@ -89,7 +93,7 @@ const pushRecord = (services) => {
         initialize,
         // Feedback: Feedback,
         // ListManager: ListManager,
-        reloadBridge: reloadBridge
+        reloadBridge: reloadBridge,
     };
 
 };
