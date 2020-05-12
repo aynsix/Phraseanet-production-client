@@ -122,7 +122,7 @@ const pushAddUser = (services) => {
             submitAddUser();
         });
 
-        $addUserForm.on('click', '.validate', function (event) {
+        $addUserForm.on('click', '.valid', function (event) {
             event.preventDefault();
             submitAddUser();
         });

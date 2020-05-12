@@ -513,7 +513,7 @@ Feedback.prototype = {
                 if (data.success) {
                     humane.info(data.message);
                     $this.selectUser(data.user);
-                    callback();
+                    callback;
                 } else {
                     humane.error(data.message);
                 }
