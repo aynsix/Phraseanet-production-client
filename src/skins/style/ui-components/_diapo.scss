@@ -5,8 +5,9 @@ $diapoBorderColor: #404040 !default;
  */
 
 #reorder_box .diapo {
-  height: 130px;
+  height: 130px!important;
   width: 100px;
+  margin: 5px;
 }
 .editDiaButtons .icomoon {
     color: gray;
