@@ -173,6 +173,7 @@ $diapoBorderColor: #404040 !default;
     height: 140px!important;
     display: flex!important;
     align-items: center;
+    justify-content: center;
     .record_image {
         position: relative;
         max-height: 100%;
@@ -184,5 +185,6 @@ $diapoBorderColor: #404040 !default;
 }
 
 .diapo.IMGT .thumb_wrapper {
-  padding: 0 11px;
+  padding: 0;
+    margin: auto;
 }
