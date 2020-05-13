@@ -318,6 +318,7 @@ const publication = (services) => {
                 $('button', $dialog.getDomElement()).prop('disabled', false);
             },
             success: function (data) {
+                $('.state-navigation').trigger('click');
                 $('button', $dialog.getDomElement()).prop('disabled', false);
                 if (data.error === true) {
                     alert(data.message);
