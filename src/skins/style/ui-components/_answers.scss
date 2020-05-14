@@ -219,8 +219,8 @@ $answersInfoLabelColor: #949494 !default;
                 }
             }
             &.hover {
-                table a.tools {
-                    display: inline;
+                .feed_btn_wrapper {
+                    display: inline-block;
                 }
             }
         }
@@ -280,6 +280,35 @@ $answersInfoLabelColor: #949494 !default;
             a {
                 color: $darkerTextColor;
             }
+        }
+    }
+    .feed_btn_wrapper {
+        background: #fff;
+        display: inline-block;
+        padding: 3px 6px 0;
+        width: 56px;
+        text-align: center;
+        border-radius: 5px;
+        display: none;
+    }
+    .feed_icon {
+        .fa {
+            color: #5cb85c;
+            font-size: 22px;
+        }
+        &.feed_delete  {
+            margin-left: 8px;
+            .fa {
+                color: red;
+                margin-left: 2px;
+            }
+        }
+    }
+    .ajax_answers {
+        .fa {
+            margin-left: 12px;
+            font-size: 22px;
+            color: #F09A3A;
         }
     }
 }

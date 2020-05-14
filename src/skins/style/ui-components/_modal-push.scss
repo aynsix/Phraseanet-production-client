@@ -169,6 +169,7 @@ input.text_input_white {
             border: solid 1px $orangeThemeColor;
             color: $orangeThemeColor;
             min-width: 115px;
+            float: right;
         }
         button.ui-button:hover {
             background-color: $orangeThemeColor;
@@ -807,6 +808,7 @@ input.text_input_white {
 
 .PushBox .LeftColumn ul {
     margin: 10px 0;
+    padding-bottom: 40px;
 }
 
 .PushBox .LeftColumn ul li img {
@@ -1327,10 +1329,10 @@ input.text_input_white {
     letter-spacing: 0px;
     color: #ffffff;
     padding: 6px 8px;
-    position: absolute;
-    bottom: 15px;
-    left: 10px;
-    right: 10px;
+    position: fixed;
+    bottom: 31px;
+    left: 32px;
+    width: 158px;
     img {
         width: 16px;
         height: 16px;
