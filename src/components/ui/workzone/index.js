@@ -70,9 +70,10 @@ const workzone = (services) => {
 
         $('#idFrameC .ui-tabs-nav li').on('click', function (event) {
             if ($container.attr('data-status') === 'closed') {
-                $container.width(300);
-                $('#rightFrame').css('left', 300);
-                $('#rightFrame').width($(window).width() - 300);
+                $('#retractableButton').find('i').removeClass('fa-angle-double-right').addClass('fa-angle-double-left');
+                $container.width(360);
+                $('#rightFrame').css('left', 360);
+                $('#rightFrame').width($(window).width() - 360);
                 $('#baskets, #proposals, #thesaurus_tab').hide();
                 $('.ui-resizable-handle, #basket_menu_trigger').show();
                 var IDname = $(this).attr('aria-controls');

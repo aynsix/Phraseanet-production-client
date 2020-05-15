@@ -305,10 +305,9 @@ $answersInfoLabelColor: #949494 !default;
         }
     }
     .ajax_answers {
-        .fa {
+        img {
             margin-left: 12px;
-            font-size: 22px;
-            color: #F09A3A;
+            margin-top: -4px;
         }
     }
 }

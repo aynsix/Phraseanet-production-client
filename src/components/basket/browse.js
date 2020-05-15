@@ -124,6 +124,15 @@ const basketBrowse = (services) => {
                 return false;
             });
 
+            $('.result_page').bind('click', function (event) {
+                event.preventDefault();
+                var $this = $(this);
+
+                loadResults({}, $this.attr('href'));
+
+                return false;
+            });
+
             $('a.basket_link', $scope).bind('click', function (event) {
                 event.preventDefault();
                 var $this = $(this);
