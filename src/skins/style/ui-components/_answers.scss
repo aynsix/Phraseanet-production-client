@@ -207,6 +207,9 @@ $answersInfoLabelColor: #949494 !default;
             }
             h1 {
                 margin-bottom: 0;
+                &.with_btn {
+                    margin-top: 18px;
+                }
             }
             table {
                 &.head {
@@ -220,7 +223,7 @@ $answersInfoLabelColor: #949494 !default;
             }
             &.hover {
                 .feed_btn_wrapper {
-                    display: inline-block;
+                    visibility: visible;
                 }
             }
         }
@@ -289,7 +292,10 @@ $answersInfoLabelColor: #949494 !default;
         width: 56px;
         text-align: center;
         border-radius: 5px;
-        display: none;
+        visibility: hidden;
+        position: absolute;
+        left: 11px;
+        top: 10px;
     }
     .feed_icon {
         .fa {
