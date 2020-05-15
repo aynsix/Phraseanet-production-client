@@ -221,6 +221,24 @@ const publication = (services) => {
         return ajaxState.query;
     };
 
+    function checkFeedVFieldError() {
+        if ($('.feed_warning').hasClass('alert-error')) {
+            $('.ui-dialog-buttons').find('button').eq(1).prop('disabled', true);
+        } else {
+            $('.ui-dialog-buttons').find('button').eq(1).prop('disabled', false);
+        }
+    }
+
+    function feedFieldValidator (field, feedWarning , length) {
+        field.on('change keyup',function () {
+            if ( $(this).val().length > length){
+                feedWarning.addClass('alert alert-error');
+            }else {
+                feedWarning.removeClass('alert alert-error');
+            }
+            checkFeedVFieldError();
+        });
+    }
     var openModal = function (data) {
         let buttons = {};
         let modal = dialog.create(services, {
@@ -236,6 +254,12 @@ const publication = (services) => {
         modal.setOption('buttons', buttons);
         let $feeds_item = $('.feeds .feed', modal.getDomElement());
         let $form = $('form.main_form', modal.getDomElement());
+        let $feed_title_field = $('#feed_add_title', modal.getDomElement());
+        let $feed_title_warning = $('.feed_title_warning', modal.getDomElement());
+        let $feed_subtitle_field = $('#feed_add_subtitle', modal.getDomElement());
+        let $feed_subtitle_warning = $('.feed_subtitle_warning', modal.getDomElement());
+        feedFieldValidator($feed_title_field,$feed_title_warning, 128);
+        feedFieldValidator($feed_subtitle_field,$feed_subtitle_warning, 1024);
 
         $feeds_item.bind('click', function () {
             $feeds_item.removeClass('selected');

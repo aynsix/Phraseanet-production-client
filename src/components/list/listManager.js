@@ -147,7 +147,7 @@ const ListManager = function (services, options) {
                     cancelButton: true,
                     buttons: buttons,
                     title: $('#push-new-list-title').val(),
-                    size: '315x170'
+                    size: '450x170'
                 };
 
                 const $dialog = dialog.create(services, options, 2);

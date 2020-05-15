@@ -70,9 +70,10 @@ const workzone = (services) => {
 
         $('#idFrameC .ui-tabs-nav li').on('click', function (event) {
             if ($container.attr('data-status') === 'closed') {
-                $container.width(300);
-                $('#rightFrame').css('left', 300);
-                $('#rightFrame').width($(window).width() - 300);
+                $('#retractableButton').find('i').removeClass('fa-angle-double-right').addClass('fa-angle-double-left');
+                $container.width(360);
+                $('#rightFrame').css('left', 360);
+                $('#rightFrame').width($(window).width() - 360);
                 $('#baskets, #proposals, #thesaurus_tab').hide();
                 $('.ui-resizable-handle, #basket_menu_trigger').show();
                 var IDname = $(this).attr('aria-controls');
@@ -101,9 +102,9 @@ const workzone = (services) => {
                 previousTab = $('#idFrameC .prod-icon-menu').find('li.ui-tabs-active');
             } else {
                 $(this).find('i').removeClass('fa-angle-double-right').addClass('fa-angle-double-left');
-                $container.width(300);
-                $('#rightFrame').css('left', 300);
-                $('#rightFrame').width($(window).width() - 300);
+                $container.width(360);
+                $('#rightFrame').css('left', 360);
+                $('#rightFrame').width($(window).width() - 360);
                 $container.attr('data-status', 'open');
                 $('.ui-resizable-handle, #basket_menu_trigger').show();
                 $('.WZbasketTab').css('background-position', '9px 16px');

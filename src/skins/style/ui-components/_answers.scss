@@ -207,6 +207,9 @@ $answersInfoLabelColor: #949494 !default;
             }
             h1 {
                 margin-bottom: 0;
+                &.with_btn {
+                    margin-top: 18px;
+                }
             }
             table {
                 &.head {
@@ -219,8 +222,8 @@ $answersInfoLabelColor: #949494 !default;
                 }
             }
             &.hover {
-                table a.tools {
-                    display: inline;
+                .feed_btn_wrapper {
+                    visibility: visible;
                 }
             }
         }
@@ -280,6 +283,37 @@ $answersInfoLabelColor: #949494 !default;
             a {
                 color: $darkerTextColor;
             }
+        }
+    }
+    .feed_btn_wrapper {
+        background: #fff;
+        display: inline-block;
+        padding: 3px 6px 0;
+        width: 56px;
+        text-align: center;
+        border-radius: 5px;
+        visibility: hidden;
+        position: absolute;
+        left: 11px;
+        top: 10px;
+    }
+    .feed_icon {
+        .fa {
+            color: #5cb85c;
+            font-size: 22px;
+        }
+        &.feed_delete  {
+            margin-left: 8px;
+            .fa {
+                color: red;
+                margin-left: 2px;
+            }
+        }
+    }
+    .ajax_answers {
+        img {
+            margin-left: 12px;
+            margin-top: -4px;
         }
     }
 }

@@ -48,3 +48,11 @@
     }
   }
 }
+
+.feed_warning {
+    margin-bottom: 12px;
+    display: none;
+    &.alert {
+        display: inline-block ;
+    }
+}
