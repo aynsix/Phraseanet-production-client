@@ -142,7 +142,12 @@ const notifyLayout = (services) => {
                     $notificationDialog.dialog('destroy').remove();
                 }
             }).dialog('option', 'buttons', buttons)
-            .dialog('open');
+            .dialog('open').on('click','.notification_next .notification__print-action', function (event) {
+                event.preventDefault();
+                var $el = $(event.currentTarget);
+                var page = $el.data('page');
+                print_notifications(page);
+            });
 
 
         $.ajax({
