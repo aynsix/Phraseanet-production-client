@@ -141,8 +141,7 @@ const notifyLayout = (services) => {
                 close: function (event, ui) {
                     $notificationDialog.dialog('destroy').remove();
                 }
-            }).dialog('option', 'buttons', buttons)
-            .dialog('open').on('click','.notification_next .notification__print-action', function (event) {
+            }).dialog('option', 'buttons', buttons).dialog('open').on('click','.notification_next .notification__print-action', function (event) {
                 event.preventDefault();
                 var $el = $(event.currentTarget);
                 var page = $el.data('page');
