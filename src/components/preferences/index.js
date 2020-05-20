@@ -171,6 +171,16 @@ const preferences = services => {
             );
         });
 
+
+        $container.on('change', '.preferences-options-basket-type', event => {
+            let $el = $(event.currentTarget);
+            event.preventDefault();
+            appCommons.userModule.setPref(
+                'basket_type_display',
+                $el.prop('checked') ? '1' : '0'
+            );
+        });
+
         $container.on('click', '.preference-change-theme-action', event => {
             let $el = $(event.currentTarget);
             let color = $el.data('theme');
