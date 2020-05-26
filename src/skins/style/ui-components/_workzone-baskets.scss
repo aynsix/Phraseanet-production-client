@@ -334,7 +334,7 @@
     height: 17px;
     width: 12px;
     position: relative;
-    bottom: -5px;
+    bottom: -6px;
     .icomoon {
         font-size: 16px;
         color: #d8d8d8;
@@ -394,4 +394,14 @@
     .checkbox input[type=checkbox], .radio input[type=radio] {
         margin-top: 1px;
     }
+}
+.basket_type {
+    width: 15px;
+    display: inline-block;
+}
+.bottom {
+    .captionRolloverTips {
+        padding-top: 4px;
+    }
+
 }
