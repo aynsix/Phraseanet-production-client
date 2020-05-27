@@ -118,52 +118,6 @@ const preview = services => {
 
         switch (currentRecord.type) {
             case 'video':
-                // checkif video editor is enabled
-                let hasVideoEditor = false;
-                if (parentOptions.recordConfig.videoEditorConfig !== null) {
-                    hasVideoEditor = true;
-                }
-                if (hasVideoEditor) {
-                    // get records information for videoEditor
-                    let videoRecords = [];
-                    for (let recordIndex in parentOptions.recordConfig
-                        .records) {
-                        if (
-                            parentOptions.recordConfig.records[recordIndex]
-                                .id === currentRecord.rid
-                        ) {
-                            videoRecords.push(
-                                parentOptions.recordConfig.records[recordIndex]
-                            );
-                        }
-                    }
-
-                    videoEditor(services).initialize({
-                        $container,
-                        parentOptions,
-                        data: {
-                            videoEditorConfig:
-                                parentOptions.recordConfig.videoEditorConfig,
-                            records: videoRecords
-                        }
-                    });
-                } else {
-                    // transform default embed ID in order to avoid conflicts:
-                    let customId = 'phraseanet-embed-editor-frame';
-                    let $template = $(currentRecord.template);
-                    $template.attr('id', customId);
-
-                    $container.append($template.get(0));
-                    activeThumbnailFrame = new pym.Parent(
-                        customId,
-                        currentRecord.data.preview.url
-                    );
-                    activeThumbnailFrame.iframe.setAttribute(
-                        'allowfullscreen',
-                        ''
-                    );
-                }
-                break;
             case 'audio':
             case 'document':
                 let customId = 'phraseanet-embed-editor-frame';
@@ -186,6 +140,42 @@ const preview = services => {
         if ($('img.PREVIEW_PIC.zoomable').length > 0) {
             $('img.PREVIEW_PIC.zoomable').draggable();
         }
+
+        /**Resize video on edit**/
+        if(currentRecord.type == 'video') {
+            resizeVideo();
+            $('#phraseanet-embed-editor-frame').css('text-align','center');
+            /*resize of VIDEO */
+            function resizeVideo(){
+                if($('#phraseanet-embed-editor-frame iframe').length > 0) {
+
+                    var $sel = $('#phraseanet-embed-editor-frame');
+                    var $window =  $('#TH_Opreview').height();
+
+                    // V is for "video" ; K is for "container" ; N is for "new"
+                    var VH = $('#phraseanet-embed-editor-frame ').data( "original-width" );
+                    var VW = $('#phraseanet-embed-editor-frame ').data( "original-height" );
+                    var VW= 747;
+                    var VH= 420;
+
+                    var KW = $sel.width();
+                    var KH = $sel.height();
+                    KH = $window - 20 ;
+
+                    var NW, NH;
+                    if( (NH = (VH / VW) * (NW=KW) ) > KH )  {   // try to fit exact horizontally, adjust vertically
+                        // too bad... new height overflows container height
+                        NW = (VW / VH) * (NH=KH);      // so fit exact vertically, adjust horizontally
+                    }
+                    $("#phraseanet-embed-editor-frame iframe").css('width', NW).css('height', NH);
+
+                }
+            }
+            $(window).on("load resize ",function(e){
+                resizeVideo();
+            });
+        }
+        /**end Resize video on edit**/
     }
 
     /**
