@@ -174,6 +174,9 @@ const preview = services => {
             $(window).on("load resize ",function(e){
                 resizeVideo();
             });
+            $(window).click(".ui-tabs-anchor", function (e) {
+                resizeVideo();
+            });
         }
         /**end Resize video on edit**/
     }
