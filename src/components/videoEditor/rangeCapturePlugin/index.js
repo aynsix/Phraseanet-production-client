@@ -318,7 +318,10 @@ const plugin = function (options) {
         if (settings.vttFieldValue !== false) {
             var playPromise = null;
             if (this.paused()) {
-                playPromise = this.play();
+                playPromise = this.play().then(() => {
+                    this.pause();
+                }).catch(error => {
+                    });
             }
             if (!this.paused()) {
                 if (playPromise !== undefined) {
