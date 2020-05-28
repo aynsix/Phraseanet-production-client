@@ -153,10 +153,8 @@ const preview = services => {
                     var $window =  $('#TH_Opreview').height();
 
                     // V is for "video" ; K is for "container" ; N is for "new"
-                    var VH = $('#phraseanet-embed-editor-frame ').data( "original-width" );
-                    var VW = $('#phraseanet-embed-editor-frame ').data( "original-height" );
-                    var VW= 747;
-                    var VH= 420;
+                    var VW = $('#phraseanet-embed-editor-frame ').data( "original-width" );
+                    var VH = $('#phraseanet-embed-editor-frame ').data( "original-height" );
 
                     var KW = $sel.width();
                     var KH = $sel.height();
