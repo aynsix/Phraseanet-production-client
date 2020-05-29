@@ -63,7 +63,7 @@ const recordToolsModal = (services, datas, activeTab = false) => {
         $('.action_submiter', $scope).bind('click', function () {
             var $this = $(this);
             var form = $(this).closest('form');
-
+            $('.confirm_block').removeClass('hide');
             $.ajax({
                 url: form.attr('action'),
                 type: form.attr('method'),
@@ -71,12 +71,13 @@ const recordToolsModal = (services, datas, activeTab = false) => {
                 data: form.serializeArray(),
                 beforeSend: function () {
                     $this.prop('disabled', true);
+                    setTimeout(function(){ dialog.get(1).close(); }, 1500);
                 },
                 success: function (data) {
                     if (!data.success) {
                         humane.error(data.message);
                     } else {
-                        dialog.get(1).close();
+                        console.log('sub-definitions recreated');
                     }
                 },
                 complete: function () {
