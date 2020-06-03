@@ -7,6 +7,7 @@ import cgu from '../cgu';
 import editRecordService from '../record/edit';
 import exportRecord from '../record/export';
 import shareRecord from '../record/share';
+import recordVideoEditorModal from '../record/videoEditor/index';
 import addToBasket from '../record/addToBasket';
 import removeFromBasket from '../record/removeFromBasket';
 import printRecord from '../record/print';

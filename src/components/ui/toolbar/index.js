@@ -130,6 +130,20 @@ const toolbar = (services) => {
             alert(localeService.t('nodocselected'));
         }
     };
+    const _triggerModal_2 = (event, actionFn) => {
+        event.preventDefault();
+        const $el = $(event.currentTarget);
+        const selectionSource = $el.data('selection-source');
+
+        let selection = _getSelection(selectionSource, {});
+        let params = _prepareParams(selection);
+
+        // require a list of records a basket group or a story
+        if (params !== false) {
+            return actionFn.apply(null, [params]);
+        } ;
+
+    };
 
 
     const _bindEvents = () => {
@@ -169,8 +183,8 @@ const toolbar = (services) => {
         /**
          * tools > Edit > VideoEditor
          */
-        $container.on('click', '.TOOL_videoeditor_btn', function (event) {
-            _triggerModal(event, videoToolsModal(services).openModal);
+        $container.on('click', '.video-tools-record-action', function (event) {
+            _triggerModal_2(event, videoToolsModal(services).openModal);
         });
 
         /**

@@ -13,6 +13,20 @@ const recordVideoEditorModal = (services, datas, activeTab = false) => {
     let $dialog = null;
     let toolsStream = new Rx.Subject();
 
+    var initialize = function initialize(options) {
+
+        $(document).on('click', '.video-tools-record-action', function (event) {
+            event.preventDefault();
+            var $el = $(event.currentTarget);
+            var test = $el.data("test");
+            var datas = {}
+            var key = "lst";
+            datas[key] = test;
+            openModal(datas, activeTab);
+        });
+    };
+    initialize();
+
     toolsStream.subscribe((params) => {
         switch (params.action) {
             case 'refresh':
@@ -52,7 +66,7 @@ const recordVideoEditorModal = (services, datas, activeTab = false) => {
         }
 
         // available if only 1 record is selected:
-        if (data.selectionLength === 1 && data.isVideo === "true") {
+        if (data.isVideo === "true") {
             videoScreenCapture(services).initialize({$container: $scope, data});
             videoRangeCapture(services).initialize({$container: $('.video-range-editor-container'), data, services});
         }else {
