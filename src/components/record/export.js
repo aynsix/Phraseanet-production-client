@@ -138,7 +138,7 @@ const exportRecord = services => {
 
             if (count > 1 && total / 1024 / 1024 > dataConfig.maxDownload) {
                 if (
-                    confirm(
+                    humane.infoLarge(
                         `${dataConfig.msg.fileTooLarge} \n ${dataConfig.msg
                             .fileTooLargeAlt} \n ${dataConfig.msg
                             .fileTooLargeEmail}`

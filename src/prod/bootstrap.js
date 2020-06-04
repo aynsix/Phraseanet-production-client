@@ -173,8 +173,9 @@ class Bootstrap {
     initDom() {
         document.getElementById('loader_bar').style.width = '30%';
 
-        humane.info = humane.spawn({addnCls: 'humane-libnotify-info', timeout: 1000});
-        humane.error = humane.spawn({addnCls: 'humane-libnotify-error', timeout: 1000});
+        humane.infoLarge = humane.spawn({addnCls: 'humane-libnotify-info humane-large', timeout: 5000});
+        humane.info = humane.spawn({addnCls: 'humane-libnotify-info', timeout: 4000});
+        humane.error = humane.spawn({addnCls: 'humane-libnotify-error', timeout: 4000});
         humane.forceNew = true;
         // cguModule.activateCgus();
 
