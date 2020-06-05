@@ -138,7 +138,7 @@ const exportRecord = services => {
 
             if (count > 1 && total / 1024 / 1024 > dataConfig.maxDownload) {
                 if (
-                    humane.infoLarge(
+                    confirm(
                         `${dataConfig.msg.fileTooLarge} \n ${dataConfig.msg
                             .fileTooLargeAlt} \n ${dataConfig.msg
                             .fileTooLargeEmail}`
@@ -318,6 +318,7 @@ const exportRecord = services => {
             }
 
             $('#sendmail form').submit();
+            humane.infoLarge($('#export-send-mail-notif').val());
             $dialog.close();
         });
 
