@@ -318,6 +318,7 @@ const exportRecord = services => {
             }
 
             $('#sendmail form').submit();
+            humane.infoLarge($('#export-send-mail-notif').val());
             $dialog.close();
         });
 
