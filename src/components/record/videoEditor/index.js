@@ -3,6 +3,7 @@ import $ from 'jquery';
 import dialog from 'phraseanet-common/src/components/dialog';
 import videoScreenCapture from './videoScreenCapture';
 import videoRangeCapture from './videoRangeCapture';
+import videoSubtitleCapture from './videoSubtitleCapture';
 import * as Rx from 'rx';
 
 const humane = require('humane-js');
@@ -55,6 +56,7 @@ const recordVideoEditorModal = (services, datas, activeTab = false) => {
         if (data.selectionLength === 1 && data.isVideo === "true") {
             videoScreenCapture(services).initialize({$container: $scope, data});
             videoRangeCapture(services).initialize({$container: $('.video-range-editor-container'), data, services});
+            videoSubtitleCapture(services).initialize({$container: $('.video-subtitle-editor-container'), data, services});
         }else {
             let confirmationDialog = dialog.create(services, {
                 size: 'Alert',
