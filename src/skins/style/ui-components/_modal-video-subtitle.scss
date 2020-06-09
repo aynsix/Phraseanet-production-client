@@ -5,7 +5,7 @@
     flex-wrap: wrap;
   }
   .video-subtitle-left {
-    width: 40%;
+    width: 50%;
     position: relative;
   }
   .video-subtitle-left-inner {
@@ -16,7 +16,7 @@
     background: #1a1a1a;
   }
   .video-subtitle-right {
-    width: 60%;
+    width: 50%;
     background: #000;
   }
   .video-subtitle-wrapper {
@@ -42,12 +42,6 @@
     width: 47%;
     margin-right: 3%;
     float: left;
-    input[type="text"] {
-      max-width: 170px;
-    }
-    &.caption-text {
-      width: 100%;
-    }
   }
   .thumb_video {
     height: 100%;

@@ -15,12 +15,18 @@ const videoSubtitleCapture = (services, datas, activeTab = false) => {
             e.preventDefault();
             $(this).closest('.video-subtitle-item').remove();
         });
-test
     }
 
 
     const addSubTitleVtt = () => {
-        let item = " <fieldset class='video-subtitle-item'><div class='item-field start-time' ><label>Start time</label><input type='text' name='startTime'/></div><div class='item-field show-for-time'><label>Show for</label><input type='text' name='showForTime'/></div> <div class='item-field end-time'><label>End time</label><input type='text' name='endTime'/></div> <div class='item-field caption-text'><textarea name='captionText'></textarea></div> <div class='remove-item'><i class='fa fa-times-circle'></i> </div></fieldset>";
+        let countSubtitle = $('.video-subtitle-item').length + 1;
+        let item = " <fieldset class='video-subtitle-item'><h4>"+ countSubtitle +"</h4>" +
+            "<div class='item-field start-time' ><label>Start time</label><input type='text' name='startTime'/></div>" +
+            "<div class='item-field show-for-time'><label>Show for</label><input type='text' name='showForTime'/></div>" +
+            "<div class='item-field end-time'><label>End time</label><input type='text' name='endTime'/></div>" +
+            "<div class='item-field caption-text'><label>Caption</label><textarea name='captionText'></textarea></div>" +
+            "<div class='remove-item'><i class='fa fa-times-circle'></i></div>" +
+            "</fieldset>";
         $('.fields-wrapper').append(item);
     }
 
