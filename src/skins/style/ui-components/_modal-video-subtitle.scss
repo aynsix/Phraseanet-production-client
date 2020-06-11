@@ -1,5 +1,12 @@
 /**Video subtitle **/
 .video-subtitle-editor-container {
+  font-size: 12px;
+  .video-subtitle-top {
+    padding: 7px 7px 10px;
+    form {
+      margin: 0;
+    }
+  }
   .video-subtitle-bottom {
     display: flex;
     flex-wrap: wrap;
@@ -10,10 +17,10 @@
   }
   .video-subtitle-left-inner {
     overflow: auto;
-    height: 470px;
+    height: 410px;
     position: relative;
-    margin-bottom: 60px;
     background: #1a1a1a;
+    padding-top: 10px;
   }
   .video-subtitle-right {
     width: 50%;
@@ -39,9 +46,16 @@
     }
   }
   .item-field {
-    width: 47%;
-    margin-right: 3%;
+    width: auto;
+    margin-right: 10px;
     float: left;
+    input[type="text"] {
+      width: 83px;
+    }
+    &.caption-text {
+      width: calc(100% - 42px);
+      margin-left: 42px;
+    }
   }
   .thumb_video {
     height: 100%;
@@ -68,5 +82,14 @@
     color: #fff;
     border: none;
     padding: 6px 9px;
+  }
+  .number {
+    background: green;
+    padding: 2px;
+    float: left;
+    margin-right: 12px;
+    font-weight: bold;
+    min-width: 20px;
+    text-align: center;
   }
 }
