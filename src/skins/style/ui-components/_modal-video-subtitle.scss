@@ -7,25 +7,13 @@
       margin: 0;
     }
   }
-  .video-subtitle-bottom {
-    display: flex;
-    flex-wrap: wrap;
-  }
-  .video-subtitle-left {
-    width: 50%;
-    position: relative;
-  }
   .video-subtitle-left-inner {
     overflow: auto;
-    height: 410px;
     position: relative;
     background: #1a1a1a;
     padding-top: 10px;
   }
-  .video-subtitle-right {
-    width: 50%;
-    background: #000;
-  }
+
   .video-subtitle-wrapper {
     height: 503px;
   }
@@ -57,10 +45,7 @@
       margin-left: 42px;
     }
   }
-  .thumb_video {
-    height: 100%;
-    width: 100%;
-  }
+
   textarea {
     width: 100%;
     display: block;
@@ -74,22 +59,58 @@
     cursor: pointer;
   }
   button.add-subtitle-vtt {
-    position: absolute;
-    bottom: 8px;
-    right: 15px;
-    font-size: 31px;
-    background: green;
-    color: #fff;
+    font-size: 20px;
+    background: #5cb85c;
     border: none;
-    padding: 6px 9px;
+    padding: 5px 8px;
+    float: right;
   }
   .number {
-    background: green;
+    background: #5cb85c;
     padding: 2px;
     float: left;
     margin-right: 12px;
     font-weight: bold;
     min-width: 20px;
     text-align: center;
+  }
+  .video-subtitle-left-button {
+    text-align: right;
+    padding: 5px 20px;
+    &.btn {
+      margin-right: 15px;
+      margin-bottom: 10px;
+    }
+  }
+}
+#record-vtt {
+  position: absolute;
+  z-index: -1;
+}
+
+.video-subtitle-bottom {
+  display: flex;
+  flex-wrap: wrap;
+}
+.video-subtitle-left {
+  width: 50%;
+  position: relative;
+}
+.video-subtitle-right {
+  width: 50%;
+  background: #000;
+}
+
+.video-subtitle-request {
+  padding: 20px;
+}
+.video-subtitle-center-button {
+  text-align: center;
+  margin-top: 20px;
+}
+.video-subtitle-right {
+  .thumb_video {
+    height: 100%;
+    width: 100%;
   }
 }

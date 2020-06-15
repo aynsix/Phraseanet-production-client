@@ -16,15 +16,25 @@ const videoSubtitleCapture = (services, datas, activeTab = false) => {
         let startVal = 0;
         let endVal = 0;
         let diffVal = 0;
+        let leftHeight = 300;
+
+        // Set height of left block
+        leftHeight = $('.video-subtitle-left-inner').closest('#tool-tabs').height();
+        $('.video-subtitle-left-inner').css('height', leftHeight - 230);
+        $('.video-request-left-inner').css('height', leftHeight - 230);
 
         function setDiffTime(e) {
+            $('.endTime').on('keyup change', function (e) {
+                setDefaultStartTime ();
+            });
             $('.startTime').on('keyup change', function (e) {
                 startVal = stringToseconde($(this).val());
                 $(this).closest('.video-subtitle-item').find('.endTime').on('keyup change', function (e) {
                     endVal = stringToseconde($(this).val());
                     diffVal = millisecondeToTime(endVal - startVal);
                     $(this).closest('.video-subtitle-item').find('.showForTime').val(diffVal);
-                })
+                });
+                setDefaultStartTime ();
             });
             return;
         }
@@ -55,7 +65,15 @@ const videoSubtitleCapture = (services, datas, activeTab = false) => {
             $(this).closest('.video-subtitle-item').remove();
         });
 
-        $('.submit-subtitle').on('click', function (e) {
+        function setDefaultStartTime (e) {
+            $('#defaultStartValue').val($('.video-subtitle-item:last .endTime').val());
+            var DefaultStartT = $('.video-subtitle-item:last .endTime').val();
+            var DefaultEndT = stringToseconde(DefaultStartT) + 2000;
+            DefaultEndT = millisecondeToTime(DefaultEndT);
+            $('#defaultEndValue').val(DefaultEndT);
+        }
+
+        $('#submit-subtitle').on('click', function (e) {
             e.preventDefault();
             try {
                 var allData = $('#video-subtitle-list').serializeArray();
@@ -87,17 +105,48 @@ const videoSubtitleCapture = (services, datas, activeTab = false) => {
             }
         });
 
+        $('#copy-subtitle').on('click', function (event) {
+            event.preventDefault();
+            $('#submit-subtitle').trigger('click');
+            return copyElContentClipboard('record-vtt');
+        });
+
+        var copyElContentClipboard = function copyElContentClipboard(elId) {
+            var copyEl = document.getElementById(elId);
+            copyEl.select();
+            try {
+                var successful = document.execCommand('copy');
+                var msg = successful ? 'successful' : 'unsuccessful';
+            } catch (err) {
+                console.log('unable to copy');
+            }
+        };
+
 
         const addSubTitleVtt = () => {
             let countSubtitle = $('.video-subtitle-item').length;
+            setDefaultStartTime ();
             let item = $('#default-item').html();
             $('.fields-wrapper').append(item);
             $('.video-subtitle-item:last .time').attr('pattern', '[0-9][0-9]:[0-9][0-9]:[0-9][0-9].[0-9]{3}$');
-            $('.video-subtitle-item:last .startTime').attr('name', 'startTime' + countSubtitle).addClass('startTime' + countSubtitle);
-            $('.video-subtitle-item:last .endTime').attr('name', 'endTime' + countSubtitle).addClass('endTime' + countSubtitle);
+            $('.video-subtitle-item:last .startTime').attr('name', 'startTime' + countSubtitle).addClass('startTime' + countSubtitle).val($('#defaultStartValue').val());
+            $('.video-subtitle-item:last .endTime').attr('name', 'endTime' + countSubtitle).addClass('endTime' + countSubtitle).val($('#defaultEndValue').val());
             $('.video-subtitle-item:last .number').html(countSubtitle);
             setDiffTime();
         };
+
+        //Subtitle Request Tab
+        $('#submit-subtitle-request').on('click', function (e) {
+            e.preventDefault();
+            try {
+                var requestData = $('#video-subtitle-request').serializeArray();
+                requestData = JSON.parse(JSON.stringify(requestData));
+console.log(requestData)
+
+            } catch (err) {
+                return;
+            }
+        });
     }
 
 
