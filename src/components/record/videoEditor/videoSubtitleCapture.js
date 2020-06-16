@@ -7,30 +7,6 @@ const videoSubtitleCapture = (services, datas, activeTab = false) => {
     const initialize = (params) => {
         let {$container, data} = params;
 
-
-        //Populate Language Select field by select id
-        function builCaptionlanguage(selectField) {
-            $.ajax({
-                type: 'GET',
-                url: url + 'prod/tools/videoTextTrack/field',
-                //url: 'https://next.json-generator.com/api/json/get/Ny78r9gpd',
-                success: function success(datas) {
-
-                    if (datas.length > 0) {
-
-                        var _html = '';
-                        datas.forEach(function (elem) {
-                            _html += '<option value=' + elem.meta_struct_id + '>' + elem.label + '</option>';
-                            console.log(elem);
-                        });
-                        $(selectField).append(_html);
-                    }
-                }
-            });
-        }
-
-        builCaptionlanguage('#subtitle-language-select');
-
         $container.on('click', '.add-subtitle-vtt', function (e) {
             e.preventDefault();
             addSubTitleVtt();
@@ -199,6 +175,57 @@ const videoSubtitleCapture = (services, datas, activeTab = false) => {
             $('.video-subtitle-item:last .number').html(countSubtitle);
             //setDiffTime();
         };
+
+
+        // Edit subtitle
+        var fieldvalue = '';
+        var ResValue = '';
+        var captionValue = '';
+        var captionLength = '';
+        var timeValue = '';
+
+        //Show default caption to edit
+        fieldvalue = $('#caption_' + $('#metaStructId').val()).val();
+        editCaptionByLanguage(fieldvalue);
+
+
+        $('#metaStructId').on('keyup change', function (e) {
+            fieldvalue = $('#caption_' + $(this).val()).val();
+            editCaptionByLanguage(fieldvalue);
+        });
+
+        $('.editing >p').click(function (e) {
+            $(this).next('.video-subtitle-item').toggleClass('active');
+            $(this).toggleClass('caption_active');
+        })
+
+        function editCaptionByLanguage(fieldvalue) {
+            $('.fields-wrapper').html('');
+            if (fieldvalue != '') {
+                ResValue = fieldvalue.split("WEBVTT\n\n");
+                captionValue = ResValue[1].split("\n\n");
+                captionLength = captionValue.length - 1;
+                var item = $('#default-item').html();
+                for (var i = 0; i < captionLength; i++) {
+                    console.log(captionValue[i]);
+                    timeValue = captionValue[i].split(" --> ");
+                    $('.fields-wrapper').append('<div class="item_' + i + ' editing"></div>')
+                    $('.fields-wrapper .item_' + i + '').append('<p>' + captionValue[i] + '</p>');
+                    $('.fields-wrapper .item_' + i + '').append(item);
+                    $('.item_' + i + ' .video-subtitle-item ').find('.startTime').val(timeValue[0]);
+                    timeValue = timeValue [1].split("\n")
+                    $('.item_' + i + ' .video-subtitle-item ').find('.endTime').val(timeValue[0]);
+                    if (timeValue[1] != '') {
+                        $('.item_' + i + ' .video-subtitle-item ').find('.captionText').val(timeValue[1]);
+                    }
+                }
+                console.log(captionValue);
+                console.log(captionValue.length - 1);
+            } else {
+                $('.fields-wrapper').append('<p> No caption for this language</p>');
+            }
+        }
+
 
         //Subtitle Request Tab
         $('#submit-subtitle-request').on('click', function (e) {

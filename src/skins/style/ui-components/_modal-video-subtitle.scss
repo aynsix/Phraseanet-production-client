@@ -23,6 +23,7 @@
     padding-bottom: 20px;
     position: relative;
     margin-bottom: 20px;
+    transition: 0.3s all;
     &:after {
       width: 100%;
       height: 1px;
@@ -32,6 +33,29 @@
       bottom: 0;
       left: 0;
     }
+  }
+  .editing {
+    .video-subtitle-item {
+      display: none;
+      &:after {
+        content: '\f078';
+        font-family: fontawesome;
+        position: absolute;
+        right: 20px;
+        top: 0;
+      }
+      &.active {
+        display: block;
+        &:after {
+          content: '\f077';
+          font-family: fontawesome;
+          position: absolute;
+          right: 20px;
+          top: 0;
+        }
+      }
+    }
+
   }
   .item-field {
     width: auto;
