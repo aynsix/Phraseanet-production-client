@@ -192,6 +192,10 @@ const videoSubtitleCapture = (services, datas, activeTab = false) => {
         $('#metaStructId').on('keyup change', function (e) {
             fieldvalue = $('#caption_' + $(this).val()).val();
             editCaptionByLanguage(fieldvalue);
+            $('.editing >p').click(function (e) {
+                $(this).next('.video-subtitle-item').toggleClass('active');
+                $(this).toggleClass('caption_active');
+            })
         });
 
         $('.editing >p').click(function (e) {
