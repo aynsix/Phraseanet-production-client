@@ -37,6 +37,12 @@
   .editing {
     .video-subtitle-item {
       display: none;
+      &.active {
+        display: block;
+      }
+    }
+    & > p {
+      color: #fff;
       &:after {
         content: '\f078';
         font-family: fontawesome;
@@ -44,7 +50,7 @@
         right: 20px;
         top: 0;
       }
-      &.active {
+      &.caption_active {
         display: block;
         &:after {
           content: '\f077';
