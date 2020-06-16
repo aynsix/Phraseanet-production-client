@@ -1,5 +1,5 @@
 import $ from 'jquery';
-import dialog from 'phraseanet-common/src/components/dialog';
+const humane = require('humane-js');
 
 const videoSubtitleCapture = (services, datas, activeTab = false) => {
     const {configService, localeService, appEvents} = services;
@@ -126,10 +126,12 @@ const videoSubtitleCapture = (services, datas, activeTab = false) => {
         $('#submit-subtitle').on('click', function (e) {
             e.preventDefault();
             try {
-                var allData = $('#video-subtitle-list').serializeArray();
+                let allData = $('#video-subtitle-list').serializeArray();
                 allData = JSON.parse(JSON.stringify(allData));
+                allData = JSON.parse(JSON.stringify(allData));
+                let metaStructId = $('#metaStructId').val();
 
-                var countSubtitle = $('.video-subtitle-item').length;
+                let countSubtitle = $('.video-subtitle-item').length;
                 if (allData) {
                     var i = 0;
                     var captionText = "WEBVTT\n\n";
@@ -139,14 +141,26 @@ const videoSubtitleCapture = (services, datas, activeTab = false) => {
                         if (i == (countSubtitle * 3) - 3) {
                             $('#record-vtt').val(captionText);
                             console.log(captionText);
-
-                            // put everyting on the form to send
-                            var captionData = $('#video-subtitle-data').serializeArray();
-                            captionData = JSON.parse(JSON.stringify(captionData));
-                            console.log(captionData);
+                            //send data
+                            $.ajax({
+                                type: 'POST',
+                                url: url + 'prod/tools/metadata/save/',
+                                dataType: 'json',
+                                data: {
+                                    databox_id: data.databoxId,
+                                    record_id: data.recordId,
+                                    meta_struct_id: metaStructId,
+                                    value: captionText
+                                },
+                                success: function success(data) {
+                                    if (!data.success) {
+                                        humane.error(localeService.t('prod:videoeditor:subtitletab:messsage:: error'));
+                                    } else {
+                                        humane.info(localeService.t('prod:videoeditor:subtitletab:messsage:: success'));
+                                    }
+                                }
+                            });
                         }
-
-
                     }
                     ;
                 }
