@@ -1,11 +1,24 @@
 import $ from 'jquery';
 const humane = require('humane-js');
+;
 
 const videoSubtitleCapture = (services, datas, activeTab = false) => {
     const {configService, localeService, appEvents} = services;
     const url = configService.get('baseUrl');
-    const initialize = (params) => {
+    const initialize = (params, userOptions) => {
         let {$container, data} = params;
+        var initialData = data;
+        var videoSource = "/embed/?url=/datafiles/" + initialData.databoxId + "/" + initialData.recordId + "/preview/%3Fetag";
+
+        function loadVideo() {
+            $('.video-subtitle-right .video-subtitle-wrapper').html('');
+            if (initialData.records[0].sources.length > 0) {
+                $('.video-subtitle-right .video-subtitle-wrapper').append("<iframe src=" + videoSource + " width='100%' scrolling='no' marginheight='0' frameborder='0' allowfullscreen='' height='420'></iframe>");
+            }else {
+                $('.video-subtitle-right .video-subtitle-wrapper').append("<img  src='/assets/common/images/icons/substitution/video_webm.png'>");
+            }
+        }
+        loadVideo();
 
         $container.on('click', '.add-subtitle-vtt', function (e) {
             e.preventDefault();
@@ -20,7 +33,7 @@ const videoSubtitleCapture = (services, datas, activeTab = false) => {
 
         // Set height of left block
         leftHeight = $('.video-subtitle-left-inner').closest('#tool-tabs').height();
-        $('.video-subtitle-left-inner').css('height', leftHeight - 230);
+        $('.video-subtitle-left-inner').css('height', leftHeight - 178);
         $('.video-request-left-inner').css('height', leftHeight);
 
 
@@ -30,7 +43,6 @@ const videoSubtitleCapture = (services, datas, activeTab = false) => {
             startVal = stringToseconde($(this).closest('.video-subtitle-item').find('.startTime').val());
             diffVal = millisecondeToTime(endVal - startVal);
             $(this).closest('.video-subtitle-item').find('.showForTime').val(diffVal);
-            setDefaultStartTime();
         });
         $('.startTime').on('keyup change', function (e) {
             setDefaultStartTime();
@@ -38,10 +50,8 @@ const videoSubtitleCapture = (services, datas, activeTab = false) => {
             endVal = stringToseconde($(this).closest('.video-subtitle-item').find('.endTime').val());
             diffVal = millisecondeToTime(endVal - startVal);
             $(this).closest('.video-subtitle-item').find('.showForTime').val(diffVal);
-            setDefaultStartTime();
         });
         function setDefaultStartTime(e) {
-
 
             var DefaultStartT = $('.video-subtitle-item:last .endTime').val();
             DefaultStartT = stringToseconde(DefaultStartT) + 1;
@@ -101,6 +111,17 @@ const videoSubtitleCapture = (services, datas, activeTab = false) => {
 
         $('#submit-subtitle').on('click', function (e) {
             e.preventDefault();
+            buildCaptionVtt('save');
+        });
+
+        $('#copy-subtitle').on('click', function (event) {
+            event.preventDefault();
+            buildCaptionVtt('copy');
+            /* $('#submit-subtitle').trigger('click');
+             return copyElContentClipboard('record-vtt');*/
+        });
+
+        function buildCaptionVtt(btn) {
             try {
                 let allData = $('#video-subtitle-list').serializeArray();
                 allData = JSON.parse(JSON.stringify(allData));
@@ -117,25 +138,31 @@ const videoSubtitleCapture = (services, datas, activeTab = false) => {
                         if (i == (countSubtitle * 3) - 3) {
                             $('#record-vtt').val(captionText);
                             console.log(captionText);
-                            //send data
-                            $.ajax({
-                                type: 'POST',
-                                url: url + 'prod/tools/metadata/save/',
-                                dataType: 'json',
-                                data: {
-                                    databox_id: data.databoxId,
-                                    record_id: data.recordId,
-                                    meta_struct_id: metaStructId,
-                                    value: captionText
-                                },
-                                success: function success(data) {
-                                    if (!data.success) {
-                                        humane.error(localeService.t('prod:videoeditor:subtitletab:messsage:: error'));
-                                    } else {
-                                        humane.info(localeService.t('prod:videoeditor:subtitletab:messsage:: success'));
+                            if (btn == 'save') {
+                                //send data
+                                $.ajax({
+                                    type: 'POST',
+                                    url: url + 'prod/tools/metadata/save/',
+                                    dataType: 'json',
+                                    data: {
+                                        databox_id: data.databoxId,
+                                        record_id: data.recordId,
+                                        meta_struct_id: metaStructId,
+                                        value: captionText
+                                    },
+                                    success: function success(data) {
+                                        if (!data.success) {
+                                            humane.error(localeService.t('prod:videoeditor:subtitletab:messsage:: error'));
+                                        } else {
+                                            humane.info(localeService.t('prod:videoeditor:subtitletab:messsage:: success'));
+                                            loadVideo();
+                                        }
                                     }
-                                }
-                            });
+                                });
+                            }
+                            if (btn == 'copy') {
+                                return copyElContentClipboard('record-vtt');
+                            }
                         }
                     }
                     ;
@@ -144,13 +171,7 @@ const videoSubtitleCapture = (services, datas, activeTab = false) => {
             } catch (err) {
                 return;
             }
-        });
-
-        $('#copy-subtitle').on('click', function (event) {
-            event.preventDefault();
-            $('#submit-subtitle').trigger('click');
-            return copyElContentClipboard('record-vtt');
-        });
+        }
 
         var copyElContentClipboard = function copyElContentClipboard(elId) {
             var copyEl = document.getElementById(elId);
@@ -166,7 +187,12 @@ const videoSubtitleCapture = (services, datas, activeTab = false) => {
 
         const addSubTitleVtt = () => {
             let countSubtitle = $('.video-subtitle-item').length;
-            setDefaultStartTime();
+            if($('.alert-error').length) {
+                $('.alert-error').remove();
+            }
+            if(countSubtitle > 1) {
+                setDefaultStartTime();
+            }
             let item = $('#default-item').html();
             $('.fields-wrapper').append(item);
             $('.video-subtitle-item:last .time').attr('pattern', '[0-9][0-9]:[0-9][0-9]:[0-9][0-9].[0-9]{3}$');
@@ -192,7 +218,7 @@ const videoSubtitleCapture = (services, datas, activeTab = false) => {
         $('#metaStructId').on('keyup change', function (e) {
             fieldvalue = $('#caption_' + $(this).val()).val();
             editCaptionByLanguage(fieldvalue);
-            $('.editing >p').click(function (e) {
+            $('.editing > .caption-label').click(function (e) {
                 $(this).next('.video-subtitle-item').toggleClass('active');
                 $(this).toggleClass('caption_active');
             })
@@ -213,9 +239,11 @@ const videoSubtitleCapture = (services, datas, activeTab = false) => {
                 for (var i = 0; i < captionLength; i++) {
                     console.log(captionValue[i]);
                     timeValue = captionValue[i].split(" --> ");
+                    timeValue = captionValue[i].split(" --> ");
                     $('.fields-wrapper').append('<div class="item_' + i + ' editing"></div>')
-                    $('.fields-wrapper .item_' + i + '').append('<p>' + captionValue[i] + '</p>');
+                    $('.fields-wrapper .item_' + i + '').append('<p class="caption-label">' + captionValue[i] + '</p>');
                     $('.fields-wrapper .item_' + i + '').append(item);
+                    $('.item_' + i + ' .video-subtitle-item ').find('.number').text(i + 1);
                     $('.item_' + i + ' .video-subtitle-item ').find('.startTime').val(timeValue[0]);
                     timeValue = timeValue [1].split("\n")
                     $('.item_' + i + ' .video-subtitle-item ').find('.endTime').val(timeValue[0]);
@@ -224,9 +252,9 @@ const videoSubtitleCapture = (services, datas, activeTab = false) => {
                     }
                 }
                 console.log(captionValue);
-                console.log(captionValue.length - 1);
             } else {
-                $('.fields-wrapper').append('<p> No caption for this language</p>');
+                var errorMsg = $('#no_caption').val();
+                $('.fields-wrapper').append('<p class="alert alert-error">'+errorMsg+'</p>');
             }
         }
 
@@ -245,6 +273,32 @@ const videoSubtitleCapture = (services, datas, activeTab = false) => {
         });
     }
 
+    /*    const render = (initData) => {
+     let record = initData.records[0];
+     if (record.type !== 'video') {
+     return;
+     }
+     options.frameRates = {};
+     options.ratios = {};
+     const coverUrl = '';
+     let generateSourcesTpl = (record) => {
+     let recordSources = [];
+     _.each(record.sources, (s, i) => {
+     recordSources.push(`<source src="${s.src}" type="${s.type}" data-frame-rate="${s.framerate}">`)
+     options.frameRates[s.src] = s.framerate;
+     options.ratios[s.src] = s.ratio;
+     });
+
+     return recordSources.join(' ');
+     };
+     let sources = generateSourcesTpl(record);
+     $('.video-subtitle-right .video-subtitle-wrapper').html('');
+     $('.video-subtitle-right .video-subtitle-wrapper').append(
+     `<video id="embed-video" class="thumb_video embed-resource video-js vjs-default-skin vjs-big-play-centered" data-ratio="{{ prevRatio }}" controls
+     preload="none" width="100%" height="100%" poster="${coverUrl}" data-setup='{"language":"${localeService.getLocale()}"}'>${sources}
+     <track kind="captions" src=${$('#record-vtt').val()} srclang="en" label="English" default>
+     </video>`);
+     };*/
 
     return {
         initialize

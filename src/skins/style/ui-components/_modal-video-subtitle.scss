@@ -15,7 +15,10 @@
   }
 
   .video-subtitle-wrapper {
-    height: 503px;
+    > div {
+      width: 100%;
+      height: 100%;
+    }
   }
 
   .video-subtitle-item {
@@ -27,12 +30,46 @@
     &:after {
       width: 100%;
       height: 1px;
-      background: #fff;
+      background: #7f7f7f;
       content: " ";
       position: absolute;
       bottom: 0;
       left: 0;
     }
+  }
+  .caption-label {
+    position: relative;
+    padding-bottom: 14px;
+    padding-top: 2px;
+    color: #fff;
+    &:after {
+      content: '\f078';
+      font-family: fontawesome;
+      position: absolute;
+      right: 20px;
+      top: 0;
+      color: #7f7f7f;;
+    }
+    &:before {
+      content: "";
+      background: #7f7f7f;
+      width: 100%;
+      height: 1px;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+    }
+
+    &.caption_active {
+      display: block;
+      &:after {
+        content: '\f077';
+      }
+      &:before {
+        content: none;
+      }
+    }
+
   }
   .editing {
     .video-subtitle-item {
@@ -41,34 +78,16 @@
         display: block;
       }
     }
-    & > p {
-      color: #fff;
-      &:after {
-        content: '\f078';
-        font-family: fontawesome;
-        position: absolute;
-        right: 20px;
-        top: 0;
-      }
-      &.caption_active {
-        display: block;
-        &:after {
-          content: '\f077';
-          font-family: fontawesome;
-          position: absolute;
-          right: 20px;
-          top: 0;
-        }
-      }
-    }
 
   }
   .item-field {
-    width: auto;
     margin-right: 10px;
     float: left;
+    width: 83px;
+    padding-right: 10px;
+    float: left;
     input[type="text"] {
-      width: 83px;
+      width: 100%;
     }
     &.caption-text {
       width: calc(100% - 42px);
@@ -97,6 +116,7 @@
   }
   .number {
     background: #5cb85c;
+    color: #ffffff;
     padding: 2px;
     float: left;
     margin-right: 12px;
@@ -105,11 +125,10 @@
     text-align: center;
   }
   .video-subtitle-left-button {
-    text-align: right;
+    text-align: left;
     padding: 5px 20px;
-    &.btn {
-      margin-right: 15px;
-      margin-bottom: 10px;
+    .btn {
+      margin-right: 5px;
     }
   }
 }
@@ -143,4 +162,7 @@
     height: 100%;
     width: 100%;
   }
+}
+#video-subtitle-data {
+  margin-bottom: 2px;
 }
