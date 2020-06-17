@@ -35,6 +35,7 @@ const videoSubtitleCapture = (services, datas, activeTab = false) => {
         leftHeight = $('.video-subtitle-left-inner').closest('#tool-tabs').height();
         $('.video-subtitle-left-inner').css('height', leftHeight - 178);
         $('.video-request-left-inner').css('height', leftHeight);
+        $('.video-subtitle-right iframe').css('height', leftHeight - 100);
 
 
         $('.endTime').on('keyup change', function (e) {
@@ -241,9 +242,9 @@ const videoSubtitleCapture = (services, datas, activeTab = false) => {
                     timeValue = captionValue[i].split(" --> ");
                     timeValue = captionValue[i].split(" --> ");
                     $('.fields-wrapper').append('<div class="item_' + i + ' editing"></div>')
-                    $('.fields-wrapper .item_' + i + '').append('<p class="caption-label">' + captionValue[i] + '</p>');
+                    $('.fields-wrapper .item_' + i + '').append('<p class="caption-label"><span class="number">'+i + 1 +'</span>' + captionValue[i] + '</p>');
                     $('.fields-wrapper .item_' + i + '').append(item);
-                    $('.item_' + i + ' .video-subtitle-item ').find('.number').text(i + 1);
+                    $('.item_' + i + ' .video-subtitle-item ').find('.number').remove();
                     $('.item_' + i + ' .video-subtitle-item ').find('.startTime').val(timeValue[0]);
                     timeValue = timeValue [1].split("\n")
                     $('.item_' + i + ' .video-subtitle-item ').find('.endTime').val(timeValue[0]);

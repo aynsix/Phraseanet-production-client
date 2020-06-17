@@ -117,7 +117,8 @@
   .number {
     background: #5cb85c;
     color: #ffffff;
-    padding: 2px;
+    padding: 4px 2px;
+    line-height: 1;
     float: left;
     margin-right: 12px;
     font-weight: bold;
@@ -130,6 +131,9 @@
     .btn {
       margin-right: 5px;
     }
+  }
+  .editing .item-field.caption-text {
+    margin-left: 0;
   }
 }
 #record-vtt {
@@ -148,6 +152,9 @@
 .video-subtitle-right {
   width: 50%;
   background: #000;
+}
+.video-subtitle-wrapper {
+  text-align: center;
 }
 
 .video-subtitle-request {
