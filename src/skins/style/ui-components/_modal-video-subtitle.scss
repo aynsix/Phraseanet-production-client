@@ -30,6 +30,9 @@
     font-weight: bold;
     min-width: 20px;
     text-align: center;
+    display: block;
+    width: 26px;
+    text-align: center;
   }
   .video-subtitle-item {
     padding-right: 50px;
@@ -91,11 +94,8 @@
         display: block;
       }
       .number {
-        display: block;
-        width: 26px;
-        text-align: center;
+        float: left;
       }
-
     }
 
   }
@@ -144,15 +144,14 @@
     margin-left: 0;
   }
   .duration {
-    float: right;
-    padding-right: 60px;
-    color: #2196f3;
+    display: none;
   }
   .start-label, .end-label {
     padding: 0 10px;
   }
   .text-label {
-    display: none;
+    padding-right: 60px;
+    color: #fff;
   }
 
 }

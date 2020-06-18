@@ -283,7 +283,7 @@ const videoSubtitleCapture = (services, datas, activeTab = false) => {
                     var startTimeLabel = timeValue[0];
                     timeValue = captionValue[i].split(" --> ");
                     $('.fields-wrapper').append('<div class="item_' + i + ' editing"></div>')
-                    $('.fields-wrapper .item_' + i + '').append('<p class="caption-label"><span class="number">' + captionNumber + '</span><span class="start-label"></span> --> <span class="end-label"></span><span class="duration"></span><br><span class="text-label"></span></p>');
+                    $('.fields-wrapper .item_' + i + '').append('<p class="caption-label"><span class="number">' + captionNumber + '</span><span class="start-label"></span> --> <span class="end-label"></span><span class="duration"></span><span class="text-label"></span></p>');
                     $('.fields-wrapper .item_' + i + '').append(item);
                     $('.item_' + i + ' .video-subtitle-item ').find('.number').remove();
 
@@ -304,8 +304,9 @@ const videoSubtitleCapture = (services, datas, activeTab = false) => {
                     $('.item_' + i + ' .video-subtitle-item ').find('.showForTime').val(diffVal);
 
                     //Re-build caption text
+                    var textTrimed =  timeValue[1] && timeValue[1].length > length ? timeValue[1].substring(0, 30) + '...' : timeValue[1];
                     if (timeValue[1] != '') {
-                        $('.item_' + i + ' .video-subtitle-item ').closest('.editing').find('.text-label').text(timeValue[1]);
+                        $('.item_' + i + ' .video-subtitle-item ').closest('.editing').find('.text-label').text(textTrimed);
                         $('.item_' + i + ' .video-subtitle-item ').find('.captionText').val(timeValue[1]);
                     }
                 }
