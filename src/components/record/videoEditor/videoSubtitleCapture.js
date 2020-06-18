@@ -13,12 +13,39 @@ const videoSubtitleCapture = (services, datas, activeTab = false) => {
         function loadVideo() {
             $('.video-subtitle-right .video-subtitle-wrapper').html('');
             if (initialData.records[0].sources.length > 0) {
-                $('.video-subtitle-right .video-subtitle-wrapper').append("<iframe src=" + videoSource + " width='100%' scrolling='no' marginheight='0' frameborder='0' allowfullscreen='' height='420'></iframe>");
+                var prevWidth = initialData.records[0].sources[0].width;
+                var prevHeight = initialData.records[0].sources[0].height;
+                var prevRatio = initialData.records[0].sources[0].ratio;
+                $('.video-subtitle-right .video-subtitle-wrapper').append("<iframe src=" + videoSource + " data-width="+ prevWidth +" data-height="+ prevHeight +" data-ratio="+ prevRatio +"  scrolling='no' marginheight='0' frameborder='0' allowfullscreen=''></iframe>");
+                resizeVideoPreview();
             }else {
                 $('.video-subtitle-right .video-subtitle-wrapper').append("<img  src='/assets/common/images/icons/substitution/video_webm.png'>");
             }
+
+        }
+        function resizeVideoPreview(KW) {
+
+            var $sel = $('.video-subtitle-wrapper');
+            var $Iframe = $('.video-subtitle-wrapper iframe');
+            // V is for "video" ; K is for "container" ; N is for "new"
+            var VW = $Iframe.data('width');
+            var VH = $Iframe.data('height');
+            var KW = $('.video-subtitle-left').width();
+            var KH = $('.video-subtitle-left-inner').closest('#tool-tabs').height() - 100;
+
+            var NW, NH;
+            if ((NH = VH / VW * (NW = KW)) > KH) {
+                // try to fit exact horizontally, adjust vertically
+                // too bad... new height overflows container height
+                NW = VW / VH * (NH = KH); // so fit exact vertically, adjust horizontally
+            }
+            //    (0, _jquery2.default)($Iframe).css('width', NW).css('height', NH);
+            $($Iframe).attr('width', NW).css('width', NW);
+            $($Iframe).attr('height', NH).css('height', NH);
         }
         loadVideo();
+        setTimeout(function(){ resizeVideoPreview() }, 2000);
+
 
         $container.on('click', '.add-subtitle-vtt', function (e) {
             e.preventDefault();
@@ -35,7 +62,7 @@ const videoSubtitleCapture = (services, datas, activeTab = false) => {
         leftHeight = $('.video-subtitle-left-inner').closest('#tool-tabs').height();
         $('.video-subtitle-left-inner').css('height', leftHeight - 178);
         $('.video-request-left-inner').css('height', leftHeight);
-        $('.video-subtitle-right iframe').css('height', leftHeight - 100);
+        $('.video-subtitle-right .video-subtitle-wrapper').css('height', leftHeight - 100);
 
 
         $('.endTime').on('keyup change', function (e) {
@@ -107,7 +134,11 @@ const videoSubtitleCapture = (services, datas, activeTab = false) => {
 
         $container.on('click', '.remove-item', function (e) {
             e.preventDefault();
-            $(this).closest('.video-subtitle-item').remove();
+            if ($(this).closest('.editing').length>0) {
+                $(this).closest('.editing').remove();
+            }else {
+                $(this).closest('.video-subtitle-item').remove();
+            }
         });
 
         $('#submit-subtitle').on('click', function (e) {
@@ -197,9 +228,14 @@ const videoSubtitleCapture = (services, datas, activeTab = false) => {
             let item = $('#default-item').html();
             $('.fields-wrapper').append(item);
             $('.video-subtitle-item:last .time').attr('pattern', '[0-9][0-9]:[0-9][0-9]:[0-9][0-9].[0-9]{3}$');
-            $('.video-subtitle-item:last .startTime').attr('name', 'startTime' + countSubtitle).addClass('startTime' + countSubtitle).val($('#defaultStartValue').val());
-            $('.video-subtitle-item:last .endTime').attr('name', 'endTime' + countSubtitle).addClass('endTime' + countSubtitle).val($('#defaultEndValue').val());
+            $('.video-subtitle-item:last .startTime').attr('name', 'startTime' + countSubtitle).addClass('startTime' + countSubtitle);
+            $('.video-subtitle-item:last .endTime').attr('name', 'endTime' + countSubtitle).addClass('endTime' + countSubtitle);
             $('.video-subtitle-item:last .number').html(countSubtitle);
+            if(countSubtitle > 1) {
+                $('.video-subtitle-item:last .startTime').val($('#defaultStartValue').val());
+                $('.video-subtitle-item:last .endTime').val($('#defaultEndValue').val());
+
+            }
             //setDiffTime();
         };
 
@@ -225,7 +261,7 @@ const videoSubtitleCapture = (services, datas, activeTab = false) => {
             })
         });
 
-        $('.editing >p').click(function (e) {
+        $('.editing > .caption-label').click(function (e) {
             $(this).next('.video-subtitle-item').toggleClass('active');
             $(this).toggleClass('caption_active');
         })
@@ -237,12 +273,13 @@ const videoSubtitleCapture = (services, datas, activeTab = false) => {
                 captionValue = ResValue[1].split("\n\n");
                 captionLength = captionValue.length - 1;
                 var item = $('#default-item').html();
+                var captionNumber ;
                 for (var i = 0; i < captionLength; i++) {
-                    console.log(captionValue[i]);
+                    captionNumber = i +1;
                     timeValue = captionValue[i].split(" --> ");
                     timeValue = captionValue[i].split(" --> ");
                     $('.fields-wrapper').append('<div class="item_' + i + ' editing"></div>')
-                    $('.fields-wrapper .item_' + i + '').append('<p class="caption-label"><span class="number">'+i + 1 +'</span>' + captionValue[i] + '</p>');
+                    $('.fields-wrapper .item_' + i + '').append('<p class="caption-label"><span class="number">'+ captionNumber +'</span>' + captionValue[i] + '</p>');
                     $('.fields-wrapper .item_' + i + '').append(item);
                     $('.item_' + i + ' .video-subtitle-item ').find('.number').remove();
                     $('.item_' + i + ' .video-subtitle-item ').find('.startTime').val(timeValue[0]);
@@ -252,7 +289,6 @@ const videoSubtitleCapture = (services, datas, activeTab = false) => {
                         $('.item_' + i + ' .video-subtitle-item ').find('.captionText').val(timeValue[1]);
                     }
                 }
-                console.log(captionValue);
             } else {
                 var errorMsg = $('#no_caption').val();
                 $('.fields-wrapper').append('<p class="alert alert-error">'+errorMsg+'</p>');

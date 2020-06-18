@@ -83,7 +83,7 @@
   .item-field {
     margin-right: 10px;
     float: left;
-    width: 83px;
+    width: 93px;
     padding-right: 10px;
     float: left;
     input[type="text"] {
@@ -155,6 +155,10 @@
 }
 .video-subtitle-wrapper {
   text-align: center;
+  display: flex;
+  align-content: center;
+  flex-wrap: wrap;
+  justify-content: center;
 }
 
 .video-subtitle-request {
@@ -172,4 +176,10 @@
 }
 #video-subtitle-data {
   margin-bottom: 2px;
+}
+.video-player {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
 }
