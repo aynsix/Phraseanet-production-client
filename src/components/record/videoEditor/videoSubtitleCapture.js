@@ -276,28 +276,45 @@ const videoSubtitleCapture = (services, datas, activeTab = false) => {
                 captionValue = ResValue[1].split("\n\n");
                 captionLength = captionValue.length - 1;
                 var item = $('#default-item').html();
-                var captionNumber ;
+                var captionNumber;
                 for (var i = 0; i < captionLength; i++) {
-                    captionNumber = i +1;
+                    captionNumber = i + 1;
                     timeValue = captionValue[i].split(" --> ");
+                    var startTimeLabel = timeValue[0];
                     timeValue = captionValue[i].split(" --> ");
                     $('.fields-wrapper').append('<div class="item_' + i + ' editing"></div>')
-                    $('.fields-wrapper .item_' + i + '').append('<p class="caption-label"><span class="number">'+ captionNumber +'</span>' + captionValue[i] + '</p>');
+                    $('.fields-wrapper .item_' + i + '').append('<p class="caption-label"><span class="number">' + captionNumber + '</span><span class="start-label"></span> --> <span class="end-label"></span><span class="duration"></span><br><span class="text-label"></span></p>');
                     $('.fields-wrapper .item_' + i + '').append(item);
                     $('.item_' + i + ' .video-subtitle-item ').find('.number').remove();
-                    $('.item_' + i + ' .video-subtitle-item ').find('.startTime').val(timeValue[0]);
+
+                    //Re-Build StartTime
+                    $('.item_' + i + ' .video-subtitle-item ').closest('.editing').find('.start-label').text(startTimeLabel);
+                    $('.item_' + i + ' .video-subtitle-item ').find('.startTime').val(startTimeLabel);
+
+                    startVal = stringToseconde(timeValue[0]);
+                    //Re-Build EndTime
                     timeValue = timeValue [1].split("\n")
+                    $('.item_' + i + ' .video-subtitle-item ').closest('.editing').find('.end-label').text(timeValue[0]);
                     $('.item_' + i + ' .video-subtitle-item ').find('.endTime').val(timeValue[0]);
+                    endVal = stringToseconde(timeValue[0]);
+
+                    //Re-build Duration
+                    diffVal = millisecondeToTime(endVal - startVal);
+                    $('.item_' + i + ' .video-subtitle-item ').closest('.editing').find('.duration').text(diffVal);
+                    $('.item_' + i + ' .video-subtitle-item ').find('.showForTime').val(diffVal);
+
+                    //Re-build caption text
                     if (timeValue[1] != '') {
+                        $('.item_' + i + ' .video-subtitle-item ').closest('.editing').find('.text-label').text(timeValue[1]);
                         $('.item_' + i + ' .video-subtitle-item ').find('.captionText').val(timeValue[1]);
                     }
                 }
+                setDiffTime();
             } else {
                 var errorMsg = $('#no_caption').val();
-                $('.fields-wrapper').append('<p class="alert alert-error">'+errorMsg+'</p>');
+                $('.fields-wrapper').append('<p class="alert alert-error">' + errorMsg + '</p>');
             }
         }
-
 
         //Subtitle Request Tab
         $('#submit-subtitle-request').on('click', function (e) {

@@ -20,7 +20,17 @@
       height: 100%;
     }
   }
-
+  .number {
+    background: #5cb85c;
+    color: #ffffff;
+    padding: 4px 2px;
+    line-height: 1;
+    float: left;
+    margin-right: 12px;
+    font-weight: bold;
+    min-width: 20px;
+    text-align: center;
+  }
   .video-subtitle-item {
     padding-right: 50px;
     padding-bottom: 20px;
@@ -36,6 +46,9 @@
       bottom: 0;
       left: 0;
     }
+
+
+
   }
   .caption-label {
     position: relative;
@@ -77,6 +90,12 @@
       &.active {
         display: block;
       }
+      .number {
+        display: block;
+        width: 26px;
+        text-align: center;
+      }
+
     }
 
   }
@@ -90,8 +109,7 @@
       width: 100%;
     }
     &.caption-text {
-      width: calc(100% - 42px);
-      margin-left: 42px;
+      width: 100%;
     }
   }
 
@@ -114,17 +132,7 @@
     padding: 5px 8px;
     float: right;
   }
-  .number {
-    background: #5cb85c;
-    color: #ffffff;
-    padding: 4px 2px;
-    line-height: 1;
-    float: left;
-    margin-right: 12px;
-    font-weight: bold;
-    min-width: 20px;
-    text-align: center;
-  }
+
   .video-subtitle-left-button {
     text-align: left;
     padding: 5px 20px;
@@ -135,6 +143,18 @@
   .editing .item-field.caption-text {
     margin-left: 0;
   }
+  .duration {
+    float: right;
+    padding-right: 60px;
+    color: #2196f3;
+  }
+  .start-label, .end-label {
+    padding: 0 10px;
+  }
+  .text-label {
+    display: none;
+  }
+
 }
 #record-vtt {
   position: absolute;
