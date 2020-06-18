@@ -16,7 +16,7 @@ const videoSubtitleCapture = (services, datas, activeTab = false) => {
                 var prevWidth = initialData.records[0].sources[0].width;
                 var prevHeight = initialData.records[0].sources[0].height;
                 var prevRatio = initialData.records[0].sources[0].ratio;
-                $('.video-subtitle-right .video-subtitle-wrapper').append("<iframe src=" + videoSource + " data-width="+ prevWidth +" data-height="+ prevHeight +" data-ratio="+ prevRatio +"  scrolling='no' marginheight='0' frameborder='0' allowfullscreen=''></iframe>");
+                $('.video-subtitle-right .video-subtitle-wrapper').append("<iframe class='video-player' src=" + videoSource + " data-width="+ prevWidth +" data-height="+ prevHeight +" data-ratio="+ prevRatio +"  scrolling='no' marginheight='0' frameborder='0' allowfullscreen=''></iframe>");
                 resizeVideoPreview();
             }else {
                 $('.video-subtitle-right .video-subtitle-wrapper').append("<img  src='/assets/common/images/icons/substitution/video_webm.png'>");
@@ -46,6 +46,9 @@ const videoSubtitleCapture = (services, datas, activeTab = false) => {
         loadVideo();
         setTimeout(function(){ resizeVideoPreview() }, 2000);
 
+        $('#subtitleEditortoggle').on('click', function (e) {
+            resizeVideoPreview();
+        });
 
         $container.on('click', '.add-subtitle-vtt', function (e) {
             e.preventDefault();
