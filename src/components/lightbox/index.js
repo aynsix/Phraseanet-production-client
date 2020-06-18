@@ -133,6 +133,17 @@ const lightbox = services => {
             _resizeLightbox();
         });
         _bind_keyboard();
+
+        //Move comments bloc under yes /no Button
+        if( $('.comment_button').length) {
+            if( $('#basket_infos .choices').length) {
+                $('.comment_button').insertAfter('#basket_infos .choices');
+            }else {
+                $('.comment_button').insertAfter('#basket_infos .user_infos');
+            }
+        }
+
+
     };
 
     function _resizeLightbox() {
