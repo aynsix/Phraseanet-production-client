@@ -133,6 +133,8 @@ const lightbox = services => {
             _resizeLightbox();
         });
         _bind_keyboard();
+
+
     };
 
     function _resizeLightbox() {
@@ -392,7 +394,7 @@ const lightbox = services => {
             // _download($(this).next('form[name=download_form]').find('input').val());
         });
 
-        $('.comment_button', options_container).bind('click', function () {
+        $('.comment_button').bind('click', function () {
             //				$(this).blur();
             if ($('.lightbox_container', container).hasClass('note_editing')) {
                 _hideNotes(container);
