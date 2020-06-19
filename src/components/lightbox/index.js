@@ -134,15 +134,6 @@ const lightbox = services => {
         });
         _bind_keyboard();
 
-        //Move comments bloc under yes /no Button
-        if( $('.comment_button').length) {
-            if( $('#basket_infos .choices').length) {
-                $('.comment_button').insertAfter('#basket_infos .choices');
-            }else {
-                $('.comment_button').insertAfter('#basket_infos .user_infos');
-            }
-        }
-
 
     };
 
@@ -403,7 +394,7 @@ const lightbox = services => {
             // _download($(this).next('form[name=download_form]').find('input').val());
         });
 
-        $('.comment_button', options_container).bind('click', function () {
+        $('.comment_button').bind('click', function () {
             //				$(this).blur();
             if ($('.lightbox_container', container).hasClass('note_editing')) {
                 _hideNotes(container);
