@@ -8,7 +8,7 @@ import {generateRandStr} from '../../utils/utils';
 import provider from '../provider';
 import leafletLocaleFr from './locales/fr';
 import merge from 'lodash.merge';
-require('mapbox.js/dist/mapbox.css');
+require('mapbox.js/theme/style.css');
 require('mapbox-gl/dist/mapbox-gl.css');
 require('./mapbox.css');
 require('leaflet-draw/dist/leaflet.draw.css');
