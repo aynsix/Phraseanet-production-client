@@ -1,6 +1,6 @@
 {
   "name": "phraseanet-production-client",
-  "version": "0.34.236-d",
+  "version": "0.34.240-d",
   "description": "Phraseanet frontend dependencies",
   "scripts": {
     "clean": "rimraf dist",
@@ -151,7 +151,7 @@
     "leaflet-draw": "^0.3.0",
     "lodash.merge": "^4.6.2",
     "mapbox": "^1.0.0-beta10",
-    "mapbox-gl": "^0.44.2",
+    "mapbox-gl": "^1.11.0",
     "mapbox-gl-circle": "^1.6.5",
     "mapbox.js": "^2.4.0",
     "nouislider": "^9.2.0",
