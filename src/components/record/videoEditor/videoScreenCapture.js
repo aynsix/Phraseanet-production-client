@@ -90,7 +90,7 @@ const videoScreenCapture = (services, datas, activeTab = false) => {
                     $(grid_item).addClass('grid-item').append($(grid_wrapper)).appendTo($gridContainer);
                     $('#videotools-spinner').addClass('hidden');
                 }
-                setTimeout(getScreenShot(),500);
+                setTimeout(getScreenShot, 1000);
             };
 
             $container.on('mouseup', '#thumb_camera_button', function () {
