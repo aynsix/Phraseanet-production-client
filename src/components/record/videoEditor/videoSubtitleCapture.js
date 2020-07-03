@@ -46,7 +46,7 @@ const videoSubtitleCapture = (services, datas, activeTab = false) => {
         loadVideo();
         setTimeout(function(){ resizeVideoPreview() }, 2000);
 
-        $('#subtitleEditortoggle').on('click', function (e) {
+        $('.subtitleEditortoggle').on('click', function (e) {
             resizeVideoPreview();
         });
 
