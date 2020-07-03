@@ -1,6 +1,10 @@
 {
   "name": "phraseanet-production-client",
+<<<<<<< HEAD
   "version": "0.34.242-d",
+=======
+  "version": "0.34.243-d",
+>>>>>>> Revert package.json
   "description": "Phraseanet frontend dependencies",
   "scripts": {
     "clean": "rimraf dist",
