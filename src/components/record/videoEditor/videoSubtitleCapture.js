@@ -222,8 +222,8 @@ const videoSubtitleCapture = (services, datas, activeTab = false) => {
 
         const addSubTitleVtt = () => {
             let countSubtitle = $('.video-subtitle-item').length;
-            if($('.alert-error').length) {
-                $('.alert-error').remove();
+            if($('.alert-info').length) {
+                $('.alert-info').remove();
             }
             if(countSubtitle > 1) {
                 setDefaultStartTime();
@@ -313,7 +313,7 @@ const videoSubtitleCapture = (services, datas, activeTab = false) => {
                 setDiffTime();
             } else {
                 var errorMsg = $('#no_caption').val();
-                $('.fields-wrapper').append('<p class="alert alert-error">' + errorMsg + '</p>');
+                $('.fields-wrapper').append('<p class="alert alert-info">' + errorMsg + '</p>');
             }
         }
 
