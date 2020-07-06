@@ -1,8 +1,10 @@
 import $ from 'jquery';
 require('jquery-ui');
+const humane = require('humane-js');
 import utils from 'phraseanet-common/src/components/utils';
 import download from './download';
 import pym from 'pym.js';
+
 
 const lightbox = services => {
     const { configService, localeService, appEvents } = services;
@@ -16,6 +18,7 @@ const lightbox = services => {
     let activeThumbnailFrame = false;
 
     const initialize = () => {
+
         $mainContainer = $('#mainContainer');
         _bodySize.y = $mainContainer.height();
         _bodySize.x = $mainContainer.width();
