@@ -215,6 +215,7 @@ const download = (services) => {
                     if (data.success) {
                         humane.info(data.message);
                         $dialog.close();
+                        setTimeout(hideHumane, 3000);
                     } else {
                         var alert = dialog.create(
                             services,
@@ -267,6 +268,9 @@ const download = (services) => {
             );
         });
 
+            function hideHumane() {
+                $('body').find('.humane').hide();
+            }
         $('#sendmail .sendmail_button').bind('click', function () {
             if(!validEmail($('input[name="destmail"]', $('#sendmail')).val(), dataConfig)) {
                 return false;
@@ -289,6 +293,7 @@ const download = (services) => {
             $('#sendmail form').submit();
             humane.info($('#export-send-mail-notif').val());
             $dialog.close();
+            setTimeout(hideHumane, 3000);
         });
 
         $('.datepicker', $dialog.getDomElement()).datepicker({
