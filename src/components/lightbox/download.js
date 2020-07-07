@@ -174,10 +174,11 @@ const download = (services) => {
                     dialog.create(services, options, 2).setContent(data.msg);
 
                     if (!data.error) {
-                        humane.info(data.msg);
+                        showHumane(data.msg);
+
                         $dialog.close();
                     } else {
-                        humane.error(data.msg);
+                        alert(data.msg);
                     }
 
                     return;
@@ -213,9 +214,8 @@ const download = (services) => {
                     $('#ftp .ftp_button_loader').hide();
 
                     if (data.success) {
-                        humane.info(data.message);
+                        showHumane(data.message);
                         $dialog.close();
-                        setTimeout(hideHumane, 3000);
                     } else {
                         var alert = dialog.create(
                             services,
@@ -268,8 +268,13 @@ const download = (services) => {
             );
         });
 
+            function showHumane(data) {
+                $('body').append('<div class="humane humane-libnotify-info">Email sending request submitted </div>');
+                $('body').find('.humane-libnotify-info').html(data);
+                setTimeout(hideHumane, 3000);
+            }
             function hideHumane() {
-                $('body').find('.humane').hide();
+                $('body').find('.humane').remove();
             }
         $('#sendmail .sendmail_button').bind('click', function () {
             if(!validEmail($('input[name="destmail"]', $('#sendmail')).val(), dataConfig)) {
@@ -291,9 +296,9 @@ const download = (services) => {
             }
 
             $('#sendmail form').submit();
-            humane.info($('#export-send-mail-notif').val());
+            showHumane($('#export-send-mail-notif').val());
             $dialog.close();
-            setTimeout(hideHumane, 3000);
+
         });
 
         $('.datepicker', $dialog.getDomElement()).datepicker({
