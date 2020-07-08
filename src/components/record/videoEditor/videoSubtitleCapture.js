@@ -16,13 +16,14 @@ const videoSubtitleCapture = (services, datas, activeTab = false) => {
                 var prevWidth = initialData.records[0].sources[0].width;
                 var prevHeight = initialData.records[0].sources[0].height;
                 var prevRatio = initialData.records[0].sources[0].ratio;
-                $('.video-subtitle-right .video-subtitle-wrapper').append("<iframe class='video-player' src=" + videoSource + " data-width="+ prevWidth +" data-height="+ prevHeight +" data-ratio="+ prevRatio +"  scrolling='no' marginheight='0' frameborder='0' allowfullscreen=''></iframe>");
+                $('.video-subtitle-right .video-subtitle-wrapper').append("<iframe class='video-player' src=" + videoSource + " data-width=" + prevWidth + " data-height=" + prevHeight + " data-ratio=" + prevRatio + "  scrolling='no' marginheight='0' frameborder='0' allowfullscreen=''></iframe>");
                 resizeVideoPreview();
-            }else {
+            } else {
                 $('.video-subtitle-right .video-subtitle-wrapper').append("<img  src='/assets/common/images/icons/substitution/video_webm.png'>");
             }
 
         }
+
         function resizeVideoPreview(KW) {
 
             var $sel = $('.video-subtitle-wrapper');
@@ -43,8 +44,11 @@ const videoSubtitleCapture = (services, datas, activeTab = false) => {
             $($Iframe).attr('width', NW).css('width', NW);
             $($Iframe).attr('height', NH).css('height', NH);
         }
+
         loadVideo();
-        setTimeout(function(){ resizeVideoPreview() }, 2000);
+        setTimeout(function () {
+            resizeVideoPreview()
+        }, 2000);
 
         $('.subtitleEditortoggle').on('click', function (e) {
             resizeVideoPreview();
@@ -137,9 +141,9 @@ const videoSubtitleCapture = (services, datas, activeTab = false) => {
 
         $container.on('click', '.remove-item', function (e) {
             e.preventDefault();
-            if ($(this).closest('.editing').length>0) {
+            if ($(this).closest('.editing').length > 0) {
                 $(this).closest('.editing').remove();
-            }else {
+            } else {
                 $(this).closest('.video-subtitle-item').remove();
             }
         });
@@ -152,8 +156,6 @@ const videoSubtitleCapture = (services, datas, activeTab = false) => {
         $('#copy-subtitle').on('click', function (event) {
             event.preventDefault();
             buildCaptionVtt('copy');
-            /* $('#submit-subtitle').trigger('click');
-             return copyElContentClipboard('record-vtt');*/
         });
 
         function buildCaptionVtt(btn) {
@@ -166,9 +168,11 @@ const videoSubtitleCapture = (services, datas, activeTab = false) => {
                 let countSubtitle = $('.video-subtitle-item').length;
                 if (allData) {
                     var i = 0;
-                    var captionText = "WEBVTT\n\n";
+                    var j = 0;
+                    var captionText = "WEBVTT - with cue identifier\n\n";
                     while (i <= countSubtitle * 3) {
-                        captionText += allData[i].value + " --> " + allData[i + 1].value + "\n" + allData[i + 2].value + "\n\n";
+                        j= j +1;
+                        captionText += j + "\n" + allData[i].value + " --> " + allData[i + 1].value + "\n" + allData[i + 2].value + "\n\n";
                         i = i + 3;
                         if (i == (countSubtitle * 3) - 3) {
                             $('#record-vtt').val(captionText);
@@ -222,10 +226,10 @@ const videoSubtitleCapture = (services, datas, activeTab = false) => {
 
         const addSubTitleVtt = () => {
             let countSubtitle = $('.video-subtitle-item').length;
-            if($('.alert-wrapper').length) {
+            if ($('.alert-wrapper').length) {
                 $('.alert-wrapper').remove();
             }
-            if(countSubtitle > 1) {
+            if (countSubtitle > 1) {
                 setDefaultStartTime();
             }
             let item = $('#default-item').html();
@@ -234,7 +238,7 @@ const videoSubtitleCapture = (services, datas, activeTab = false) => {
             $('.video-subtitle-item:last .startTime').attr('name', 'startTime' + countSubtitle).addClass('startTime' + countSubtitle);
             $('.video-subtitle-item:last .endTime').attr('name', 'endTime' + countSubtitle).addClass('endTime' + countSubtitle);
             $('.video-subtitle-item:last .number').html(countSubtitle);
-            if(countSubtitle > 1) {
+            if (countSubtitle > 1) {
                 $('.video-subtitle-item:last .startTime').val($('#defaultStartValue').val());
                 $('.video-subtitle-item:last .endTime').val($('#defaultEndValue').val());
 
@@ -271,45 +275,111 @@ const videoSubtitleCapture = (services, datas, activeTab = false) => {
 
         function editCaptionByLanguage(fieldvalue) {
             $('.fields-wrapper').html('');
+            var item = $('#default-item').html();
+
             if (fieldvalue != '') {
-                ResValue = fieldvalue.split("WEBVTT\n\n");
-                captionValue = ResValue[1].split("\n\n");
-                captionLength = captionValue.length - 1;
-                var item = $('#default-item').html();
-                var captionNumber;
-                for (var i = 0; i < captionLength; i++) {
-                    captionNumber = i + 1;
-                    timeValue = captionValue[i].split(" --> ");
-                    var startTimeLabel = timeValue[0];
-                    timeValue = captionValue[i].split(" --> ");
-                    $('.fields-wrapper').append('<div class="item_' + i + ' editing"></div>')
-                    $('.fields-wrapper .item_' + i + '').append('<p class="caption-label"><span class="number">' + captionNumber + '</span><span class="start-label"></span> --> <span class="end-label"></span><span class="duration"></span><span class="text-label"></span></p>');
-                    $('.fields-wrapper .item_' + i + '').append(item);
-                    $('.item_' + i + ' .video-subtitle-item ').find('.number').remove();
+                var withCueId = false;
+                //var fieldType = fieldvalue.split("WEBVTT");
+                var fieldType = fieldvalue.split("\n\n");
+                if (fieldType[0] === 'WEBVTT - with cue identifier') {
+                    // with cue
+                    ResValue = fieldvalue.split("WEBVTT - with cue identifier\n\n");
+                    captionValue = ResValue[1].split("\n\n");
+                    captionLength = captionValue.length;
+                    console.log(captionValue);
+                    for (var i = 0; i < captionLength - 1; i++) {
 
-                    //Re-Build StartTime
-                    $('.item_' + i + ' .video-subtitle-item ').closest('.editing').find('.start-label').text(startTimeLabel);
-                    $('.item_' + i + ' .video-subtitle-item ').find('.startTime').val(startTimeLabel);
+                        // Regex blank line
+                        var ResValueItem = captionValue[i].replace(/\n\r/g, "\n")
+                            .replace(/\r/g, "\n")
+                            .split(/\n{2,}/g);
 
-                    startVal = stringToseconde(timeValue[0]);
-                    //Re-Build EndTime
-                    timeValue = timeValue [1].split("\n")
-                    $('.item_' + i + ' .video-subtitle-item ').closest('.editing').find('.end-label').text(timeValue[0]);
-                    $('.item_' + i + ' .video-subtitle-item ').find('.endTime').val(timeValue[0]);
-                    endVal = stringToseconde(timeValue[0]);
+                        var captionValueItem = ResValueItem[0].split("\n");
+                        var captionNumber = captionValueItem[0];
+                        var timing = captionValueItem[1];
+                        var text1 = captionValueItem.slice(2);
+                        if (text1.length > 1) {
+                            var text = text1.join('\n');
+                        } else {
+                            var text = text1;
+                        }
 
-                    //Re-build Duration
-                    diffVal = millisecondeToTime(endVal - startVal);
-                    $('.item_' + i + ' .video-subtitle-item ').closest('.editing').find('.duration').text(diffVal);
-                    $('.item_' + i + ' .video-subtitle-item ').find('.showForTime').val(diffVal);
+                        var timeValue = timing.split(" --> ");
+                        var startTimeLabel = timeValue[0];
+                        $('.fields-wrapper').append('<div class="item_' + i + ' editing"></div>')
+                        $('.fields-wrapper .item_' + i + '').append('<p class="caption-label"><span class="number">' + captionNumber + '</span><span class="start-label"></span> --> <span class="end-label"></span><span class="duration"></span><span class="text-label"></span></p>');
+                        $('.fields-wrapper .item_' + i + '').append(item);
+                        $('.item_' + i + ' .video-subtitle-item ').find('.number').remove();
 
-                    //Re-build caption text
-                    var textTrimed =  timeValue[1] && timeValue[1].length > length ? timeValue[1].substring(0, 30) + '...' : timeValue[1];
-                    if (timeValue[1] != '') {
-                        $('.item_' + i + ' .video-subtitle-item ').closest('.editing').find('.text-label').text(textTrimed);
-                        $('.item_' + i + ' .video-subtitle-item ').find('.captionText').val(timeValue[1]);
+                        //Re-Build StartTime
+                        $('.item_' + i + ' .video-subtitle-item ').closest('.editing').find('.start-label').text(startTimeLabel);
+                        $('.item_' + i + ' .video-subtitle-item ').find('.startTime').val(startTimeLabel);
+
+                        startVal = stringToseconde(timeValue[0]);
+                        //Re-Build EndTime
+                        timeValue = timeValue [1].split("\n")
+                        $('.item_' + i + ' .video-subtitle-item ').closest('.editing').find('.end-label').text(timeValue[0]);
+                        $('.item_' + i + ' .video-subtitle-item ').find('.endTime').val(timeValue[0]);
+                        endVal = stringToseconde(timeValue[0]);
+
+                        //Re-build Duration
+                        diffVal = millisecondeToTime(endVal - startVal);
+                        $('.item_' + i + ' .video-subtitle-item ').closest('.editing').find('.duration').text(diffVal);
+                        $('.item_' + i + ' .video-subtitle-item ').find('.showForTime').val(diffVal);
+
+                        //Re-build caption text
+                        var textTrimed = text && text.length > length ? text.substring(0, 30) + '...' : text;
+                        if (timeValue[1] != '') {
+                            $('.item_' + i + ' .video-subtitle-item ').closest('.editing').find('.text-label').text(textTrimed);
+                            $('.item_' + i + ' .video-subtitle-item ').find('.captionText').val(text);
+                        }
+                        //end with cue number
+                    }
+
+                } else {
+                    ResValue = fieldvalue.split("WEBVTT\n\n");
+                    captionValue = ResValue[1].split("\n\n");
+                    captionLength = captionValue.length - 1;
+
+                    var captionNumber;
+                    for (var i = 0; i < captionLength; i++) {
+                        captionNumber = i + 1;
+                        timeValue = captionValue[i].split(" --> ");
+                        var startTimeLabel = timeValue[0];
+                        $('.fields-wrapper').append('<div class="item_' + i + ' editing"></div>')
+                        $('.fields-wrapper .item_' + i + '').append('<p class="caption-label"><span class="number">' + captionNumber + '</span><span class="start-label"></span> --> <span class="end-label"></span><span class="duration"></span><span class="text-label"></span></p>');
+                        $('.fields-wrapper .item_' + i + '').append(item);
+                        $('.item_' + i + ' .video-subtitle-item ').find('.number').remove();
+
+                        //Re-Build StartTime
+                        $('.item_' + i + ' .video-subtitle-item ').closest('.editing').find('.start-label').text(startTimeLabel);
+                        $('.item_' + i + ' .video-subtitle-item ').find('.startTime').val(startTimeLabel);
+
+                        startVal = stringToseconde(timeValue[0]);
+                        //Re-Build EndTime
+                        timeValue = timeValue [1].split("\n")
+                        $('.item_' + i + ' .video-subtitle-item ').closest('.editing').find('.end-label').text(timeValue[0]);
+                        $('.item_' + i + ' .video-subtitle-item ').find('.endTime').val(timeValue[0]);
+                        endVal = stringToseconde(timeValue[0]);
+
+                        //Re-build Duration
+                        diffVal = millisecondeToTime(endVal - startVal);
+                        $('.item_' + i + ' .video-subtitle-item ').closest('.editing').find('.duration').text(diffVal);
+                        $('.item_' + i + ' .video-subtitle-item ').find('.showForTime').val(diffVal);
+
+                        //Re-build caption text
+                        var textTrimed = timeValue[1] && timeValue[1].length > length ? timeValue[1].substring(0, 30) + '...' : timeValue[1];
+                        if (timeValue[1] != '') {
+                            var text = timeValue.slice(1);
+                            text = text.join('\n');
+                            $('.item_' + i + ' .video-subtitle-item ').closest('.editing').find('.text-label').text(textTrimed);
+                            $('.item_' + i + ' .video-subtitle-item ').find('.captionText').val(text);
+                        }
+
                     }
                 }
+
+
                 setDiffTime();
             } else {
                 var errorMsg = $('#no_caption').val();
