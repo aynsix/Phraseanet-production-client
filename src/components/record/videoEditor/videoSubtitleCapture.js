@@ -156,8 +156,6 @@ const videoSubtitleCapture = (services, datas, activeTab = false) => {
         $('#copy-subtitle').on('click', function (event) {
             event.preventDefault();
             buildCaptionVtt('copy');
-            /* $('#submit-subtitle').trigger('click');
-             return copyElContentClipboard('record-vtt');*/
         });
 
         function buildCaptionVtt(btn) {
@@ -170,9 +168,11 @@ const videoSubtitleCapture = (services, datas, activeTab = false) => {
                 let countSubtitle = $('.video-subtitle-item').length;
                 if (allData) {
                     var i = 0;
-                    var captionText = "WEBVTT\n\n";
+                    var j = 0;
+                    var captionText = "WEBVTT - with cue identifier\n\n";
                     while (i <= countSubtitle * 3) {
-                        captionText += allData[i].value + " --> " + allData[i + 1].value + "\n" + allData[i + 2].value + "\n\n";
+                        j= j +1;
+                        captionText += j + "\n" + allData[i].value + " --> " + allData[i + 1].value + "\n" + allData[i + 2].value + "\n\n";
                         i = i + 3;
                         if (i == (countSubtitle * 3) - 3) {
                             $('#record-vtt').val(captionText);
@@ -279,9 +279,9 @@ const videoSubtitleCapture = (services, datas, activeTab = false) => {
 
             if (fieldvalue != '') {
                 var withCueId = false;
-                var fieldType = fieldvalue.split("WEBVTT");
-                fieldType = fieldType[1].split("\n\n");
-                if (fieldType[0] === ' - with cue identifier') {
+                //var fieldType = fieldvalue.split("WEBVTT");
+                var fieldType = fieldvalue.split("\n\n");
+                if (fieldType[0] === 'WEBVTT - with cue identifier') {
                     // with cue
                     ResValue = fieldvalue.split("WEBVTT - with cue identifier\n\n");
                     captionValue = ResValue[1].split("\n\n");
