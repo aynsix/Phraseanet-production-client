@@ -218,35 +218,38 @@ const lightbox = services => {
             var cancelKey = false;
             var el;
             var id;
-            switch (event.keyCode) {
-                case 39:
-                    _getNext();
-                    cancelKey = true;
-                    break;
-                case 37:
-                    _getPrev();
-                    cancelKey = true;
-                    break;
-                case 32:
-                    var bool = !$(document).data('slideshow');
-                    _slideshow(bool);
-                    break;
-                case 38:
-                    el = $('#sc_container .basket_element.selected');
-                    if (el.length === 1) {
-                        id = el.attr('id').split('_').pop();
-                        _setAgreement(event, el, id, 1);
-                    }
-                    break;
-                case 40:
-                    el = $('#sc_container .basket_element.selected');
-                    if (el.length === 1) {
-                        id = el.attr('id').split('_').pop();
-                        _setAgreement(event, el, id, -1);
-                    }
-                    break;
-                default:
-                    break;
+
+            if($('body').hasClass('dialog-open') ==false) {
+                switch (event.keyCode) {
+                    case 39:
+                        _getNext();
+                        cancelKey = true;
+                        break;
+                    case 37:
+                        _getPrev();
+                        cancelKey = true;
+                        break;
+                    case 32:
+                        var bool = !$(document).data('slideshow');
+                        _slideshow(bool);
+                        break;
+                    case 38:
+                        el = $('#sc_container .basket_element.selected');
+                        if (el.length === 1) {
+                            id = el.attr('id').split('_').pop();
+                            _setAgreement(event, el, id, 1);
+                        }
+                        break;
+                    case 40:
+                        el = $('#sc_container .basket_element.selected');
+                        if (el.length === 1) {
+                            id = el.attr('id').split('_').pop();
+                            _setAgreement(event, el, id, -1);
+                        }
+                        break;
+                    default:
+                        break;
+                }
             }
 
             if (cancelKey) {
