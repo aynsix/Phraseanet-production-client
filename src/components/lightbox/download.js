@@ -15,9 +15,14 @@ const download = (services) => {
         })
     };
     const openModal = (datas) => {
+        $('body').addClass('dialog-open');
         var $dialog = dialog.create(services, {
             size: 'Medium',
-            title: localeService.t('export')
+            title: localeService.t('export'),
+        });
+
+        $('#DIALOG1').on('dialogclose', function(event) {
+            $('body').removeClass('dialog-open');
         });
 
         $.ajax({
