@@ -171,6 +171,10 @@
 .video-subtitle-right {
   width: 50%;
   background: #000;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: center;
 }
 .video-subtitle-wrapper {
   text-align: center;

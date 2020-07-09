@@ -24,14 +24,14 @@ const videoSubtitleCapture = (services, datas, activeTab = false) => {
 
         }
 
-        function resizeVideoPreview(KW) {
+        function resizeVideoPreview() {
 
             var $sel = $('.video-subtitle-wrapper');
             var $Iframe = $('.video-subtitle-wrapper iframe');
             // V is for "video" ; K is for "container" ; N is for "new"
             var VW = $Iframe.data('width');
             var VH = $Iframe.data('height');
-            var KW = $('.video-subtitle-left').width();
+            var KW = $('#prod-tool-box').width() / 2;
             var KH = $('.video-subtitle-left-inner').closest('#tool-tabs').height() - 100;
 
             var NW, NH;
