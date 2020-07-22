@@ -1,8 +1,10 @@
 import $ from 'jquery';
 require('jquery-ui');
+const humane = require('humane-js');
 import utils from 'phraseanet-common/src/components/utils';
 import download from './download';
 import pym from 'pym.js';
+
 
 const lightbox = services => {
     const { configService, localeService, appEvents } = services;
@@ -16,6 +18,7 @@ const lightbox = services => {
     let activeThumbnailFrame = false;
 
     const initialize = () => {
+
         $mainContainer = $('#mainContainer');
         _bodySize.y = $mainContainer.height();
         _bodySize.x = $mainContainer.width();
@@ -133,6 +136,8 @@ const lightbox = services => {
             _resizeLightbox();
         });
         _bind_keyboard();
+
+
     };
 
     function _resizeLightbox() {
@@ -213,35 +218,38 @@ const lightbox = services => {
             var cancelKey = false;
             var el;
             var id;
-            switch (event.keyCode) {
-                case 39:
-                    _getNext();
-                    cancelKey = true;
-                    break;
-                case 37:
-                    _getPrev();
-                    cancelKey = true;
-                    break;
-                case 32:
-                    var bool = !$(document).data('slideshow');
-                    _slideshow(bool);
-                    break;
-                case 38:
-                    el = $('#sc_container .basket_element.selected');
-                    if (el.length === 1) {
-                        id = el.attr('id').split('_').pop();
-                        _setAgreement(event, el, id, 1);
-                    }
-                    break;
-                case 40:
-                    el = $('#sc_container .basket_element.selected');
-                    if (el.length === 1) {
-                        id = el.attr('id').split('_').pop();
-                        _setAgreement(event, el, id, -1);
-                    }
-                    break;
-                default:
-                    break;
+
+            if($('body').hasClass('dialog-open') ==false) {
+                switch (event.keyCode) {
+                    case 39:
+                        _getNext();
+                        cancelKey = true;
+                        break;
+                    case 37:
+                        _getPrev();
+                        cancelKey = true;
+                        break;
+                    case 32:
+                        var bool = !$(document).data('slideshow');
+                        _slideshow(bool);
+                        break;
+                    case 38:
+                        el = $('#sc_container .basket_element.selected');
+                        if (el.length === 1) {
+                            id = el.attr('id').split('_').pop();
+                            _setAgreement(event, el, id, 1);
+                        }
+                        break;
+                    case 40:
+                        el = $('#sc_container .basket_element.selected');
+                        if (el.length === 1) {
+                            id = el.attr('id').split('_').pop();
+                            _setAgreement(event, el, id, -1);
+                        }
+                        break;
+                    default:
+                        break;
+                }
             }
 
             if (cancelKey) {
@@ -392,7 +400,7 @@ const lightbox = services => {
             // _download($(this).next('form[name=download_form]').find('input').val());
         });
 
-        $('.comment_button', options_container).bind('click', function () {
+        $('.comment_button').bind('click', function () {
             //				$(this).blur();
             if ($('.lightbox_container', container).hasClass('note_editing')) {
                 _hideNotes(container);

@@ -8,6 +8,7 @@ import mainMenu from './../components/mainMenu';
 import merge from 'lodash.merge';
 require('phraseanet-common/src/components/tooltip');
 require('phraseanet-common/src/components/vendors/contextMenu');
+const humane = require('humane-js');
 
 class Bootstrap {
     app;
@@ -64,6 +65,11 @@ class Bootstrap {
             if (isReleasable !== null) {
                 this.appLightbox.setReleasable(isReleasable);
             }
+
+            humane.infoLarge = humane.spawn({addnCls: 'humane-libnotify-info humane-large', timeout: 5000});
+            humane.info = humane.spawn({addnCls: 'humane-libnotify-info', timeout: 1000});
+            humane.error = humane.spawn({addnCls: 'humane-libnotify-error', timeout: 1000});
+            humane.forceNew = true;
         });
 
     }
