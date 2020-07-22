@@ -19,10 +19,10 @@ const recordVideoEditorModal = (services, datas, activeTab = false) => {
         $(document).on('click', '.video-tools-record-action', function (event) {
             event.preventDefault();
             var $el = $(event.currentTarget);
-            var test = $el.data("test");
+            var idLst = $el.data("idlst");
             var datas = {}
             var key = "lst";
-            datas[key] = test;
+            datas[key] = idLst;
             openModal(datas, activeTab);
         });
     };
