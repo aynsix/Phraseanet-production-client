@@ -53,9 +53,12 @@ const provider = (services) => {
                     };
                     isValid = true;
                 }
+
+
+
                 // set default values:
                 defaultPosition = provider['default-position'];
-                defaultZoom = provider['default-zoom'] || 2;
+                defaultZoom = $('#map-zoom-from-setting').val()!=''? $('#map-zoom-from-setting').val() :  provider['default-zoom'] || 2;
                 markerDefaultZoom = provider['marker-default-zoom'] || 12;
                 defaultMapProvider = provider['map-provider'] || "mapboxWebGL";
                 if (provider['map-layers'] && provider['map-layers'].length > 0) {

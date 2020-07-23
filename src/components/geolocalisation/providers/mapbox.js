@@ -307,6 +307,7 @@ const leafletMap = (services) => {
                 if (shouldUpdateZoom) {
                     currentZoomLevel = map.getZoom();
                 }
+                $('#map-zoom-to-setting').val(map.getZoom());
             });
 
             map.on('remove', function () {
