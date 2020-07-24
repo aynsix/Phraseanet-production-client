@@ -118,7 +118,6 @@ const searchForm = (services) => {
             if (preferences.hasOwnProperty(prefKey)) {
                 searchPreferences[prefKey] = preferences[prefKey];
                 user.setPref(prefKey, JSON.stringify(preferences[prefKey]));
-                console.log('ato');
             }
         }
     }

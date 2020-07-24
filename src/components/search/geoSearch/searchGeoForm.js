@@ -58,6 +58,21 @@ const searchGeoForm = (services) => {
                     );
                     $('#map-zoom-from-setting').val(parseFloat($('#map-zoom-to-setting').val()));
                 }
+                if($('#map-position-to-setting').val()!= '') {
+                    var centerRes = $('#map-position-to-setting').val();
+                    centerRes = centerRes.split('[');
+                    centerRes = centerRes[1].split(']');
+                    centerRes = centerRes[0].split(',');
+
+                    var lng = centerRes[0].split('"');
+                    lng= lng[1];
+                    var lat = centerRes[1].split('"');
+                    lat= lat[1];
+                    var res = [lng, lat];
+                    savePreferences(
+                        { map_position: res });
+                    $('#map-position-from-setting').val('["'+lng+'","'+lat +'"]');
+                }
             });
     }
 
@@ -86,7 +101,8 @@ const searchGeoForm = (services) => {
             obj['center'] = circleObj.getCenter();
             obj['radius'] = circleObj.getRadius();
             return obj;
-        })
+        });
+
         savePreferences({drawnItems: circleObjCollection});
     }
 

@@ -42,7 +42,6 @@ const preferences = services => {
             );
         });
 
-
         $container.on('change', '.preferences-options-use-truncation', event => {
             let $el = $(event.currentTarget);
             event.preventDefault();
