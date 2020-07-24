@@ -71,7 +71,7 @@ const searchGeoForm = (services) => {
                     var res = [lng, lat];
                     savePreferences(
                         { map_position: res });
-                    $('#map-position-from-setting').val('["'+lng+'","'+lat +'"]');
+                    $('#map-position-from-setting').val('["' + lng + '","' +  lat + '"]');
                 }
             });
     }

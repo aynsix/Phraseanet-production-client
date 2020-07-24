@@ -313,9 +313,9 @@ const leafletMap = (services) => {
             map.on('dragend', function () {
                 var LngLat = map.getCenter();
                 var arr= [];
-                arr.push(String(LngLat['lng']));
                 arr.push(String(LngLat['lat']));
-               $('#map-position-to-setting').val('["'+LngLat['lng']+'","'+LngLat['lat'] +'"]');
+                arr.push(String(LngLat['lng']));
+               $('#map-position-to-setting').val('["'+LngLat['lat']+'","'+LngLat['lng'] +'"]');
             });
 
             map.on('remove', function () {
