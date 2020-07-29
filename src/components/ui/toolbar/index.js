@@ -114,8 +114,7 @@ const toolbar = (services) => {
             panel.css('maxHeight', '');
         }
     }
-
-    const _triggerModal = (event, actionFn) => {
+    const _triggerModal = (event, actionFn, nodocselected= true) => {
         event.preventDefault();
         const $el = $(event.currentTarget);
         const selectionSource = $el.data('selection-source');
@@ -127,24 +126,11 @@ const toolbar = (services) => {
         if (params !== false) {
             return actionFn.apply(null, [params]);
         } else {
-            alert(localeService.t('nodocselected'));
+            if (nodocselected != false) {
+                alert(localeService.t('nodocselected'));
+            }
         }
     };
-    const _triggerModal_2 = (event, actionFn) => {
-        event.preventDefault();
-        const $el = $(event.currentTarget);
-        const selectionSource = $el.data('selection-source');
-
-        let selection = _getSelection(selectionSource, {});
-        let params = _prepareParams(selection);
-
-        // require a list of records a basket group or a story
-        if (params !== false) {
-            return actionFn.apply(null, [params]);
-        } ;
-
-    };
-
 
     const _bindEvents = () => {
 
@@ -184,7 +170,7 @@ const toolbar = (services) => {
          * tools > Edit > VideoEditor
          */
         $container.on('click', '.video-tools-record-action', function (event) {
-            _triggerModal_2(event, videoToolsModal(services).openModal);
+            _triggerModal(event, videoToolsModal(services).openModal, false);
         });
 
         /**

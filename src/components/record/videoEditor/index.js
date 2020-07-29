@@ -14,7 +14,7 @@ const recordVideoEditorModal = (services, datas, activeTab = false) => {
     let $dialog = null;
     let toolsStream = new Rx.Subject();
 
-    var initialize = function initialize(options) {
+    var initialize = function initialize() {
 
         $(document).on('click', '.video-tools-record-action', function (event) {
             event.preventDefault();
