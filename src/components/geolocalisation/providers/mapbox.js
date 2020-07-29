@@ -307,6 +307,15 @@ const leafletMap = (services) => {
                 if (shouldUpdateZoom) {
                     currentZoomLevel = map.getZoom();
                 }
+                $('#map-zoom-to-setting').val(map.getZoom());
+            });
+
+            map.on('dragend', function () {
+                var LngLat = map.getCenter();
+                var arr= [];
+                arr.push(String(LngLat['lat']));
+                arr.push(String(LngLat['lng']));
+               $('#map-position-to-setting').val('["'+LngLat['lat']+'","'+LngLat['lng'] +'"]');
             });
 
             map.on('remove', function () {
@@ -774,6 +783,7 @@ const leafletMap = (services) => {
                         position.lng = featureLayer.getGeoJSON()[0].geometry.coordinates[0];
                         position.lat = featureLayer.getGeoJSON()[0].geometry.coordinates[1];
                         updateMarkerPosition(featureLayer.getGeoJSON()[0].properties.recordIndex, position);
+                        console.log('ato');
                     } else {
                         // set default position
                         shouldUpdateZoom = false;
