@@ -36,6 +36,7 @@ const searchGeoForm = (services) => {
         $container.on('click', '.submit-geo-search-action', (event) => {
             event.preventDefault();
             updateSearchValue();
+
             // searchQuery
             $dialog.close();
         });
@@ -49,6 +50,30 @@ const searchGeoForm = (services) => {
         });
         mapBoxService.appendMapContent({selection: []});
 
+            $('.map-geo-btn').on('click', event => {
+                event.preventDefault();
+                if($('#map-zoom-to-setting').val()!= '') {
+                    savePreferences(
+                        {map_zoom : parseFloat($('#map-zoom-to-setting').val())}
+                    );
+                    $('#map-zoom-from-setting').val(parseFloat($('#map-zoom-to-setting').val()));
+                }
+                if($('#map-position-to-setting').val()!= '') {
+                    var centerRes = $('#map-position-to-setting').val();
+                    centerRes = centerRes.split('[');
+                    centerRes = centerRes[1].split(']');
+                    centerRes = centerRes[0].split(',');
+
+                    var lng = centerRes[0].split('"');
+                    lng= lng[1];
+                    var lat = centerRes[1].split('"');
+                    lat= lat[1];
+                    var res = [lng, lat];
+                    savePreferences(
+                        { map_position: res });
+                    $('#map-position-from-setting').val('["' + lng + '","' +  lat + '"]');
+                }
+            });
     }
 
     const updateSearchValue = () => {
@@ -64,7 +89,7 @@ const searchGeoForm = (services) => {
         return `
         <div style="overflow:hidden">
         <div id="${mapContainerName}" style="top: 0px; left: 0;    bottom: 42px;    position: absolute;height: auto;width: 100%;overflow: hidden;"></div>
-        <div style="position: absolute;bottom: 0; text-align:center; height: 35px; width: 98%;overflow: hidden;"><button class="submit-geo-search-action btn" style="font-size: 14px">${localeService.t('Valider')}</button></div>
+        <div style="position: absolute;bottom: 0; text-align:center; height: 35px; width: 98%;overflow: hidden;"><button class="submit-geo-search-action btn map-geo-btn" style="font-size: 14px">${localeService.t('Valider')}</button></div>
         </div>`;
     };
 
@@ -76,7 +101,8 @@ const searchGeoForm = (services) => {
             obj['center'] = circleObj.getCenter();
             obj['radius'] = circleObj.getRadius();
             return obj;
-        })
+        });
+
         savePreferences({drawnItems: circleObjCollection});
     }
 
