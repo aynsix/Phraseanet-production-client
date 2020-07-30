@@ -114,8 +114,7 @@ const toolbar = (services) => {
             panel.css('maxHeight', '');
         }
     }
-
-    const _triggerModal = (event, actionFn) => {
+    const _triggerModal = (event, actionFn, nodocselected= true) => {
         event.preventDefault();
         const $el = $(event.currentTarget);
         const selectionSource = $el.data('selection-source');
@@ -127,10 +126,11 @@ const toolbar = (services) => {
         if (params !== false) {
             return actionFn.apply(null, [params]);
         } else {
-            alert(localeService.t('nodocselected'));
+            if (nodocselected != false) {
+                alert(localeService.t('nodocselected'));
+            }
         }
     };
-
 
     const _bindEvents = () => {
 
@@ -169,8 +169,8 @@ const toolbar = (services) => {
         /**
          * tools > Edit > VideoEditor
          */
-        $container.on('click', '.TOOL_videoeditor_btn', function (event) {
-            _triggerModal(event, videoToolsModal(services).openModal);
+        $container.on('click', '.video-tools-record-action', function (event) {
+            _triggerModal(event, videoToolsModal(services).openModal, false);
         });
 
         /**

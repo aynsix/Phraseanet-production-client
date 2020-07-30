@@ -277,7 +277,7 @@ const videoSubtitleCapture = (services, datas, activeTab = false) => {
             $('.fields-wrapper').html('');
             var item = $('#default-item').html();
 
-            if (fieldvalue != '') {
+            if (fieldvalue != '' && fieldvalue!= undefined) {
                 var withCueId = false;
                 //var fieldType = fieldvalue.split("WEBVTT");
                 var fieldType = fieldvalue.split("\n\n");
