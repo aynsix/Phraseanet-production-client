@@ -224,6 +224,7 @@ const workzone = (services) => {
             }
         };
         filterBaskets();
+        $('#expose_tabs').tabs();
 
     };
 
@@ -283,6 +284,7 @@ const workzone = (services) => {
 
                 activeBaskets();
                 filterBaskets();
+                $('#expose_tabs').tabs();
                 $('.basketTips').tooltip({
                     delay: 200
                 });
