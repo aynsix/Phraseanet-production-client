@@ -210,5 +210,15 @@ $stackInverseBg: #cccccc;
 $chimWrap: #1d1d1d;
 $chimImg: #343434;
 
+//Dialog custom
+$dialogHeaderBg: #282828;
+$dialogWrapBg: #424242;
+$dialogBtnBg: #e6e6e6;
+$dialogBtnBg2: #787878;
+$dialogBtnBgHover: #282828;
+$dialogBtnColor: #000;
+$dialogBtnColor2: #fff;
+
+
 @import '../../../../stylesheets/shared/jquery-ui/dark-hive';
 @import '../skin-shared';

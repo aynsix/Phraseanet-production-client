@@ -10,10 +10,13 @@ const moveRecord = (services) => {
 
     const openModal = (datas) => {
         $dialog = dialog.create(services, {
-            size: 'Small',
+            size: 'Small phrasea-black-dialog',
             title: localeService.t('move'),
-            closeButton: true
+            closeButton: true,
+            dialogClass: 'black_dialog'
         });
+        //Add custom class to dialog wrapper
+        $('.phrasea-black-dialog').closest('.ui-dialog').addClass('black-dialog-wrap');
 
         return _getMovableRecords(datas)
             .then((data) => {
