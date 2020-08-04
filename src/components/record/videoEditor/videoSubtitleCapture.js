@@ -67,7 +67,7 @@ const videoSubtitleCapture = (services, datas, activeTab = false) => {
 
         // Set height of left block
         leftHeight = $('.video-subtitle-left-inner').closest('#tool-tabs').height();
-        $('.video-subtitle-left-inner').css('height', leftHeight - 178);
+        $('.video-subtitle-left-inner').css('height', leftHeight - 147);
         $('.video-request-left-inner').css('height', leftHeight);
         $('.video-subtitle-right .video-subtitle-wrapper').css('height', leftHeight - 100);
 

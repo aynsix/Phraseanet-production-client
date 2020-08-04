@@ -70,32 +70,7 @@
       }
 
   }
-  .btn-container{
-    margin: 10px 0px;
-    text-align: center;
-    position: relative;
-      .btn {
-          border-radius: 15px;
-          padding-left: 10px;
-          padding-right: 10px;
-          background: #525252;
-          border: 1px solid #fff;
-          color: #fff;
-          font-family: Roboto, sans-serif;
-          font-size: 12px;
-          font-weight: 500;
-          font-style: normal;
-          margin: 0 10px;
-          box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.2), 0 4px 16px 0 rgba(0, 0, 0, 0.19);
-      }
-      .btn.add-range {
-          border: 1px solid #aa46bb;
-      }
-      .btn:hover {
-          border: 1px solid #aa46bb;
-          background: #aa46bb;
-      }
-  }
+
   input.range-input {
     background: none;
     background-color: transparent;
@@ -183,6 +158,38 @@
     }
 }
 
+#prod-tool-box .btn-container{
+  margin: 10px 0px;
+  text-align: center;
+  position: relative;
+  &.video-subtitle-left-button {
+    margin: 0;
+  }
+  .btn {
+    border-radius: 15px;
+    padding-left: 10px;
+    padding-right: 10px;
+    background: #525252;
+    border: 1px solid #fff;
+    color: #fff;
+    font-family: Roboto, sans-serif;
+    font-size: 12px;
+    font-weight: 500;
+    font-style: normal;
+    margin: 0 10px;
+    box-shadow: 0 2px 6px 0 rgba(0, 0, 0, 0.2), 0 4px 16px 0 rgba(0, 0, 0, 0.19);
+    &.btn-blue {
+
+    }
+    &.add-range, &.add-btn {
+      border: 1px solid #aa46bb;
+    }
+    &:hover {
+      border: 1px solid #aa46bb;
+      background: #aa46bb;
+    }
+  }
+}
 .range-control-bar {
     position: absolute;
     bottom: 0;
