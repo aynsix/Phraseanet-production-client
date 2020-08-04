@@ -162,6 +162,9 @@
   margin: 10px 0px;
   text-align: center;
   position: relative;
+  &.video-subtitle-left-button {
+    margin: 0;
+  }
   .btn {
     border-radius: 15px;
     padding-left: 10px;
