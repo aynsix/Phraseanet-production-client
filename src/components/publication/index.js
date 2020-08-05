@@ -248,7 +248,7 @@ const publication = (services) => {
             title: localeService.t('Publication')
         });
         //Add custom class to dialog wrapper
-        $('.dialog-Full').closest('.ui-dialog').addClass('black-dialog-wrap');
+        $('.dialog-Full').closest('.ui-dialog').addClass('black-dialog-wrap publish-dialog');
 
         modal.setContent(data);
 

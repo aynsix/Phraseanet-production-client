@@ -1,9 +1,14 @@
 
+.publish-dialog {
+  .ui-dialog-content {
+    max-height: 575px !important;
+  }
+}
 #modal_feed {
   width: 100%;
   .publish_top_list {
     background: $dialogTopBg;
-    height: 423px;
+    height: 285px;
     overflow-y: auto;
   }
   .record_item {

@@ -15,7 +15,7 @@ const moveRecord = (services) => {
             closeButton: true,
         });
         //Add custom class to dialog wrapper
-        $('.phrasea-black-dialog').closest('.ui-dialog').addClass('black-dialog-wrap');
+        $('.phrasea-black-dialog').closest('.ui-dialog').addClass('black-dialog-wrap move-dialog');
 
         return _getMovableRecords(datas)
             .then((data) => {
