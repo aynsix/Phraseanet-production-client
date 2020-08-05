@@ -297,7 +297,7 @@ const exportRecord = services => {
         });
 
         $('#sendmail .sendmail_button').bind('click', function () {
-            if(!validEmail($('input[name="destmail"]', $('#sendmail')).val(), dataConfig)) {
+            if(!validEmail($('input[name="taglistdestmail"]', $('#sendmail')).val(), dataConfig)) {
                 return false;
             }
 
