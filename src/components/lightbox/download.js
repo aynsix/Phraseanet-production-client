@@ -114,8 +114,7 @@ const download = (services) => {
                 if (
                     confirm(
                         `${dataConfig.msg.fileTooLarge} \n ${dataConfig.msg
-                            .fileTooLargeAlt} \n ${dataConfig.msg
-                            .fileTooLargeEmail}`
+                            .fileTooLargeAlt}`
                     )
                 ) {
                     $(
