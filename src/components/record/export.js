@@ -140,8 +140,7 @@ const exportRecord = services => {
                 if (
                     confirm(
                         `${dataConfig.msg.fileTooLarge} \n ${dataConfig.msg
-                            .fileTooLargeAlt} \n ${dataConfig.msg
-                            .fileTooLargeEmail}`
+                            .fileTooLargeAlt}`
                     )
                 ) {
                     $(
@@ -153,9 +152,8 @@ const exportRecord = services => {
                             $('#sendmail')
                         ).prop('checked', true);
                     });
-                    $('input[name="destmail"]', $('#sendmail')).val(
-                        dataConfig.user.email
-                    );
+
+                    $(document).find('input[name="taglistdestmail"]').tagsinput('add', dataConfig.user.email);
 
                     var tabs = $('.tabs', $dialog.getDomElement());
                     tabs.tabs('option', 'active', 1);
