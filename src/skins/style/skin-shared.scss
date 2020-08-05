@@ -416,12 +416,16 @@ span.ww_winTitle {
     border: 0 none ;
     background: $dialogWrapBg;
     font-size: 16px;
+    &.move-dialog {
+        .ui-dialog-content {
+            height: auto!important;
+            }
+        }
     .ui-dialog-content {
         padding: 0;
         display: flex;
         align-items: center;
         justify-content: center;
-        height: auto!important;
         form {
             margin-bottom: 0;
         }
