@@ -408,6 +408,68 @@ span.ww_winTitle {
     position: relative;
 }
 
+/**Modal global style**/
+//black-dialog-wrap
+.black-dialog-wrap.ui-dialog.ui-widget-content {
+    border-radius: 5px!important;
+    padding: 0;
+    border: 0 none ;
+    background: $dialogWrapBg;
+    font-size: 16px;
+    &.move-dialog {
+        .ui-dialog-content {
+            height: auto!important;
+            }
+        }
+    .ui-dialog-content {
+        padding: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        form {
+            margin-bottom: 0;
+        }
+    }
+    .ui-dialog-titlebar {
+        background: $dialogHeaderBg;
+        border-top-left-radius: 5px!important;
+        border-top-right-radius: 5px!important;
+        .ui-dialog-title {
+            font-size: 21px;
+        }
+    }
+    .ui-dialog-buttonpane {
+        text-align: center;
+        border: 0;
+        margin-top: 0;
+        padding: 0;
+        margin-bottom: 10px;
+        .ui-dialog-buttonset {
+            float: none;
+        }
+        button {
+            transition: all 0.3s;
+            border-radius: 19px;
+            padding: 0 20px;
+            font-size: 15px;
+            min-width: 170px;
+            margin: 12px 10px;
+            box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.36);
+            background: $dialogBtnBg;
+            color: $dialogBtnColor;
+            &:first-child {
+                background: $dialogBtnBg2;
+                color: $dialogBtnColor2;
+            }
+            &:hover {
+                background: $dialogBtnBgHover;
+                color: $dialogBtnColor2;
+            }
+        }
+
+    }
+}
+
 /******* ORDER MANAGER ********************************************************/
 
 #order_manager tr.order_row {

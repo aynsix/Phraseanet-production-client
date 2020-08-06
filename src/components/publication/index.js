@@ -245,8 +245,11 @@ const publication = (services) => {
             size: 'Full',
             closeOnEscape: true,
             closeButton: true,
-            // buttons: {}
+            title: localeService.t('Publication')
         });
+        //Add custom class to dialog wrapper
+        $('.dialog-Full').closest('.ui-dialog').addClass('black-dialog-wrap publish-dialog');
+
         modal.setContent(data);
 
         buttons[localeService.t('valider')] = onSubmitPublication;

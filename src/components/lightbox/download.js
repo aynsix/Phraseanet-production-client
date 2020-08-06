@@ -114,8 +114,7 @@ const download = (services) => {
                 if (
                     confirm(
                         `${dataConfig.msg.fileTooLarge} \n ${dataConfig.msg
-                            .fileTooLargeAlt} \n ${dataConfig.msg
-                            .fileTooLargeEmail}`
+                            .fileTooLargeAlt}`
                     )
                 ) {
                     $(
@@ -127,9 +126,7 @@ const download = (services) => {
                             $('#sendmail')
                         ).prop('checked', true);
                     });
-                    $('input[name="destmail"]', $('#sendmail')).val(
-                        dataConfig.user.email
-                    );
+                    $(document).find('input[name="taglistdestmail"]').tagsinput('add', dataConfig.user.email);
 
                     var tabs = $('.tabs', $dialog.getDomElement());
                     tabs.tabs('option', 'active', 1);
@@ -282,7 +279,7 @@ const download = (services) => {
                 $('body').find('.humane').remove();
             }
         $('#sendmail .sendmail_button').bind('click', function () {
-            if(!validEmail($('input[name="destmail"]', $('#sendmail')).val(), dataConfig)) {
+            if(!validEmail($('input[name="taglistdestmail"]', $('#sendmail')).val(), dataConfig)) {
                 return false;
             }
 

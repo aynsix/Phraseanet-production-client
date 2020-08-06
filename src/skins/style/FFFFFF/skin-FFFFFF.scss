@@ -246,5 +246,18 @@ $stackInverseBg: #cccccc;
 $chimWrap: #e8e8e8;
 $chimImg: #cacaca;
 
+
+//Dialog custom
+$dialogHeaderBg: #f5f5f5;
+$dialogWrapBg: #fff;
+$dialogBtnBg: #e6e6e6;
+$dialogBtnBg2: #787878;
+$dialogBtnBgHover: #282828;
+$dialogBtnColor: #000;
+$dialogBtnColor2: #fff;
+
+$dialogTopBg: #b0b0b0;
+$recordBg: #e6e6e6;
+
 @import '../../../../stylesheets/shared/jquery-ui/ui-lightness';
 @import '../skin-shared';
