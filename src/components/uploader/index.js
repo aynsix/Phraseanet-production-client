@@ -357,7 +357,6 @@ const uploader = (services) => {
                         uploaderInstance.Preview.render(file, function (img) {
                             context.find('.thumbnail .canva-wrapper').prepend(img);
                             uploaderInstance.addAttributeToData(uploadIndex, 'image', img);
-                            uploaderInstance.addAttributeToData(uploadIndex, 'b64_image', img.toDataURL('image/png') || '');
                         });
                     }
                 });
