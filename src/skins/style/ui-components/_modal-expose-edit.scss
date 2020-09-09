@@ -1,0 +1,19 @@
+$blue: #2196f3;
+$green: #8bc34a;
+$orange: #ff9400;
+.expose-edit-wrapper {
+  .ui-widget {
+    display: flex;
+    flex-wrap: wrap;
+    & > label {
+      width: 28%;
+    }
+  }
+  .available-widget {
+    display: inline-flex;
+    padding-right: 10px;
+  }
+  input[type=text], select {
+    margin-bottom: 10px;
+  }
+}

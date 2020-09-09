@@ -26,12 +26,11 @@ const workzone = (services) => {
 
     function checkActiveBloc(destBloc) {
 
-        if (document.getElementById('expose_tab').getAttribute('aria-expanded') == 'true') {
+        if (document.getElementById('expose_tab') && document.getElementById('expose_tab').getAttribute('aria-expanded') == 'true') {
             $('#basket-tab').val('#expose_tab');
         }
-        if (document.getElementById('baskets').getAttribute('aria-expanded') == 'true') {
+        if (document.getElementById('baskets') && document.getElementById('baskets').getAttribute('aria-expanded') == 'true') {
             $('#basket-tab').val('#baskets');
-
         }
 
         var destBloc =  $('#basket-tab').val();
@@ -87,6 +86,10 @@ const workzone = (services) => {
 
         $('#idFrameC .expose_li').on('click', function (event) {
             checkActiveBloc(dragBloc);
+        });
+
+        $('.edit_expose').on('click', function (event) {
+            editExposeOnBasket();
         });
 
 
@@ -676,6 +679,24 @@ const workzone = (services) => {
         });
     }
 
+    function editExposeOnBasket() {
+        console.log('test');
+        $('#DIALOG-expose-edit').attr('title', localeService.t('Edit expose title'))
+            .dialog({
+                autoOpen: false,
+                closeOnEscape: true,
+                resizable: true,
+                draggable: false,
+                width: 800,
+                height: 400,
+                modal: true,
+                overlay: {
+                    backgroundColor: '#000',
+                    opacity: 0.7
+                }
+            }).dialog('open');
+    }
+    
     function dropOnBask(event, from, destKey, singleSelection) {
         checkActiveBloc(dragBloc);
 
