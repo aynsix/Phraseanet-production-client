@@ -1,0 +1,22 @@
+#idFrameC {
+  .basketTips.expose_basket_item {
+    background: $chimWrap;
+    padding: 10px;
+    margin-bottom: 5px;
+    border: 1px solid $chimWrap;
+    box-sizing: border-box;
+  }
+  .expose_item_deployed {
+    height: 0;
+    max-height: 0;
+    transition: max-height 0.3s;
+    overflow: hidden;
+    &.open {
+      height: auto;
+      max-height: 100vh;
+    }
+  }
+  .expose_item_title {
+
+  }
+}

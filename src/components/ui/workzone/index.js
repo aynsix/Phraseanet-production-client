@@ -92,6 +92,11 @@ const workzone = (services) => {
             editExposeOnBasket();
         });
 
+        //Toggle open
+        $('.expose_item_title').on('click', function (event) {
+            $(this).parent().find('.expose_item_deployed').toggleClass('open');
+        });
+
 
         $('#idFrameC .ui-tabs-nav li').on('click', function (event) {
             if ($container.attr('data-status') === 'closed') {
@@ -680,7 +685,6 @@ const workzone = (services) => {
     }
 
     function editExposeOnBasket() {
-        console.log('test');
         $('#DIALOG-expose-edit').attr('title', localeService.t('Edit expose title'))
             .dialog({
                 autoOpen: false,
