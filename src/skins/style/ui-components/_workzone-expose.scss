@@ -5,6 +5,25 @@
     margin-bottom: 5px;
     border: 1px solid $chimWrap;
     box-sizing: border-box;
+    .top-block {
+      position: relative;
+      padding-left: 29px;
+      &:before {
+        content: "\f054";
+        font-family: fontawesome;
+        font-size: 23px;
+        position: absolute;
+        left: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        transition: 0.3s all;
+      }
+      &.open {
+        &:before {
+          transform: translateY(-50%) rotate(90deg);
+        }
+      }
+    }
   }
   .expose_item_deployed {
     height: 0;

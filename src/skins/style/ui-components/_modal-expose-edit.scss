@@ -2,6 +2,7 @@ $blue: #2196f3;
 $green: #8bc34a;
 $orange: #ff9400;
 .expose-edit-wrapper {
+  padding: 12px 20px 0 10px;
   .ui-widget {
     display: flex;
     flex-wrap: wrap;
@@ -81,5 +82,12 @@ $orange: #ff9400;
       margin-left: 10px;
       margin-top: -8px;
     }
+  }
+  .ui-dialog-buttonset {
+    display: inline-flex;
+  }
+  button.ui-button {
+    display: inline-block;
+    text-align: center;
   }
 }

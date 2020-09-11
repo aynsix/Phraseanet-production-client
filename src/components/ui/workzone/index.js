@@ -93,8 +93,9 @@ const workzone = (services) => {
         });
 
         //Toggle open
-        $('.expose_item_title').on('click', function (event) {
+        $('.expose_basket_item .top-block').on('click', function (event) {
             $(this).parent().find('.expose_item_deployed').toggleClass('open');
+            $(this).toggleClass('open');
         });
 
 
@@ -690,17 +691,21 @@ const workzone = (services) => {
                 autoOpen: false,
                 closeOnEscape: true,
                 resizable: true,
-                draggable: false,
-                width: 800,
-                height: 400,
+                draggable: true,
+                width: 900,
+                height: 575,
                 modal: true,
                 overlay: {
                     backgroundColor: '#000',
                     opacity: 0.7
                 }
             }).dialog('open');
+        $('.ui-dialog').addClass('black-dialog-wrap publish-dialog');
+        $('.close-expose-modal').on('click', function () {
+            $('#DIALOG-expose-edit').dialog('close');
+        });
     }
-    
+
     function dropOnBask(event, from, destKey, singleSelection) {
         checkActiveBloc(dragBloc);
 
