@@ -88,12 +88,29 @@ const workzone = (services) => {
             checkActiveBloc(dragBloc);
         });
 
-        $('.edit_expose').on('click', function (event) {
-            editExposeOnBasket();
+        $('.add_expose').on('click',function (event) {
+            openExposeModalOnBasket('#DIALOG-expose-add');
+        });
+        $('#expose_list').on('change', function () {
+            $('.publication-list').empty().html('<img src="/assets/common/images/icons/main-loader.gif" alt="loading"/>');
+            $.ajax({
+                type: "GET",
+                url: `/prod/expose/list-publication/?exposeName=` + this.value,
+                success: function (data) {
+                    $('.publication-list').empty().html(data);
+                    console.log(data);
+                    $('.expose_basket_item .top_block').on('click', function (event) {
+                        $(this).parent().find('.expose_item_deployed').toggleClass('open');
+                        $(this).toggleClass('open');
+                    });
+                    $('.edit_expose').on('click',function (event) {
+                        openExposeModalOnBasket();
+                    });
+                }
+            });
         });
 
-        //Toggle open
-        $('.expose_basket_item .top-block').on('click', function (event) {
+        $('.publication-list').on('click', '.top-block' , function (event) {
             $(this).parent().find('.expose_item_deployed').toggleClass('open');
             $(this).toggleClass('open');
         });
@@ -685,8 +702,8 @@ const workzone = (services) => {
         });
     }
 
-    function editExposeOnBasket() {
-        $('#DIALOG-expose-edit').attr('title', localeService.t('Edit expose title'))
+    function openExposeModalOnBasket(edit = '#DIALOG-expose-edit') {
+        $(edit).attr('title', localeService.t('Edit expose title'))
             .dialog({
                 autoOpen: false,
                 closeOnEscape: true,
