@@ -468,7 +468,8 @@ const workzone = (services) => {
     function activeBaskets() {
         checkActiveBloc(dragBloc);
 
-        var cache = $('#idFrameC #baskets');
+        //var cache = $('#idFrameC #baskets');
+        var cache = $('#idFrameC '+dragBloc);
 
         cache.accordion({
             active: 'active',
@@ -484,11 +485,11 @@ const workzone = (services) => {
                         return;
                     }
 
-                    var t = $('#baskets .SSTT.active').position().top + b_active.next().height() - 200;
+                    var t = $(dragBloc+' .SSTT.active').position().top + b_active.next().height() - 200;
 
                     t = t < 0 ? 0 : t;
 
-                    $('#baskets .bloc').stop().animate({
+                    $(dragBloc+' .bloc').stop().animate({
                         scrollTop: t
                     });
                 }
