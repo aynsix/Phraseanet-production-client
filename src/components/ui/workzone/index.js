@@ -94,11 +94,11 @@ const workzone = (services) => {
         $('#expose_list').on('change', function () {
             $('.publication-list').empty().html('<img src="/assets/common/images/icons/main-loader.gif" alt="loading"/>');
             $.ajax({
-                type: "GET",
-                url: `/prod/expose/list-publication/?exposeName=` + this.value,
+                type: 'GET',
+                url: '/prod/expose/list-publication/?exposeName=' + this.value,
                 success: function (data) {
                     $('.publication-list').empty().html(data);
-                    console.log(data);
+
                     $('.expose_basket_item .top_block').on('click', function (event) {
                         $(this).parent().find('.expose_item_deployed').toggleClass('open');
                         $(this).toggleClass('open');
@@ -106,6 +106,8 @@ const workzone = (services) => {
                     $('.edit_expose').on('click',function (event) {
                         openExposeModalOnBasket();
                     });
+
+                    activeExpose();
                 }
             });
         });
@@ -583,6 +585,48 @@ const workzone = (services) => {
 
     }
 
+    function activeExpose() {
+        // drop on publication
+        $('#idFrameC').find('.publication-droppable')
+            .droppable({
+                scope: 'objects',
+                hoverClass: 'baskDrop',
+                tolerance: 'pointer',
+                accept: function (elem) {
+                    if ($(elem).hasClass('CHIM')) {
+                        if ($(elem).closest('.content').prev()[0] === $(this)[0]) {
+                            return false;
+                        }
+                    }
+                    if ($(elem).hasClass('grouping') || $(elem).parent()[0] === $(this)[0]) {
+                        return false;
+                    }
+                    return true;
+                },
+                drop: function (event, ui) {
+                    dropOnBask(event, ui.draggable, $(this));
+                }
+            });
+    }
+
+    function getPublicationAssetsList(publicationId, exposeName, assetsContainer) {
+        $.ajax({
+            type: 'GET',
+            url: `/prod/expose/get-publication/${publicationId}?exposeName=${exposeName}&onlyAssets=1`,
+            beforeSend: function () {
+                assetsContainer.addClass('loading');
+            },
+            success: function (data) {
+                if (typeof data.success === 'undefined') {
+                    assetsContainer.removeClass('loading');
+                    assetsContainer.empty().html(data);
+                } else {
+                    console.log(data);
+                }
+            }
+        });
+    }
+
     function getContent(header, order) {
 
         if (window.console) {
@@ -828,7 +872,7 @@ const workzone = (services) => {
             }
 
         //save basket after drop elt
-        if($('#basket-tab').val() == '#baskets') {
+        if ($('#basket-tab').val() === '#baskets') {
 
             if (window.console) {
                 window.console.log('About to execute ajax POST on ', url, ' with datas ', data);
@@ -859,10 +903,27 @@ const workzone = (services) => {
                 }
             });
 
-        }else {
-            console.log('To do : dropped expose to display ');
-            window.console.log('About to put record on expose ', url, ' with datas ', data);
-            $('#'+dest_uri).append('<p>'+data.lst+'</p>')
+        } else {
+            console.log(data.lst);
+
+            let publicationId = destKey.find('.edit_expose').attr('data-id');
+            let exposeName = $('#expose_list').val();
+            let assetsContainer = destKey.find('.expose_drag_drop');
+
+            $.ajax({
+                type: 'POST',
+                url: '/prod/expose/publication/add-assets',
+                data: {
+                    publicationId: publicationId,
+                    exposeName: exposeName,
+                    lst: data.lst
+                },
+                dataType: 'json',
+                success: function (data) {
+                    getPublicationAssetsList(publicationId, exposeName, assetsContainer);
+                    console.log(data.message);
+                }
+            });
         }
     }
 
